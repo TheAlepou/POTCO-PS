@@ -96,7 +96,7 @@ class DistributedInvasionObject(DistributedObject.DistributedObject, GridChild):
                 base.musicMgr.request(islandMusic, priority = -1, volume = 0.59999999999999998)
             
         
-        for minimapObj in self.minimapObjs.values():
+        for minimapObj in list(self.minimapObjs.values()):
             minimapObj.destroy()
         
         self.minimapObjs = { }
@@ -173,7 +173,7 @@ class DistributedInvasionObject(DistributedObject.DistributedObject, GridChild):
     def setPlayerWin(self, value, message):
         base.musicMgr.requestFadeOut(SoundGlobals.MUSIC_TORMENTA)
         base.musicMgr.requestFadeOut(SoundGlobals.MUSIC_TORMENTA_COMBAT)
-        for minimapObj in self.minimapObjs.values():
+        for minimapObj in list(self.minimapObjs.values()):
             minimapObj.destroy()
         
         if value:
@@ -260,7 +260,7 @@ class DistributedInvasionObject(DistributedObject.DistributedObject, GridChild):
                     minimapObj.updatePos(npcInfo[1], npcInfo[2])
                 minimapObjs[npcInfo[0]] = minimapObj
             
-            for id in self.minimapObjs.keys():
+            for id in list(self.minimapObjs.keys()):
                 minimapObj = self.minimapObjs.pop(id)
                 minimapObj.destroy()
                 minimapObj = None

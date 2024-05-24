@@ -111,7 +111,7 @@ class Subtitler(DirectObject.DirectObject):
             self.advancePageNumber()
             callback(*args)
 
-        for i in xrange(len(options)):
+        for i in range(len(options)):
             optionButton = GuiButton(parent = base.a2dBottomRight, pos = (-0.14999999999999999 - (len(options) - 1 - i) * 0.25, 0, 0.095000000000000001), text = str(options[i]), text_pos = (0, -0.012500000000000001), text_scale = 0.050000000000000003, text_fg = PiratesGuiGlobals.TextFG2, textMayChange = 1, command = optionCallback, extraArgs = [
                 options[i]] + extraArgs, sortOrder = 90)
             if self.specialButtonImage:

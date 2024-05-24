@@ -188,7 +188,7 @@ class PVPGamePirateer(PVPGameBase):
                 'Score': scores[currIdx] })
         
         self.scoreList.sort(self.sortScores)
-        print 'got new score list %s' % self.scoreList
+        print(('got new score list %s' % self.scoreList))
         messenger.send(self.getItemChangeMsg())
 
     

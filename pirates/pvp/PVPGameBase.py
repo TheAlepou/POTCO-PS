@@ -6,7 +6,7 @@ from direct.fsm import FSM
 from pirates.piratesbase import PLocalizer
 from pirates.pvp import PVPGlobals
 from pirates.piratesgui import PiratesGuiGlobals
-import PVPRulesPanel
+from . import PVPRulesPanel
 import random
 from pirates.piratesgui import PiratesGuiGlobals
 from pirates.piratesgui.StatRowGui import StatRowGui
@@ -304,7 +304,7 @@ class PVPGameBase(DistributedObject, FSM.FSM):
     
     def getPlayerStats(self):
         displayStats = []
-        for (playerId, stats) in self.stats.items():
+        for (playerId, stats) in list(self.stats.items()):
             if playerId in base.cr.doId2do:
                 player = base.cr.doId2do.get(playerId)
                 playerName = player.getName()
@@ -337,7 +337,7 @@ class PVPGameBase(DistributedObject, FSM.FSM):
     def getTeamStats(self):
         displayStats = []
         teams = { }
-        for (playerId, stats) in self.stats.items():
+        for (playerId, stats) in list(self.stats.items()):
             if playerId in base.cr.doId2do:
                 player = base.cr.doId2do.get(playerId)
                 playerName = player.getName()
@@ -363,7 +363,7 @@ class PVPGameBase(DistributedObject, FSM.FSM):
                     'color',
                     playerColor]])
         
-        for (team, teamStats) in teams.items():
+        for (team, teamStats) in list(teams.items()):
             teamTotals = []
             for stat in self.getColumnStats():
                 teamTotals.append([

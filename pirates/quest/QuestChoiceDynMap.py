@@ -9,7 +9,7 @@ class QuestChoiceDynMap:
     
     def __init__(self):
         self.QuestToChoiceSiblingMap = { }
-        for (ladderId, ladderDNA) in QuestLadderDB.FortuneQuestLadderDict.items():
+        for (ladderId, ladderDNA) in list(QuestLadderDB.FortuneQuestLadderDict.items()):
             ladderInt = ladderDNA.questInt
             for container in ladderDNA.getContainers():
                 if container.isContainer():
@@ -20,7 +20,7 @@ class QuestChoiceDynMap:
                 container.isChoice()
             
         
-        for (ladderId, ladderDNA) in QuestLadderDB.FameQuestLadderDict.items():
+        for (ladderId, ladderDNA) in list(QuestLadderDB.FameQuestLadderDict.items()):
             ladderInt = ladderDNA.questInt
             for container in ladderDNA.getContainers():
                 if container.isContainer():

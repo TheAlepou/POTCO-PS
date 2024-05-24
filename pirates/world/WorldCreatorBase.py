@@ -59,7 +59,7 @@ class WorldCreatorBase:
     
     def getModelPathFromFile(self, file):
         fileDict = self.openFile(file + '.py')
-        return fileDict['Objects'].values()[0]['Visual']['Model']
+        return list(fileDict['Objects'].values())[0]['Visual']['Model']
 
     
     def loadFileDataRecursive(self, file):
@@ -75,7 +75,7 @@ class WorldCreatorBase:
         'dteleport'])(loadFileDataRecursive)
     
     def rFindFile(self, objSet):
-        for obj in objSet.values():
+        for obj in list(objSet.values()):
             fileName = obj.get('File')
             if fileName:
                 self.loadFileDataRecursive(fileName + '.py')
@@ -117,7 +117,7 @@ class WorldCreatorBase:
     
     def loadObjectDict(self, objDict, parent, parentUid, dynamic, parentIsObj = False, fileName = None, actualParentObj = None):
         objects = []
-        for objKey in objDict.keys():
+        for objKey in list(objDict.keys()):
             newObj = self.loadObject(objDict[objKey], parent, parentUid, objKey, dynamic, parentIsObj = parentIsObj, fileName = fileName, actualParentObj = actualParentObj)
             if newObj:
                 objects.append(newObj)
@@ -237,11 +237,11 @@ class WorldCreatorBase:
             pass
         fileDict = self.fileDicts
         objectInfo = None
-        for fileData in fileDict.itervalues():
+        for fileData in list(fileDict.values()):
             if uid in fileData['ObjectIds']:
                 getSyntax = 'objectInfo = fileData' + fileData['ObjectIds'][uid]
-                exec getSyntax
-                if not objectInfo.has_key('File') or objectInfo.get('File') == '':
+                exec(getSyntax)
+                if 'File' not in objectInfo or objectInfo.get('File') == '':
                     break
                 
             objectInfo.get('File') == ''
@@ -268,7 +268,7 @@ class WorldCreatorBase:
                     getSyntax = 'objectInfo = None'
                 else:
                     getSyntax = 'objectInfo = fileData' + fileData['ObjectIds'][uid]
-                exec getSyntax
+                exec(getSyntax)
             
         
         return objectInfo
@@ -282,20 +282,20 @@ class WorldCreatorBase:
         fileList = set()
         for name in fileDict:
             fileData = fileDict[name]
-            if not fileData['ObjectIds'].has_key(uid):
+            if uid not in fileData['ObjectIds']:
                 continue
             
             getSyntax = 'objectInfo = fileData' + fileData['ObjectIds'][uid]
-            exec getSyntax
+            exec(getSyntax)
             fileList.add(name)
             objects = objectInfo.get('Objects')
             if objects:
-                for obj in objects.values():
+                for obj in list(objects.values()):
                     visual = obj.get('Visual')
                     if visual:
                         model = visual.get('Model')
                         if model:
-                            if type(model) is types.ListType:
+                            if type(model) is list:
                                 for currModel in model:
                                     fileList.add(currModel + '.bam')
                                 
@@ -306,7 +306,7 @@ class WorldCreatorBase:
             
             objects = fileData.get('Objects')
             if objects:
-                for obj in objects.values():
+                for obj in list(objects.values()):
                     visual = obj.get('Visual')
                     if visual:
                         model = visual.get('Model')
@@ -315,7 +315,7 @@ class WorldCreatorBase:
                         
                 
             
-            if not objectInfo.has_key('File') or objectInfo.get('File') == '':
+            if 'File' not in objectInfo or objectInfo.get('File') == '':
                 break
                 continue
         
@@ -333,17 +333,17 @@ class WorldCreatorBase:
             curFile = None
             for name in fileDict:
                 fileData = fileDict[name]
-                if not fileData['ObjectIds'].has_key(str(curUid)):
+                if str(curUid) not in fileData['ObjectIds']:
                     continue
                 
-                if fileData['Objects'].has_key(str(curUid)):
+                if str(curUid) in fileData['Objects']:
                     if fileData['Objects'][str(curUid)].get('Type') == 'Island':
                         return (str(curUid), isPrivate)
                         continue
                     continue
                 
-                objData = fileData['Objects'].values()[0]['Objects']
-                if objData.has_key(str(curUid)):
+                objData = list(fileData['Objects'].values())[0]['Objects']
+                if str(curUid) in objData:
                     if curUid == objUid:
                         if objData[str(curUid)].get('Private Status') == 'Private Only':
                             isPrivate = True
@@ -359,7 +359,7 @@ class WorldCreatorBase:
             if not curFile:
                 return None
                 continue
-            curUid = curFile.get('Objects', { }).keys()[0]
+            curUid = list(curFile.get('Objects', { }).keys())[0]
             if curFile['Objects'][str(curUid)].get('Type') == 'Island':
                 return (curUid, isPrivate)
                 continue
@@ -380,7 +380,7 @@ class WorldCreatorBase:
     
     def loadTemplateObject(self, filename, gameArea, rootTransform):
         fileData = self.openFile(filename)
-        fileObjUid = fileData['Objects'].keys()[0]
+        fileObjUid = list(fileData['Objects'].keys())[0]
         fileObj = self.getObject(LevelObject(fileObjUid, fileData), fileObjUid)
         fileObj.transform = rootTransform.compose(fileObj.transform)
         for objKey in fileObj.data.get('Objects', []):
@@ -450,7 +450,7 @@ class WorldCreatorBase:
     def registerFileObject(self, filename):
         fileData = self.openFile(filename)
         self.fileDicts[filename] = fileData
-        fileObjUid = fileData['Objects'].keys()[0]
+        fileObjUid = list(fileData['Objects'].keys())[0]
         self.storeNecessaryAreaData(fileObjUid, fileData)
         self.fileObjs[fileObjUid] = LevelObject(fileObjUid, fileData['Objects'][fileObjUid])
         self.registerSubObj(self.fileObjs[fileObjUid])

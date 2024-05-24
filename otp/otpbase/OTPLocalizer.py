@@ -7,7 +7,7 @@ language = ConfigVariableString('language', 'English').getValue()
 _languageModule = 'otp.otpbase.OTPLocalizer' + language
 
 try:
-	exec 'from ' + _languageModule + ' import *'
+	exec('from ' + _languageModule + ' import *')
 	notify.info("Running in language: %s" % language)
 except:
 	notify.warning("Language '%s' not found! Setting as default (English)" % language)

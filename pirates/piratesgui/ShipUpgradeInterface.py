@@ -486,7 +486,7 @@ class ShipUpgradeInterface(DirectFrame):
         countY = 0
         startX = -0.56999999999999995
         startY = -0.34999999999999998
-        sailTypeList = ShipUpgradeGlobals.SAILCOLOR_TYPES.keys()
+        sailTypeList = list(ShipUpgradeGlobals.SAILCOLOR_TYPES.keys())
         sailTypeList.sort()
         for iconInfoKey in sailTypeList:
             if ShipUpgradeGlobals.SAILCOLOR_TYPES[iconInfoKey].get('Available', 0):
@@ -517,7 +517,7 @@ class ShipUpgradeInterface(DirectFrame):
         countY = 0
         startX = -0.56999999999999995
         startY = -0.34999999999999998
-        logoTypeList = ShipUpgradeGlobals.LOGO_TYPES.keys()
+        logoTypeList = list(ShipUpgradeGlobals.LOGO_TYPES.keys())
         logoTypeList.sort()
         numIcons = len(logoTypeList)
         numIconsShown = 18
@@ -533,7 +533,7 @@ class ShipUpgradeInterface(DirectFrame):
         placedIndex = 0
         for countLogos in range(0, numIcons):
             if considerIndex >= numIcons:
-                print 'break'
+                print('break')
                 break
             
             iconInfoKey = logoTypeList[considerIndex]
@@ -785,7 +785,7 @@ class ShipUpgradeInterface(DirectFrame):
         if boostInfo:
             self.attributeString = PLocalizer.ShipUpgradeSkillBoosts + '\n\n'
         
-        for skillId in boostInfo.keys():
+        for skillId in list(boostInfo.keys()):
             skillLevel = boostInfo[skillId]
             skillName = PLocalizer.InventoryTypeNames[skillId]
             newAttributeLine = '\x05sailSkill-%s\x05 %s %s %s\n\n' % (skillId, skillName, PLocalizer.ShipUpgradeSkillBoostAdd, skillLevel)

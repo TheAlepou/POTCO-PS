@@ -19,7 +19,7 @@ from pirates.minigame import PotionGlobals
 from pirates.minigame import PotionRecipeData
 
 def safeSubstitute(text, dict):
-    for key in dict.keys():
+    for key in list(dict.keys()):
         text = text.replace('$'+key, str(dict[key]))
     return text
 
@@ -208,7 +208,7 @@ class SkillButton(DirectFrame):
         self.initialiseoptions(SkillButton)
         gui = loader.loadModel('models/gui/toplevel_gui')
         if not SkillButton.SkillIcons:
-            print 'not SkillButton.SkillIcons:'
+            print('not SkillButton.SkillIcons:')
             SkillButton.SkillIcons = loader.loadModel('models/textureCards/skillIcons')
             SkillButton.Image = (SkillButton.SkillIcons.find('**/base'), SkillButton.SkillIcons.find('**/base_down'), SkillButton.SkillIcons.find('**/base_over'))
             SkillButton.SkillRechargedSound = loadSfx(SoundGlobals.SFX_SKILL_RECHARGED)

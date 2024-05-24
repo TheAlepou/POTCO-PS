@@ -89,7 +89,7 @@ class ChatInputTyped(DirectObject.DirectObject):
         self.typedChatButton.hide()
         self.typedChatBar.hide()
         if self.whisperId:
-            print 'have id'
+            print('have id')
             if self.toPlayer:
                 if not base.talkAssistant.checkWhisperTypedChatPlayer(self.whisperId):
                     messenger.send('Chat-Failed player typed chat test')
@@ -144,7 +144,7 @@ class ChatInputTyped(DirectObject.DirectObject):
     def _ChatInputTyped__execMessage(self, message):
         if not ChatInputTyped.ExecNamespace:
             ChatInputTyped.ExecNamespace = { }
-            exec 'from panda3d.core import *' in globals(), self.ExecNamespace
+            exec('from panda3d.core import *', globals(), self.ExecNamespace)
             self.importExecNamespace()
         
         try:

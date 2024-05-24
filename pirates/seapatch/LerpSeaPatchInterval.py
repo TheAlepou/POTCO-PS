@@ -1,4 +1,4 @@
-from CLerpSeaPatchInterval import CLerpSeaPatchInterval
+from .CLerpSeaPatchInterval import CLerpSeaPatchInterval
 
 class LerpSeaPatchInterval(CLerpSeaPatchInterval):
     lerpNum = 1

@@ -334,65 +334,65 @@ emotes = {
         'group': OL.Emotes_General } }
 
 def getEmotePrereqs(emoteId):
-    if emotes.has_key(emoteId):
+    if emoteId in emotes:
         return emotes[emoteId].get('prereqs', [])
     
     return []
 
 
 def getEmoteAnim(emoteId):
-    if emotes.has_key(emoteId):
+    if emoteId in emotes:
         return emotes[emoteId].get('anim')
     
 
 
 def getEmoteLoop(emoteId):
-    if emotes.has_key(emoteId):
+    if emoteId in emotes:
         return emotes[emoteId].get('loop', 0)
     
     return 0
 
 
 def getEmoteProp(emoteId):
-    if emotes.has_key(emoteId):
+    if emoteId in emotes:
         return emotes[emoteId].get('prop', None)
     
 
 
 def getEmoteGroup(emoteId):
-    if emotes.has_key(emoteId):
+    if emoteId in emotes:
         return emotes[emoteId].get('group', None)
     
 
 
 def getEmoteGender(emoteId):
-    if emotes.has_key(emoteId):
+    if emoteId in emotes:
         return emotes[emoteId].get('gender', None)
     
 
 
 def getEmoteSfx(emoteId):
-    if emotes.has_key(emoteId):
+    if emoteId in emotes:
         return emotes[emoteId].get('sfx', None)
     
 
 
 def getWaitProp(emoteId):
-    if emotes.has_key(emoteId):
+    if emoteId in emotes:
         return emotes[emoteId].get('waitProp', 0)
     
     return 0
 
 
 def getDurProp(emoteId):
-    if emotes.has_key(emoteId):
+    if emoteId in emotes:
         return emotes[emoteId].get('durProp', 0)
     
     return 0
 
 
 def getEmoteVfx(emoteId):
-    if emotes.has_key(emoteId) and emotes[emoteId].has_key('vfx'):
+    if emoteId in emotes and 'vfx' in emotes[emoteId]:
         effect = emotes[emoteId].get('vfx').getEffect(1)
         return effect
     
@@ -400,7 +400,7 @@ def getEmoteVfx(emoteId):
 
 def getAllEmoteAnimations():
     animList = []
-    for emoteId in emotes.keys():
+    for emoteId in list(emotes.keys()):
         if getEmoteAnim(emoteId) not in animList:
             emoteAnim = getEmoteAnim(emoteId)
             if emoteAnim:

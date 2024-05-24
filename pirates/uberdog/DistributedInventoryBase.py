@@ -37,24 +37,24 @@ class DistributedInventoryBase:
             'Inventory(%d)[owner = %s]' % (self.doId, self.ownerId)]
         out += [
             'Categories:']
-        for (categoryId, limit) in sorted(self.categoryLimits.iteritems()):
+        for (categoryId, limit) in sorted(self.categoryLimits.items()):
             doIdsInCategory = self.doIdsInCategory.get(categoryId)
             if doIdsInCategory:
                 out += [
                     '  %4d: %7d/%-7d | doIds:  %s' % (categoryId, len(doIdsInCategory), limit, doIdsInCategory)]
                 continue
             out += [
-                '  %4d: %7d/%-7d | stacks: %s' % (categoryId, self.categoryCounts.get(categoryId, 0), limit, self.stacksInCategory.get(categoryId, { }).keys())]
+                '  %4d: %7d/%-7d | stacks: %s' % (categoryId, self.categoryCounts.get(categoryId, 0), limit, list(self.stacksInCategory.get(categoryId, { }).keys()))]
         
         out += [
             '\nStacks:']
-        for (stackId, limit) in sorted(self.stackLimits.iteritems()):
+        for (stackId, limit) in sorted(self.stackLimits.items()):
             out += [
                 '  %4d: %7d / %-7d' % (stackId, self.stacks.get(stackId, 0), limit)]
         
         out += [
             '\nAccumulators:']
-        for (accumulatorId, limit) in sorted(self.accumulators.iteritems()):
+        for (accumulatorId, limit) in sorted(self.accumulators.items()):
             out += [
                 '  %4d: %7d / %-7d' % (accumulatorId, self.accumulators.get(accumulatorId, 0), limit)]
         
@@ -65,7 +65,7 @@ class DistributedInventoryBase:
         def queryField(self, fieldName, callback = None):
             
             def response(context, value):
-                print '%s: %s' % (fieldName, value)
+                print(('%s: %s' % (fieldName, value)))
 
             dclassName = 'DistributedInventoryAI'
             self.air.contextToClassName[1] = dclassName
@@ -77,7 +77,7 @@ class DistributedInventoryBase:
         def queryFieldToXML(self, fieldName):
             
             def response(context, value):
-                print self.valueToXML(fieldName, value)
+                print((self.valueToXML(fieldName, value)))
 
             self.queryField(fieldName, response)
 
@@ -106,14 +106,14 @@ class DistributedInventoryBase:
                 
                 try:
                     overallRep = accumulators[InventoryType.OverallRep]
-                    calculatedOverallRep = _[1]([ accumulators.get(category, 0) for category in xrange(InventoryType.GeneralRep, InventoryType.end_Accumulator) ])
+                    calculatedOverallRep = _[1]([ accumulators.get(category, 0) for category in range(InventoryType.GeneralRep, InventoryType.end_Accumulator) ])
                     if overallRep != calculatedOverallRep:
                         callback(False, 'OverallRep does not add up!')
                     
                     if overallRep > AccumulatorLimits[InventoryType.OverallRep]:
                         callback(False, 'Overflow in overall rep category')
                     
-                    for category in xrange(InventoryType.GeneralRep, InventoryType.end_Accumulator):
+                    for category in range(InventoryType.GeneralRep, InventoryType.end_Accumulator):
                         if accumulators.get(category, 0) > AccumulatorLimits[category]:
                             callback(False, 'Overflow in rep category %s' % category)
                             continue
@@ -153,7 +153,7 @@ class DistributedInventoryBase:
             cls.LastInventoryRequestId = requestId
             callback(inv)
         else:
-            requestId = cls.InvRequestSerialGen.next()
+            requestId = next(cls.InvRequestSerialGen)
             cls.GetInvRequests.setdefault(inventoryId, { })
             cls.GetInvRequests[inventoryId][requestId] = callback
             cls.GetInvRequestId2InvId[requestId] = inventoryId
@@ -268,7 +268,7 @@ class DistributedInventoryBase:
             category = self.doIdsInCategory.setdefault(category, [])
             category.append(doId)
         
-        for (doId, category) in old.items():
+        for (doId, category) in list(old.items()):
             if self.doIds.get(doId) is None:
                 messenger.send('inventoryRemoveDoId-%s-%s' % (self.doId, category), [
                     doId])
@@ -279,7 +279,7 @@ class DistributedInventoryBase:
             category == InventoryCategory.SHIPS
         
         mightBeComplete = True
-        for (doId, category) in self.doIds.items():
+        for (doId, category) in list(self.doIds.items()):
             if category == InventoryCategory.WAGERS or category == InventoryCategory.SHIPS:
                 continue
             
@@ -327,7 +327,7 @@ class DistributedInventoryBase:
 
     
     def _checkDoIdsCompletion(self):
-        for (doId, category) in self.doIds.items():
+        for (doId, category) in list(self.doIds.items()):
             if category == InventoryCategory.WAGERS or category == InventoryCategory.SHIPS:
                 continue
             
@@ -352,7 +352,7 @@ class DistributedInventoryBase:
                 for requestId in reqId2callback:
                     DistributedInventoryBase.GetInvRequestId2InvId.pop(requestId)
                 
-                reqIds = reqId2callback.keys()
+                reqIds = list(reqId2callback.keys())
                 reqIds.sort()
                 for reqId in reqIds:
                     callback = reqId2callback[reqId]
@@ -439,10 +439,10 @@ class DistributedInventoryBase:
     
     def computeCategoryCounts(self):
         counts = { }
-        for category in self.doIds.values():
+        for category in list(self.doIds.values()):
             counts[category] = counts.get(category, 0) + 1
         
-        for stackType in self.stacks.keys():
+        for stackType in list(self.stacks.keys()):
             category = InventoryId.getCategory(stackType)
             if category:
                 counts[category] = counts.get(category, 0) + 1
@@ -493,11 +493,11 @@ class DistributedInventoryBase:
 
     
     def getDoIdList(self):
-        return self.doIds.keys()
+        return list(self.doIds.keys())
 
     
     def getDoIdAndCategoryList(self):
-        return self.doIds.items()
+        return list(self.doIds.items())
 
     
     def getAccumulator(self, accumulatorType):

@@ -7,7 +7,7 @@ from pirates.battle import EnemyGlobals
 from pirates.ship import ShipGlobals
 from pirates.piratesbase import PiratesGlobals
 from pirates.battle import EnemyGlobals
-import DropData
+from . import DropData
 import string
 import random
 import os
@@ -24,7 +24,7 @@ __shipMaterialDropList = { }
 
 __columnHeadings = __dropInfo.pop('columnHeadings')
 
-for (heading, value) in __commonDropInfo.items():
+for (heading, value) in list(__commonDropInfo.items()):
     if value == 'x':
         value = 1
     else:
@@ -33,11 +33,11 @@ for (heading, value) in __commonDropInfo.items():
     try:
         newHeading = string.replace(heading, '\r', '')
         id = None
-        exec 'id = (AvatarTypes.%s.getFaction(), AvatarTypes.%s.getTrack(), AvatarTypes.%s.getId())' % (heading, heading, heading)
-        exec '__typeCommonDropList[id] = %s' % value in globals()
+        exec('id = (AvatarTypes.%s.getFaction(), AvatarTypes.%s.getTrack(), AvatarTypes.%s.getId())' % (heading, heading, heading))
+        exec('__typeCommonDropList[id] = %s' % value, globals())
     except:
         newHeading = string.replace(heading, '\r', '')
-        exec "__staticCommonDropList['%s'] = %s" % (newHeading, value) in globals()
+        exec("__staticCommonDropList['%s'] = %s" % (newHeading, value), globals())
 
 def isLive(item):
     if ConfigVariableBool('force-all-items-live', False):
@@ -186,7 +186,7 @@ def getItemRarityRate(containerType):
 
 
 def getAllItemIds():
-    return __dropInfo.keys()
+    return list(__dropInfo.keys())
 
 __shipTypeList = {
     ShipGlobals.NAVY_FERRET: __commonDropInfo['NAVY_FERRET'],
@@ -236,7 +236,7 @@ getShipMaterialDropByClass(ShipGlobals.HUNTER_VENGEANCE)
 def getShipDropItemsByClass(shipClass):
     dropItems = []
     shipType = __shipTypeList.get(shipClass)
-    if __lootShipCache.has_key(shipClass):
+    if shipClass in __lootShipCache:
         return __lootShipCache[shipClass]
     
     for itemId in __dropInfo:
@@ -439,13 +439,13 @@ def getEnemyDropItemsByType(type, uniqueId):
     shouldUseCommonDrop = 1
     isStatic = 0
     dropKey = None
-    if __staticCommonDropList.has_key(uniqueId):
+    if uniqueId in __staticCommonDropList:
         shouldUseCommonDrop = __staticCommonDropList[uniqueId]
         isStatic = 1
         dropKey = uniqueId
     else:
         typeKey = (type.getFaction(), type.getTrack(), type.getId())
-        if __typeCommonDropList.has_key(typeKey):
+        if typeKey in __typeCommonDropList:
             shouldUseCommonDrop = __typeCommonDropList[typeKey]
             dropKey = typeKey
         
@@ -455,7 +455,7 @@ def getEnemyDropItemsByType(type, uniqueId):
     if not enemyType:
         enemyType = __enemyTypeList.get(type)
     
-    if dropKey and __lootDropCache.has_key(dropKey):
+    if dropKey and dropKey in __lootDropCache:
         return __lootDropCache[dropKey]
     
     for itemId in __dropInfo:
@@ -486,7 +486,7 @@ def getStoreItems(uniqueId):
     storeItems = []
     shopKeeper = __staticIdTypeList.get(uniqueId)
     if shopKeeper:
-        if __lootStoreCache.has_key(uniqueId):
+        if uniqueId in __lootStoreCache:
             return __lootStoreCache[uniqueId]
         
         for itemId in __dropInfo:
@@ -537,7 +537,7 @@ for index in [
     __commonDropInfo['FishLarge'],
     __columnHeadings['FishLegendary']]:
     dropTable = []
-    for (itemId, item) in __dropInfo.iteritems():
+    for (itemId, item) in list(__dropInfo.items()):
         if not isLive(item):
             continue
         

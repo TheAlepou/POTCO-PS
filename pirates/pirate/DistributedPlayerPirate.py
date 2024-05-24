@@ -45,7 +45,7 @@ from pirates.pirate import AvatarTypes
 from pirates.effects.VoodooAura import VoodooAura
 from pirates.uberdog.UberDogGlobals import InventoryType
 from pirates.reputation import ReputationGlobals
-import PlayerPirateGameFSM
+from . import PlayerPirateGameFSM
 from pirates.band import BandConstance
 from pirates.band import DistributedBandMember
 from pirates.world.DistributedGameArea import DistributedGameArea
@@ -158,7 +158,7 @@ class DistributedPlayerPirate(DistributedPirateBase, DistributedPlayer, Distribu
                 self.crewIconId = True
                 crewIconGui = loader.loadModel(CrewIconSelector.CREW_ICON_BAM)
                 self.crewIconDict = { }
-                for (k, v) in CrewIconSelector.CREW_ICONS.iteritems():
+                for (k, v) in list(CrewIconSelector.CREW_ICONS.items()):
                     np = crewIconGui.find('**/%s' % v)
                     self.crewIconDict[k] = np.copyTo(NodePath())
                     self.crewIconDict[k].setScale(8.8000000000000007)
@@ -178,7 +178,7 @@ class DistributedPlayerPirate(DistributedPirateBase, DistributedPlayer, Distribu
             
             if not self.badgeIconDict:
                 self.badgeIconDict = { }
-                for titleId in TitleGlobals.TitlesDict.keys():
+                for titleId in list(TitleGlobals.TitlesDict.keys()):
                     titleModel = loader.loadModel(TitleGlobals.getModelPath(titleId))
                     for rank in range(TitleGlobals.getMaxRank(titleId) + 1):
                         icName = TitleGlobals.getIconName(titleId, rank)
@@ -1089,7 +1089,7 @@ class DistributedPlayerPirate(DistributedPirateBase, DistributedPlayer, Distribu
                 iconId = 2
             
         
-        if iconId not in range(0, 3):
+        if iconId not in list(range(0, 3)):
             return None
         
         self.hasCrewIcon = iconId
@@ -1607,9 +1607,9 @@ class DistributedPlayerPirate(DistributedPirateBase, DistributedPlayer, Distribu
 
     
     def printShips(self):
-        print 'activeShip:\t', self.getActiveShipId(), self.getActiveShip()
-        print 'crewShip:\t', self.getCrewShipId(), self.getCrewShip()
-        print 'ship:\t\t', self.getShip(), self.getShip()
+        print(('activeShip:\t', self.getActiveShipId(), self.getActiveShip()))
+        print(('crewShip:\t', self.getCrewShipId(), self.getCrewShip()))
+        print(('ship:\t\t', self.getShip(), self.getShip()))
 
     
     def getShipString(self):
@@ -3183,13 +3183,13 @@ class DistributedPlayerPirate(DistributedPirateBase, DistributedPlayer, Distribu
     
     def decipherTeleportFlags(self):
         iter = BitMask32(1)
-        print self.teleportFlags, '-' * 80
+        print((self.teleportFlags, '-' * 80))
         while iter.getWord():
             if (iter & self.teleportFlags).getWord():
-                print '%-4s' % iter.getHighestOnBit()
+                print(('%-4s' % iter.getHighestOnBit()))
                 if not self.getNoTeleportString(iter):
                     pass
-                print self.getNoTeleportToString(iter)
+                print((self.getNoTeleportToString(iter)))
             
             iter <<= 1
 
@@ -3653,7 +3653,7 @@ class DistributedPlayerPirate(DistributedPirateBase, DistributedPlayer, Distribu
         counter = 0
         dclass = base.cr.dclassesByName['DistributedPlayerPirate']
         field = dclass.getFieldByName('setCompositeDNA').asMolecularField()
-        for i in xrange(field.getNumAtomics()):
+        for i in range(field.getNumAtomics()):
             subField = field.getAtomic(i)
             args = dna[counter:counter + subField.getNumElements()]
             counter += subField.getNumElements()
@@ -3668,7 +3668,7 @@ class DistributedPlayerPirate(DistributedPirateBase, DistributedPlayer, Distribu
         counter = 0
         dclass = base.cr.dclassesByName['DistributedPlayerPirate']
         field = dclass.getFieldByName('announceClothingChange').asMolecularField()
-        for i in xrange(field.getNumAtomics()):
+        for i in range(field.getNumAtomics()):
             subField = field.getAtomic(i)
             args = dna[counter:counter + subField.getNumElements()]
             counter += subField.getNumElements()
@@ -3878,7 +3878,7 @@ class DistributedPlayerPirate(DistributedPirateBase, DistributedPlayer, Distribu
         counter = 0
         dclass = base.cr.dclassesByName['DistributedPlayerPirate']
         field = dclass.getFieldByName('setClothes').asMolecularField()
-        for i in xrange(field.getNumAtomics()):
+        for i in range(field.getNumAtomics()):
             subField = field.getAtomic(i)
             args = dna[counter:counter + subField.getNumElements()]
             counter += subField.getNumElements()
@@ -3922,7 +3922,7 @@ class DistributedPlayerPirate(DistributedPirateBase, DistributedPlayer, Distribu
 
     
     def setClothes2(self, *dna):
-        if hasattr(self, 'clothingEquipBufferDict') and len(self.clothingEquipBufferDict.keys()) > 0:
+        if hasattr(self, 'clothingEquipBufferDict') and len(list(self.clothingEquipBufferDict.keys())) > 0:
             return None
         elif dna == self.getClothesComposite():
             pass
@@ -3934,7 +3934,7 @@ class DistributedPlayerPirate(DistributedPirateBase, DistributedPlayer, Distribu
         counter = 0
         dclass = base.cr.dclassesByName['DistributedPlayerPirate']
         field = dclass.getFieldByName('setClothes').asMolecularField()
-        for i in xrange(field.getNumAtomics()):
+        for i in range(field.getNumAtomics()):
             subField = field.getAtomic(i)
             args = dna[counter:counter + subField.getNumElements()]
             counter += subField.getNumElements()
@@ -3947,7 +3947,7 @@ class DistributedPlayerPirate(DistributedPirateBase, DistributedPlayer, Distribu
         counter = 0
         dclass = base.cr.dclassesByName['DistributedPlayerPirate']
         field = dclass.getFieldByName('setHair').asMolecularField()
-        for i in xrange(field.getNumAtomics()):
+        for i in range(field.getNumAtomics()):
             subField = field.getAtomic(i)
             args = dna[counter:counter + subField.getNumElements()]
             counter += subField.getNumElements()
@@ -3962,7 +3962,7 @@ class DistributedPlayerPirate(DistributedPirateBase, DistributedPlayer, Distribu
         counter = 0
         dclass = base.cr.dclassesByName['DistributedPlayerPirate']
         field = dclass.getFieldByName('setJewelry').asMolecularField()
-        for i in xrange(field.getNumAtomics()):
+        for i in range(field.getNumAtomics()):
             subField = field.getAtomic(i)
             args = dna[counter:counter + subField.getNumElements()]
             counter += subField.getNumElements()
@@ -3975,7 +3975,7 @@ class DistributedPlayerPirate(DistributedPirateBase, DistributedPlayer, Distribu
         counter = 0
         dclass = base.cr.dclassesByName['DistributedPlayerPirate']
         field = dclass.getFieldByName('setTattoos').asMolecularField()
-        for i in xrange(field.getNumAtomics()):
+        for i in range(field.getNumAtomics()):
             subField = field.getAtomic(i)
             args = dna[counter:counter + subField.getNumElements()]
             counter += subField.getNumElements()
@@ -4223,14 +4223,14 @@ class DistributedPlayerPirate(DistributedPirateBase, DistributedPlayer, Distribu
     
     def setCommonChatFlags(self, commonChatFlags):
         DistributedPlayer.setCommonChatFlags(self, commonChatFlags)
-        if hasattr(base, 'localAvatar') and base.localAvatar.playersNearby.has_key(self.getDoId()):
+        if hasattr(base, 'localAvatar') and self.getDoId() in base.localAvatar.playersNearby:
             base.localAvatar.playersNearby[self.getDoId()] = (commonChatFlags, base.localAvatar.playersNearby[self.getDoId()][1])
         
 
     
     def setWhitelistChatFlags(self, whitelistChatFlags):
         DistributedPlayer.setWhitelistChatFlags(self, whitelistChatFlags)
-        if hasattr(base, 'localAvatar') and base.localAvatar.playersNearby.has_key(self.getDoId()):
+        if hasattr(base, 'localAvatar') and self.getDoId() in base.localAvatar.playersNearby:
             base.localAvatar.playersNearby[self.getDoId()] = (base.localAvatar.playersNearby[self.getDoId()][0], whitelistChatFlags)
         
 

@@ -411,7 +411,7 @@ class GameFSMShip(FSM.FSM):
 
     
     def handleTargetHit(self, collEntry):
-        print '**********HANDLE TARGET HIT*****************'
+        print('**********HANDLE TARGET HIT*****************')
 
     
     def enterGrappleLerping(self):

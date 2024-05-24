@@ -1,8 +1,8 @@
 # File: P (Python 2.4)
 
 from pirates.piratesbase import PiratesGlobals
-from Human import Human
-import AvatarTypes
+from .Human import Human
+from . import AvatarTypes
 
 class Pirate(Human):
     

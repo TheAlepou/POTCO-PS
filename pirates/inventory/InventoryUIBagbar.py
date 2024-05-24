@@ -88,7 +88,7 @@ class InventoryUIBagbar(DirectFrame):
 
     
     def openBag(self, bagButton):
-        print 'BagBar Open Bag'
+        print('BagBar Open Bag')
         gui = loader.loadModel('models/gui/toplevel_gui')
         chestButtonClosed = gui.find('**/treasure_chest_closed_over')
         chestButtonOpen = gui.find('**/treasure_chest_open_over')

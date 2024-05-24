@@ -10,9 +10,9 @@ from pandac.PandaModules import Fog, FogAttrib, Shader
 from pandac.PandaModules import Texture
 from pandac.PandaModules import Vec4
 from direct.directnotify import DirectNotifyGlobal
-import FishingGlobals
-from Fish import Fish
-from LegendaryFish import LegendaryFish
+from . import FishingGlobals
+from .Fish import Fish
+from .LegendaryFish import LegendaryFish
 
 class FishManager:
     notify = DirectNotifyGlobal.directNotify.newCategory('FishManager')
@@ -96,7 +96,7 @@ class FishManager:
     
     def codeReload(self):
         for fish in self.uncaughtFish:
-            print fish.codeReload()
+            print((fish.codeReload()))
         
 
     

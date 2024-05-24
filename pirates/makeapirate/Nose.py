@@ -8,9 +8,9 @@ from direct.gui import DirectGuiGlobals
 from direct.gui.DirectGui import *
 from pandac.PandaModules import *
 from pirates.piratesbase import PLocalizer
-from CharGuiBase import CharGuiSlider, CharGuiPicker
+from .CharGuiBase import CharGuiSlider, CharGuiPicker
 import random
-import MakeAPirateGlobals
+from . import MakeAPirateGlobals
 damper = 0.5
 sliderRange = (-0.5, 0.5)
 
@@ -153,7 +153,7 @@ class Nose(DirectObject.DirectObject):
 
     
     def reset(self):
-        for i in xrange(0, len(self.pgs)):
+        for i in range(0, len(self.pgs)):
             self.resetSlider(self.pgs[i])
         
         self.saveDNA()
@@ -166,7 +166,7 @@ class Nose(DirectObject.DirectObject):
     def randomPick(self):
         global damper
         damper = 1.0
-        for i in xrange(0, len(self.pgs)):
+        for i in range(0, len(self.pgs)):
             slider = self.pgs[i]
             self.resetSlider(slider)
             if self.avatar.pirate.gender == 'f':
@@ -201,7 +201,7 @@ class Nose(DirectObject.DirectObject):
             noseRanges = MakeAPirateGlobals.FEMALE_NOSE_RANGES
         else:
             noseRanges = MakeAPirateGlobals.MALE_NOSE_RANGES
-        for i in xrange(0, len(self.pgs)):
+        for i in range(0, len(self.pgs)):
             slider = self.pgs[i]
             self.resetSlider(slider)
             coinFlip = random.choice([

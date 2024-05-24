@@ -3,20 +3,20 @@ from pandac.PandaModules import *
 from direct.directnotify import DirectNotifyGlobal
 from direct.showbase import PythonUtil
 from otp.otpbase import OTPLocalizer
-import HTTPUtil
-import RemoteValueSet
+from . import HTTPUtil
+from . import RemoteValueSet
 import copy
 accountServer = base.config.GetString('account-server', '')
 #accountServer = launcher.getAccountServer()
-print 'TTAccount: accountServer from launcher: ', accountServer
+print(('TTAccount: accountServer from launcher: ', accountServer))
 configAccountServer = base.config.GetString('account-server', '')
 if configAccountServer:
     accountServer = configAccountServer
-    print 'TTAccount: overriding accountServer from config: ', accountServer
+    print(('TTAccount: overriding accountServer from config: ', accountServer))
 
 if not accountServer:
     accountServer = 'https://toontown.go.com'
-    print 'TTAccount: default accountServer: ', accountServer
+    print(('TTAccount: default accountServer: ', accountServer))
 
 accountServer = URLSpec(accountServer, 1)
 
@@ -145,8 +145,8 @@ class TTAccount:
             'l2': 'addr2',
             'l3': 'addr3' }
         dict = self.accountData.dict
-        for fieldName in dict.keys():
-            if fieldNameMap.has_key(fieldName):
+        for fieldName in list(dict.keys()):
+            if fieldName in fieldNameMap:
                 dict[fieldNameMap[fieldName]] = dict[fieldName]
                 del dict[fieldName]
                 continue
@@ -189,7 +189,7 @@ class TTAccount:
     
     def talk(self, operation, data = { }):
         self.notify.debug('TTAccount.talk()')
-        for key in data.keys():
+        for key in list(data.keys()):
             data[key] = str(data[key])
         
         if operation in ('play', 'get', 'cancel', 'authenticateParentPassword', 'authenticateDelete', 'authenticateParentPasswordNewStyle', 'authenticateDeleteNewStyle'):
@@ -211,7 +211,7 @@ class TTAccount:
             pass
         1
         if operation == 'purchase':
-            if data.has_key('newPassword'):
+            if 'newPassword' in data:
                 pass
             
         else:
@@ -237,7 +237,7 @@ class TTAccount:
         else:
             url.setPath('/%s.php' % op2Php[operation])
         body = ''
-        if data.has_key('accountName'):
+        if 'accountName' in data:
             if operation not in newWebOperations:
                 url.setQuery('n=%s' % URLSpec.quote(data['accountName']))
             
@@ -270,15 +270,15 @@ class TTAccount:
             'userid': 'userid' }
         ignoredFields = ('ccType',)
         outBoundFields = { }
-        for fieldName in data.keys():
-            if not serverFields.has_key(fieldName):
+        for fieldName in list(data.keys()):
+            if fieldName not in serverFields:
                 if fieldName not in ignoredFields:
                     self.notify.error('unknown data field: %s' % fieldName)
                 
             fieldName not in ignoredFields
             outBoundFields[serverFields[fieldName]] = data[fieldName]
         
-        orderedFields = outBoundFields.keys()
+        orderedFields = list(outBoundFields.keys())
         orderedFields.sort()
         for fieldName in orderedFields:
             if len(body):

@@ -53,7 +53,7 @@ class RadioButton(DirectButton):
                 continue
         
         if fCommand and self['command']:
-            apply(self['command'], [
+            self['command'](*[
                 self['value']] + self['extraArgs'])
         
 

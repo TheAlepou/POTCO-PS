@@ -121,7 +121,7 @@ class Kraken(DistributedCreature, Monstrous):
             self.notify.debug('setTargetShipId:targetArrived: attaching %d grabbers' % len(self.grabberTentacles))
             self.targetRomRequest = None
             targetShip.setKraken(self)
-            for grabber in self.grabberTentacles.itervalues():
+            for grabber in list(self.grabberTentacles.values()):
                 grabber.attachToShipLocator()
                 grabber.setupCollisions()
             
@@ -170,7 +170,7 @@ class Kraken(DistributedCreature, Monstrous):
     
     def getRollAngle(self):
         dampen = 0
-        dampenAmounts = [ grabber.getRockingDampen() for grabber in self.grabberTentacles.itervalues() ]
+        dampenAmounts = [ grabber.getRockingDampen() for grabber in list(self.grabberTentacles.values()) ]
         if dampenAmounts:
             dampen = max(dampenAmounts)
         
@@ -209,7 +209,7 @@ class Kraken(DistributedCreature, Monstrous):
         t /= 15
         t %= len(self.grabberTentacles)
         t = int(t)
-        for grabber in self.grabberTentacles.itervalues():
+        for grabber in list(self.grabberTentacles.values()):
             grabber.rangeCollisions.hide()
         
         self.grabberTentacles[t].rangeCollisions.show()
@@ -248,7 +248,7 @@ class Kraken(DistributedCreature, Monstrous):
 
     
     def setGameState(self, stateName, timeStamp):
-        print '!!'
+        print('!!')
         self.gameFSM.request(stateName)
 
 

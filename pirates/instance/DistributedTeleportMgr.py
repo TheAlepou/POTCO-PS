@@ -581,7 +581,7 @@ class DistributedTeleportMgr(DistributedObject.DistributedObject):
             parentObj = base.cr.doId2do.get(parents[0])
             if parentObj:
                 callback(parentObj, teleportingObj)
-            elif parentsLen > 2 and base.cr.doId2do.has_key(parents[2]):
+            elif parentsLen > 2 and parents[2] in base.cr.doId2do:
                 base.cr.relatedObjectMgr.requestObjects([
                     parents[0]], eachCallback = lambda param1 = None, param2 = teleportingObj: callback(param1, param2))
                 localAvatar.setInterest(parents[2], parents[1], [

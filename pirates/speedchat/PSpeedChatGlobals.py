@@ -1,3 +1,3 @@
 # File: P (Python 2.4)
 
-from PSpeedChatQuestTerminal import PSpeedChatQuestMsgEvent
+from .PSpeedChatQuestTerminal import PSpeedChatQuestMsgEvent

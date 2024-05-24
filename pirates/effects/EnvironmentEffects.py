@@ -34,7 +34,7 @@ from pirates.effects.GentleSmoke import GentleSmoke
 from pirates.audio import SoundGlobals
 from pirates.audio.SoundGlobals import loadSfxString
 from pirates.ai import HolidayGlobals
-from PooledEffect import PooledEffect
+from .PooledEffect import PooledEffect
 from pirates.piratesgui.GameOptions import Options
 
 class EnvironmentEffects(DirectObject):
@@ -92,7 +92,7 @@ class EnvironmentEffects(DirectObject):
     soundDict = {
         'waterfall_sound': loadSfxString(SoundGlobals.SFX_FX_WATERFALL_SMALL),
         'waterfall_cave_sound': loadSfxString(SoundGlobals.SFX_FX_WATERFALL_CAVE) }
-    EffectNodeNames = effectDict.keys()
+    EffectNodeNames = list(effectDict.keys())
     animPartsDict = {
         'hanging_pot': [
             ('Hpr', 2, Point3(20, 20, 0), Point3(-20, -20, 0))],
@@ -134,7 +134,7 @@ class EnvironmentEffects(DirectObject):
                 continue
         
         self.effects = []
-        for holidayName in self.holidayEffects.keys():
+        for holidayName in list(self.holidayEffects.keys()):
             self.stopHolidayEffects(holidayName)
         
         self.holidayEffects = { }
@@ -192,14 +192,14 @@ class EnvironmentEffects(DirectObject):
             locators = self.parent.findAllMatches('**/' + effectEntry + '*;+s')
             for locator in locators:
                 if not locator.isEmpty() and locator.getNetTag('Holiday') != '':
-                    if not self.holidayLocators.has_key(effectEntry):
+                    if effectEntry not in self.holidayLocators:
                         self.holidayLocators[effectEntry] = [
                             locator]
                     else:
                         list = self.holidayLocators.get(effectEntry)
                         list.append(locator)
                         self.holidayLocators[effectEntry] = list
-                self.holidayLocators.has_key(effectEntry)
+                effectEntry in self.holidayLocators
                 if not locator.isEmpty():
                     effectParent = locator
                     locatorPos = locator.getPos()
@@ -230,7 +230,7 @@ class EnvironmentEffects(DirectObject):
             return None
         
         if base.cr.newsManager:
-            for holidayId in base.cr.newsManager.getHolidayList().iterkeys():
+            for holidayId in list(base.cr.newsManager.getHolidayList().keys()):
                 self.loadHolidayEffects(HolidayGlobals.getHolidayName(holidayId))
             
         
@@ -244,7 +244,7 @@ class EnvironmentEffects(DirectObject):
             effect.stop()
             effect = None
         
-        for holidayName in self.holidayEffects.keys():
+        for holidayName in list(self.holidayEffects.keys()):
             self.stopHolidayEffects(holidayName)
         
         self.holidayEffects = { }
@@ -257,7 +257,7 @@ class EnvironmentEffects(DirectObject):
             effectSetting = base.options.getSpecialEffectsSetting()
         else:
             effectSetting = 2
-        for effectEntry in self.holidayLocators.keys():
+        for effectEntry in list(self.holidayLocators.keys()):
             locators = self.holidayLocators.get(effectEntry)
             for locator in locators:
                 if locator.getNetTag('Holiday') == holidayName:
@@ -278,21 +278,21 @@ class EnvironmentEffects(DirectObject):
                                 effect.setScale(locatorScale)
                             
                             effect.startLoop(effectSetting)
-                            if not self.holidayEffects.has_key(holidayName):
+                            if holidayName not in self.holidayEffects:
                                 self.holidayEffects[holidayName] = [
                                     effect]
                             else:
                                 list = self.holidayEffects.get(holidayName)
                                 list.append(effect)
                                 self.holidayEffects[holidayName] = list
-                        self.holidayEffects.has_key(holidayName)
+                        holidayName in self.holidayEffects
                     
             
         
 
     
     def stopHolidayEffects(self, holidayName):
-        if not self.holidayEffects.has_key(holidayName):
+        if holidayName not in self.holidayEffects:
             return None
         
         for effect in self.holidayEffects.get(holidayName):
@@ -489,7 +489,7 @@ class EnvironmentEffects(DirectObject):
             for i in range(len(polyLights)):
                 light = polyLights[i]
                 plNode = light.node()
-                print 'light node radius = %s' % plNode.getRadius()
+                print(('light node radius = %s' % plNode.getRadius()))
                 plNode.setFlickerType(PolylightNode.FSIN)
                 plNode.setAttenuation(PolylightNode.AQUADRATIC)
                 plNode.setRadius(20)

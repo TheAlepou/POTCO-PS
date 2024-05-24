@@ -116,8 +116,8 @@ class DistributedMainWorld(DistributedInstanceBase):
     if __dev__:
         
         def printIslands(self):
-            for (doId, island) in self.islands.iteritems():
-                print doId, `island`
+            for (doId, island) in list(self.islands.items()):
+                print((doId, repr(island)))
             
 
     

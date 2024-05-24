@@ -8,7 +8,7 @@ from pandac.PandaModules import CollisionTraverser, CollisionHandlerQueue
 from direct.interval.IntervalGlobal import Sequence, Parallel, LerpPosInterval, LerpFunc, Func
 from direct.gui.DirectGui import DirectButton, DGG
 from direct.task import Task
-from RepairMincroGame import RepairMincroGame
+from .RepairMincroGame import RepairMincroGame
 
 class RepairMousePicker:
     

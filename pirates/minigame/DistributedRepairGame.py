@@ -2,14 +2,15 @@
 
 from direct.directnotify import DirectNotifyGlobal
 from direct.distributed.DistributedObject import DistributedObject
-from DistributedRepairGameBase import DistributedRepairGameBase
-from DistributedRepairGameBase import GAME_OPEN, GAME_ORDER, DIFFICULTY_MAX, ON_LAND
-from RepairClock import RepairClock
-from RepairGameGUI import RepairGameGUI
-from RepairGameFSM import RepairGameFSM
-from RepairMousePicker import RepairMousePicker
-import RepairGlobals
+from .DistributedRepairGameBase import DistributedRepairGameBase
+from .DistributedRepairGameBase import GAME_OPEN, GAME_ORDER, DIFFICULTY_MAX, ON_LAND
+from .RepairClock import RepairClock
+from .RepairGameGUI import RepairGameGUI
+from .RepairGameFSM import RepairGameFSM
+from .RepairMousePicker import RepairMousePicker
+from . import RepairGlobals
 from pirates.audio import SoundGlobals
+import importlib
 
 class DistributedRepairGame(DistributedRepairGameBase, DistributedObject):
     notify = DirectNotifyGlobal.directNotify.newCategory('DistributedRepairGame')
@@ -23,7 +24,7 @@ class DistributedRepairGame(DistributedRepairGameBase, DistributedObject):
 
     
     def codeReload(self):
-        reload(RepairGlobals)
+        importlib.reload(RepairGlobals)
 
     
     def setGoldBonus(self, goldBonusAmount):

@@ -1,6 +1,6 @@
 # File: P (Python 2.4)
 
-from MinigameFSM import MinigameFSM
+from .MinigameFSM import MinigameFSM
 from direct.interval.IntervalGlobal import Sequence, Func, Wait, Parallel
 from direct.gui.DirectGui import *
 from pirates.audio import SoundGlobals

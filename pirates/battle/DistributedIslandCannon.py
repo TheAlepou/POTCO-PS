@@ -3,7 +3,7 @@
 from otp.otpbase import OTPGlobals
 from pirates.piratesbase import PiratesGlobals
 from pirates.effects.Bonfire import Bonfire
-import DistributedPCCannon
+from . import DistributedPCCannon
 
 class DistributedIslandCannon(DistributedPCCannon.DistributedPCCannon):
     notify = directNotify.newCategory('DistributedIslandCannon')

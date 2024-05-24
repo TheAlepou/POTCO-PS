@@ -130,7 +130,7 @@ class CollectionMain(InventoryPage.InventoryPage):
 
     
     def buryTreasure(self):
-        print 'DPARIS DEBUG - Attempting to bury treasure here'
+        print('DPARIS DEBUG - Attempting to bury treasure here')
 
     
     def destroy(self):

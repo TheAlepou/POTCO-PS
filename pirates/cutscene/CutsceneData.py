@@ -542,7 +542,7 @@ CutsceneSubtitles = {
         {
             'beginTime': 21.300000000000001,
             'text': PLocalizer.CutSubtitle6_1__8 }] }
-CutsceneIds = CutsceneFilenames.keys()
+CutsceneIds = list(CutsceneFilenames.keys())
 CutsceneIds.sort()
 PRELOADED_CUTSCENE_STAGE1 = [
     Cutscene1_1_2]

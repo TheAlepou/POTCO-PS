@@ -274,7 +274,7 @@ def expandRanges(ranges):
             max = currRange[1]
         else:
             max = min
-        expanded.extend(range(min, max + 1))
+        expanded.extend(list(range(min, max + 1)))
     
     return expanded
 

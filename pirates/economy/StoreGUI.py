@@ -197,13 +197,13 @@ class StoreGUI(DirectFrame):
                     for dataInfo in self.purchaseInventory.inventory:
                         dataId = dataInfo[0]
                         if dataId in ItemGlobals.getAllConsumableIds():
-                            if dataIds.has_key(dataId):
+                            if dataId in dataIds:
                                 dataIds[dataId] += 1
                             else:
                                 dataIds[dataId] = 1
-                        dataIds.has_key(dataId)
+                        dataId in dataIds
                     
-                    if dataIds.has_key(itemId):
+                    if itemId in dataIds:
                         dataIds[itemId] += 1
                     else:
                         dataIds[itemId] = 1

@@ -134,13 +134,13 @@ class ShipFactory:
             style = shipConfig['defaultStyle']
         complexCustomization = 0
         if (sailPattern or sailMaterial):
-            if (hullMaterial or SailReplace.has_key(shipClass)):
+            if (hullMaterial or shipClass in SailReplace):
                 complexCustomization = 1
             if prowType:
                 prowType = shipConfig['prow']
             if hullMaterial:
                 hullMaterial = style
-            if (sailMaterial or SailReplace.has_key(shipClass)):
+            if (sailMaterial or shipClass in SailReplace):
                 sailMaterial = SailReplace[shipClass]
         if sailPattern:
             sailPattern = style
@@ -244,7 +244,7 @@ class ShipFactory:
                     tempHit = hitAnims[0]
                     tempHit[0].storeAnim(charBundle.loadBindAnim(loader.loader, mast.hitAnim, -1, HitMastSubset, True), '1')
                     tempHit[1].storeAnim(charBundle.loadBindAnim(loader.loader, mast.hitAnim, -1, PartSubset(), True), '1')
-                for (anim, fileName,) in mast.metaAnims.iteritems():
+                for (anim, fileName,) in list(mast.metaAnims.items()):
                     if (anim not in metaAnims):
                         metaAnims[anim] = AnimControlCollection()
                     if (anim not in MissingAnims.get(modelClass, [])):

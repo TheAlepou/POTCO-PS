@@ -12,9 +12,9 @@ from pandac.PandaModules import *
 from pirates.piratesbase import PLocalizer
 from pirates.pirate import HumanDNA
 from pirates.pirate import Human
-from CharGuiBase import CharGuiSlider, CharGuiPicker
+from .CharGuiBase import CharGuiSlider, CharGuiPicker
 from pirates.pirate import BodyDefs
-import MakeAPirateGlobals
+from . import MakeAPirateGlobals
 
 class BodyGUI(DirectFrame, StateData.StateData):
     maleShapeButtonIcons = []
@@ -241,7 +241,7 @@ class BodyGUI(DirectFrame, StateData.StateData):
 
     
     def reset(self):
-        for i in xrange(0, len(self.pgs)):
+        for i in range(0, len(self.pgs)):
             self.resetSlider(self.pgs[i])
         
         self.handleShape(2)
@@ -254,7 +254,7 @@ class BodyGUI(DirectFrame, StateData.StateData):
 
     
     def randomPick(self):
-        for i in xrange(0, len(self.pgs)):
+        for i in range(0, len(self.pgs)):
             slider = self.pgs[i]
             self.resetSlider(slider)
             if random.choice([
@@ -274,7 +274,7 @@ class BodyGUI(DirectFrame, StateData.StateData):
                 self.updateHeightSlider(slider, slider['extraArgs'][1])
                 continue
         
-        cList = range(0, 5)
+        cList = list(range(0, 5))
         bodyShapeIndex = BodyDefs.BodyChoiceGenderDict[self.main.pirate.style.gender].index(self.main.pirate.style.body.shape)
         cList.remove(bodyShapeIndex)
         choice = random.choice(cList)
@@ -283,12 +283,12 @@ class BodyGUI(DirectFrame, StateData.StateData):
         if self.main.pirate.style.gender == 'f':
             idx = 1
         
-        choice = random.choice(range(1, len(HumanDNA.skinColors)))
+        choice = random.choice(list(range(1, len(HumanDNA.skinColors))))
         self.handleSetColor(choice)
 
     
     def weightedRandomPick(self):
-        for i in xrange(0, len(self.pgs)):
+        for i in range(0, len(self.pgs)):
             slider = self.pgs[i]
             self.resetSlider(slider)
             if random.choice([
@@ -322,7 +322,7 @@ class BodyGUI(DirectFrame, StateData.StateData):
             choice = random.choice(bodyChoiceList)
         
         self.handleShape(choice)
-        colorSetChoice = random.choice(MakeAPirateGlobals.COMPLECTIONTYPES.keys())
+        colorSetChoice = random.choice(list(MakeAPirateGlobals.COMPLECTIONTYPES.keys()))
         choice = random.choice(MakeAPirateGlobals.COMPLECTIONTYPES[colorSetChoice][0])
         self.handleSetColor(choice)
 
@@ -351,7 +351,7 @@ class BodyGUI(DirectFrame, StateData.StateData):
         if hasattr(self.main, 'JSD_BODY'):
             optionsLeft = len(self.main.JSD_BODY[index])
             if optionsLeft and not random.randint(0, 4):
-                choice = random.choice(range(0, optionsLeft))
+                choice = random.choice(list(range(0, optionsLeft)))
                 if self.main.lastDialog:
                     if self.main.lastDialog.status() == AudioSound.PLAYING:
                         return None

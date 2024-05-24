@@ -103,7 +103,7 @@ class ShipAI(DirectObject.DirectObject):
 
     
     def dropMast(self, index):
-        if self.mastCollisions.has_key(index):
+        if index in self.mastCollisions:
             self.mastCollisions[index].stash()
             return True
         
@@ -111,7 +111,7 @@ class ShipAI(DirectObject.DirectObject):
 
     
     def restoreMast(self, index):
-        if self.mastCollisions.has_key(index):
+        if index in self.mastCollisions:
             self.mastCollisions[index].unstash()
             return True
         

@@ -119,7 +119,7 @@ class FriendSecretNeedsParentLogin(StateData.StateData):
 
     
     def exit(self):
-        print 'exit'
+        print('exit')
         self.ignoreAll()
         if self.dialog:
             self.dialog.destroy()
@@ -200,7 +200,7 @@ class FriendSecret(GuiPanel.GuiPanel, StateData.StateData):
 
     
     def unload(self):
-        print 'unload'
+        print('unload')
         if self.isLoaded == 0:
             return None
         
@@ -220,7 +220,7 @@ class FriendSecret(GuiPanel.GuiPanel, StateData.StateData):
 
     
     def load(self):
-        print 'load'
+        print('load')
         if self.isLoaded == 1:
             return None
         
@@ -264,7 +264,7 @@ class FriendSecret(GuiPanel.GuiPanel, StateData.StateData):
 
     
     def enter(self):
-        print 'enter'
+        print('enter')
         if self.isEntered == 1:
             return None
         
@@ -288,12 +288,12 @@ class FriendSecret(GuiPanel.GuiPanel, StateData.StateData):
 
     
     def closePanel(self):
-        print 'closePanel'
+        print('closePanel')
         self.exit()
 
     
     def exit(self):
-        print 'exit'
+        print('exit')
         if self.isEntered == 0:
             return None
         
@@ -438,7 +438,7 @@ class FriendSecret(GuiPanel.GuiPanel, StateData.StateData):
 
     
     def _FriendSecret__secretTimeout(self, caller = None):
-        print '__secretTimeout'
+        print('__secretTimeout')
         self.ignore(OTPGlobals.PlayerFriendAddEvent)
         self.ignore(OTPGlobals.PlayerFriendRejectUseSecretEvent)
         self.nextText['text'] = OTPLocalizer.FriendSecretTimeOut
@@ -450,7 +450,7 @@ class FriendSecret(GuiPanel.GuiPanel, StateData.StateData):
 
     
     def _FriendSecret__secretResponseOkay(self, avId, info):
-        print '__secretResponseOkay'
+        print('__secretResponseOkay')
         taskMgr.remove('timeoutSecretResponse')
         self.ignore(OTPGlobals.PlayerFriendAddEvent)
         self.ignore(OTPGlobals.PlayerFriendRejectUseSecretEvent)
@@ -462,7 +462,7 @@ class FriendSecret(GuiPanel.GuiPanel, StateData.StateData):
 
     
     def _FriendSecret__secretResponseReject(self, reason):
-        print '__secretResponseReject'
+        print('__secretResponseReject')
         taskMgr.remove('timeoutSecretResponse')
         self.ignore(OTPGlobals.PlayerFriendAddEvent)
         self.ignore(OTPGlobals.PlayerFriendRejectUseSecretEvent)

@@ -3,9 +3,9 @@
 from pandac.PandaModules import *
 from direct.gui.DirectGui import *
 from direct.task import Task
-from SCConstants import *
+from .SCConstants import *
 from direct.interval.IntervalGlobal import *
-from SCObject import SCObject
+from .SCObject import SCObject
 from direct.showbase.PythonUtil import makeTuple
 import types
 
@@ -106,7 +106,7 @@ class SCMenu(SCObject, NodePath):
         SCMenuHolder = SCMenuHolder
         SCStaticTextTerminal = SCStaticTextTerminal
         SCGMTextTerminal = SCGMTextTerminal
-        import SpeedChatTypes
+        from . import SpeedChatTypes
         OTPLocalizer = OTPLocalizer
         import otp.otpbase
         
@@ -114,7 +114,7 @@ class SCMenu(SCObject, NodePath):
             for child in childList:
                 emote = None
                 if type(child) == type({ }):
-                    item = child.keys()[0]
+                    item = list(child.keys())[0]
                     emote = child[item]
                     child = item
                 
@@ -136,7 +136,7 @@ class SCMenu(SCObject, NodePath):
                         subMenu = menuType()
                         subMenuChildren = child[2:]
                     if emote:
-                        print 'warning: tried to link emote %s to a menu holder' % emote
+                        print(('warning: tried to link emote %s to a menu holder' % emote))
                     
                     holder = SCMenuHolder(holderTitle, menu = subMenu)
                     menu.append(holder)
@@ -341,7 +341,7 @@ class SCMenu(SCObject, NodePath):
         memberWidth = maxWidth
         memberHeight = maxHeight
         self.width = maxWidth
-        for i in xrange(len(visibleMembers)):
+        for i in range(len(visibleMembers)):
             member = visibleMembers[i]
             member.setPos(0, 0, -i * maxHeight)
             member.setDimensions(memberWidth, memberHeight)
@@ -399,7 +399,7 @@ class SCMenu(SCObject, NodePath):
 
     
     def append(self, element):
-        if isinstance(self._SCMenu__members, types.TupleType):
+        if isinstance(self._SCMenu__members, tuple):
             self._SCMenu__members = list(self._SCMenu__members)
         
         self._SCMenu__members.append(element)
@@ -424,7 +424,7 @@ class SCMenu(SCObject, NodePath):
 
     
     def __setitem__(self, index, value):
-        if isinstance(self._SCMenu__members, types.TupleType):
+        if isinstance(self._SCMenu__members, tuple):
             self._SCMenu__members = list(self._SCMenu__members)
         
         removedMember = self._SCMenu__members[index]
@@ -435,7 +435,7 @@ class SCMenu(SCObject, NodePath):
 
     
     def __delitem__(self, index):
-        if isinstance(self._SCMenu__members, types.TupleType):
+        if isinstance(self._SCMenu__members, tuple):
             self._SCMenu__members = list(self._SCMenu__members)
         
         removedMember = self._SCMenu__members[index]
@@ -445,14 +445,14 @@ class SCMenu(SCObject, NodePath):
 
     
     def __getslice__(self, i, j):
-        if isinstance(self._SCMenu__members, types.TupleType):
+        if isinstance(self._SCMenu__members, tuple):
             self._SCMenu__members = list(self._SCMenu__members)
         
         return self._SCMenu__members[i:j]
 
     
     def __setslice__(self, i, j, s):
-        if isinstance(self._SCMenu__members, types.TupleType):
+        if isinstance(self._SCMenu__members, tuple):
             self._SCMenu__members = list(self._SCMenu__members)
         
         removedMembers = self._SCMenu__members[i:j]
@@ -461,7 +461,7 @@ class SCMenu(SCObject, NodePath):
 
     
     def __delslice__(self, i, j):
-        if isinstance(self._SCMenu__members, types.TupleType):
+        if isinstance(self._SCMenu__members, tuple):
             self._SCMenu__members = list(self._SCMenu__members)
         
         removedMembers = self._SCMenu__members[i:j]
@@ -470,7 +470,7 @@ class SCMenu(SCObject, NodePath):
 
     
     def __iadd__(self, other):
-        if isinstance(self._SCMenu__members, types.TupleType):
+        if isinstance(self._SCMenu__members, tuple):
             self._SCMenu__members = list(self._SCMenu__members)
         
         if isinstance(other, SCMenu):

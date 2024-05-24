@@ -39,15 +39,15 @@ class Burn(DirectFrame):
         cm.setFrame(-0.5, 0.5, -0.5, 0.5)
         self.rings = []
         for x in range(3):
-            cm.setName(`x` + '-back')
+            cm.setName(repr(x) + '-back')
             c = NodePath(cm.generate())
-            c.setTexture(model.findTexture('BH_burn_' + `x + 1` + '_b'))
+            c.setTexture(model.findTexture('BH_burn_' + repr(x + 1) + '_b'))
             back = DirectFrame(parent = self, relief = None, geom = c)
             back.setColorScale(1, 1, 1, 0)
             back.setTransparency(True)
-            cm.setName(`x` + '-front')
+            cm.setName(repr(x) + '-front')
             c = NodePath(cm.generate())
-            c.setTexture(model.findTexture('BH_burn_' + `x + 1` + '_f'))
+            c.setTexture(model.findTexture('BH_burn_' + repr(x + 1) + '_f'))
             front = DirectFrame(parent = self, relief = None, geom = c)
             front.setColorScale(0, 0, 0, 0)
             front.setTransparency(True)
@@ -59,11 +59,11 @@ class Burn(DirectFrame):
     
     def burnIn(self, ring = None, time = 0.25, light = True):
         if ring != None:
-            rings = range(3)[:ring + 1]
+            rings = list(range(3))[:ring + 1]
             rings = [
                 ring]
         else:
-            rings = range(3)
+            rings = list(range(3))
         par = Parallel()
         for r in rings:
             front = self.rings[r][1]
@@ -88,7 +88,7 @@ class Burn(DirectFrame):
             rings = [
                 ring]
         else:
-            rings = range(3)
+            rings = list(range(3))
         val = Vec4(0, 0, 0, 0)
         if time == 0:
             for r in rings:
@@ -154,7 +154,7 @@ class Knife(DirectFrame):
     
     def initSounds(self):
         self.sounds = { }
-        for key in Knife.SOUNDS.keys():
+        for key in list(Knife.SOUNDS.keys()):
             self.sounds[key] = loader.loadSfx(self.SOUNDS[key])
         
 
@@ -265,7 +265,7 @@ class FaceSpot(DirectFrame):
         self.dots = DirectFrame(parent = self, relief = None, geom = model.find('**/*dots'))
         spot = model.find('**/*dot')
         self.spots = [ DirectFrame(parent = self, relief = None, geom = spot, hpr = (0.0, 0.0, (360.0 / 24.0) * x)) for x in range(self.NUMSTEPS) ]
-        self.face = DirectFrame(parent = self, relief = None, geom = model.find('**/*face_' + `faceId`))
+        self.face = DirectFrame(parent = self, relief = None, geom = model.find('**/*face_' + repr(faceId)))
         self.cross = DirectFrame(parent = self, relief = None, geom = model.find('**/*x'))
         self.statusLabel = DirectLabel(parent = self, relief = None, pos = (0, 0, 0.5), text_scale = 0.25, text = '0', text_fg = (1, 1, 1, 1), text_shadow = (0, 0, 0, 1), textMayChange = 1, text_font = PiratesGlobals.getPirateOutlineFont())
         self.disable()
@@ -283,7 +283,7 @@ class FaceSpot(DirectFrame):
 
     
     def setStatus(self, status):
-        self.statusLabel['text'] = `status`
+        self.statusLabel['text'] = repr(status)
 
     
     def disable(self):
@@ -396,12 +396,12 @@ class Round(DirectObject.DirectObject):
                 self.game.burnIn(self.sequence[self.step - x], x, light = light)
                 if x == self.leadCount - 1:
                     newTarget = self.sequence[self.step - x]
-                    nonTargets = range(5)
+                    nonTargets = list(range(5))
                     nonTargets.remove(newTarget)
                     self.ignoreAll()
-                    self.acceptOnce('BishopsHand-hit-' + `newTarget`, self.reportTargetHit)
+                    self.acceptOnce('BishopsHand-hit-' + repr(newTarget), self.reportTargetHit)
                     for nonTarget in nonTargets:
-                        self.accept('BishopsHand-hit-' + `nonTarget`, self.reportTargetMiss)
+                        self.accept('BishopsHand-hit-' + repr(nonTarget), self.reportTargetMiss)
                     
                 
             x == self.leadCount - 1
@@ -471,7 +471,7 @@ class Round(DirectObject.DirectObject):
                 result = self.game.knife.strike(danger = False)
             if result[0] > -1:
                 if result[0] == 0:
-                    messenger.send('BishopsHand-hit-' + `result[1]`)
+                    messenger.send('BishopsHand-hit-' + repr(result[1]))
                 else:
                     self.updateProgress(hits = True)
                     self.notify.debug('finger hit')
@@ -496,7 +496,7 @@ class BishopsHandGame(DirectFrame, FSM.FSM):
         self.gameInterface.hide()
         model = loader.loadModel('models/props/BH_images')
         self.bgImage = DirectFrame(parent = self.gameInterface, relief = None, geom = model.find('**/*table'), scale = (8.0 / 3.0, 2, 2))
-        self.faces = [ FaceSpot(0, parent = self.gameInterface, relief = None, pos = BishopsHandGlobals.FACE_SPOT_POS[p], scale = 0.33300000000000002) for p in BishopsHandGlobals.FACE_SPOT_POS.keys()[1:] ]
+        self.faces = [ FaceSpot(0, parent = self.gameInterface, relief = None, pos = BishopsHandGlobals.FACE_SPOT_POS[p], scale = 0.33300000000000002) for p in list(BishopsHandGlobals.FACE_SPOT_POS.keys())[1:] ]
         base.faces = self.faces
         for f in self.faces:
             f.enable()
@@ -645,7 +645,7 @@ class BishopsHandGame(DirectFrame, FSM.FSM):
             
             def timerTask(task):
                 if task.time < task.timer:
-                    self.timerLabel['text'] = `int(PythonUtil.bound(task.timer - task.time, 0, time) + 1.0)`
+                    self.timerLabel['text'] = repr(int(PythonUtil.bound(task.timer - task.time, 0, time) + 1.0))
                     return Task.cont
                 else:
                     self.timerLabel['text'] = ''
@@ -695,7 +695,7 @@ class BishopsHandGame(DirectFrame, FSM.FSM):
 
             point = (self.mouseNode.getMouseX() * 4.0 / 3.0, self.mouseNode.getMouseY())
             a = turn(point, pivot)
-            self.text['text'] = `point[0]`[:10] + '\n' + `point[1]`[:10] + '\n' + `a`[:5]
+            self.text['text'] = repr(point[0])[:10] + '\n' + repr(point[1])[:10] + '\n' + repr(a)[:5]
             self.text['text'] = ''
             self.knife.turn(PythonUtil.bound(a, -60, 80))
         

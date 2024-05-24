@@ -24,7 +24,7 @@ from pirates.piratesgui.NewTutorialPanel import NewTutorialPanel
 from pirates.economy import DistributedShopKeeper
 from pirates.economy import EconomyGlobals
 from pirates.piratesgui import PDialog
-import Townfolk
+from . import Townfolk
 from pirates.interact import InteractiveBase
 from pirates.leveleditor import CustomAnims
 from direct.showbase.PythonUtil import report
@@ -39,7 +39,7 @@ import random
 from direct.showbase import PythonUtil
 from pirates.reputation import ReputationGlobals
 #from libotp import CFSpeech, CFTimeout
-import PotionInstructionPanel
+from . import PotionInstructionPanel
 from pirates.minigame.LegendaryTellGUI import LegendaryTellGUI
 from pirates.piratesbase import Freebooter
 from pirates.piratesbase import TeamUtils
@@ -401,7 +401,7 @@ class DistributedNPCTownfolk(DistributedBattleNPC.DistributedBattleNPC, Distribu
 
     
     def setDNAId(self, dnaId):
-        if dnaId and NPCList.NPC_LIST.has_key(dnaId):
+        if dnaId and dnaId in NPCList.NPC_LIST:
             dnaDict = NPCList.NPC_LIST[dnaId]
             customDNA = HumanDNA.HumanDNA()
             customDNA.loadFromNPCDict(dnaDict)
@@ -639,7 +639,7 @@ class DistributedNPCTownfolk(DistributedBattleNPC.DistributedBattleNPC, Distribu
 
     
     def d_setViewedPotionInstructions(self):
-        print 'viewing potion crafting tutorial'
+        print('viewing potion crafting tutorial')
         if self.interactGUI:
             self.interactGUI.hide()
         
@@ -1078,7 +1078,7 @@ class DistributedNPCTownfolk(DistributedBattleNPC.DistributedBattleNPC, Distribu
 
     
     def drawWeapon(self):
-        print 'draw weapon'
+        print('draw weapon')
         ival = self.pullOutCurrentWeapon()
         ival.start()
 
@@ -1144,8 +1144,8 @@ class DistributedNPCTownfolk(DistributedBattleNPC.DistributedBattleNPC, Distribu
     
     def shipTutorialPt1(self):
         nameData = [
-            PLocalizer.PirateShipPrefix.keys(),
-            PLocalizer.PirateShipSuffix.keys()]
+            list(PLocalizer.PirateShipPrefix.keys()),
+            list(PLocalizer.PirateShipSuffix.keys())]
         self.shipNamePanel = NamePanelGui.NamePanelGui(PLocalizer.NamePanelTitle, nameData, showClose = False, allowEscape = False)
         self.shipNamePanel.setPos(-1, 0, 0)
         self.acceptOnce('nameChosen', self.handleShipNameChosen)
@@ -1449,7 +1449,7 @@ class DistributedNPCTownfolk(DistributedBattleNPC.DistributedBattleNPC, Distribu
 
     
     def showVoodooDollToAvatar(self):
-        print 'triggering the interaction complete'
+        print('triggering the interaction complete')
 
     
     def showUpgradeRodDialog(self):

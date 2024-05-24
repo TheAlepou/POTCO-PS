@@ -1,6 +1,6 @@
 # File: C (Python 2.4)
 
-import WeaponGlobals
+from . import WeaponGlobals
 from direct.interval.IntervalGlobal import *
 from direct.directnotify.DirectNotifyGlobal import directNotify
 from pandac.PandaModules import *
@@ -75,7 +75,7 @@ from pirates.effects.VoodooGroundAura import VoodooGroundAura
 from pirates.effects.HitPulse import HitPulse
 from pirates.effects.SimpleSmokeCloud import SimpleSmokeCloud
 from pirates.effects.MonkeyPanicHit import MonkeyPanicHit
-from GrenadeProjectile import GrenadeProjectile
+from .GrenadeProjectile import GrenadeProjectile
 from pirates.piratesbase import PLocalizer
 from pirates.inventory import ItemGlobals
 from pirates.battle.EnemySkills import *
@@ -1303,9 +1303,9 @@ class CombatAnimations:
         
         try:
             projInterval = ProjectileInterval(grenade, startPos = startPos, endPos = endPos, duration = duration, startVel = startVel, endZ = endPlaneZ, collNode = collNode, wayPoint = wayPoint, timeToWayPoint = timeToWayPoint)
-        except StandardError:
+        except Exception:
             e = None
-            raise StandardError('(localAv %s) Invalid projectile parameters(%s,%s,%s,%s,%s,%s,%s)' % (av.isLocal(), startPos, endPos, duration, startVel, endPlaneZ, wayPoint, timeToWayPoint))
+            raise Exception('(localAv %s) Invalid projectile parameters(%s,%s,%s,%s,%s,%s,%s)' % (av.isLocal(), startPos, endPos, duration, startVel, endPlaneZ, wayPoint, timeToWayPoint))
 
         ival = Sequence(projInterval, Func(self.removeCollider, av, collNode), Func(grenade.destroy), name = 'Grenade-%s-%s' % (av.doId, grenade.id()))
         grenade.setIval(ival, start = True)

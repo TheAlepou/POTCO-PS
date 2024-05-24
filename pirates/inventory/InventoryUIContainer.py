@@ -389,7 +389,7 @@ class InventoryUIContainer(DirectFrame, InventoryRequestBase.InventoryRequestBas
     def canReceive(self, myCell, fromSwap = 0, itemInQuestion = None):
         if (myCell.inventoryItem or not fromSwap) and self.manager.isSlotPending(myCell.slotId) or MASK_NOTDEST in myCell.statusMask:
             if myCell.inventoryItem:
-                print ' ->Item%s' % myCell.inventoryItem.getName()
+                print((' ->Item%s' % myCell.inventoryItem.getName()))
             
             return 0
         
@@ -514,7 +514,7 @@ class InventoryUIContainer(DirectFrame, InventoryRequestBase.InventoryRequestBas
             destCell = None
             if flatRange:
                 if len(flatRange) > 1:
-                    slotRange = range(flatRange[0], flatRange[1] + 1)
+                    slotRange = list(range(flatRange[0], flatRange[1] + 1))
                 else:
                     slotRange = (flatRange[0],)
                 for slotId in slotRange:
@@ -537,7 +537,7 @@ class InventoryUIContainer(DirectFrame, InventoryRequestBase.InventoryRequestBas
                 itemType = ItemGlobals.getType(itemInfo[1])
                 subtypeRange = rangeTypeDict.get(itemType)
                 if len(subtypeRange) > 1:
-                    slotRange = range(subtypeRange[0], subtypeRange[1] + 1)
+                    slotRange = list(range(subtypeRange[0], subtypeRange[1] + 1))
                 else:
                     slotRange = (subtypeRange[0],)
                 if slotRange:

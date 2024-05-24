@@ -2,7 +2,7 @@
 
 from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
-from EffectController import EffectController
+from .EffectController import EffectController
 import random
 
 class RainDrops(EffectController, NodePath):

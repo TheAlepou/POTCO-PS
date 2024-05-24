@@ -159,7 +159,7 @@ class DistributedShipDeployer(DistributedNode, GridChild):
             pos = Point3(math.cos(angle), math.sin(angle), 0) * deployRingRadius
             return pos
 
-        for x in xrange(numSpheres):
+        for x in range(numSpheres):
             pos = getSpherePos(x)
             cSphere = CollisionSphere(pos[0], pos[1], pos[2], self.spacing / 2.0)
             cSphere.setTangible(0)
@@ -168,7 +168,7 @@ class DistributedShipDeployer(DistributedNode, GridChild):
             cSphereNode.setFromCollideMask(BitMask32.allOff())
             cSphereNode.setIntoCollideMask(PiratesGlobals.ShipCollideBitmask)
             sphere = self.attachNewNode(cSphereNode)
-            sphere.setTag('deploySphereId', `x`)
+            sphere.setTag('deploySphereId', repr(x))
             self.deploySpheres.append(sphere)
         
 
@@ -202,7 +202,7 @@ class DistributedShipDeployer(DistributedNode, GridChild):
         
         padding = 3
         numSpheres = len(self.deploySpheres)
-        for sphere in xrange(sphereId - padding, sphereId + padding + 1):
+        for sphere in range(sphereId - padding, sphereId + padding + 1):
             self.deploySpheres[sphere].unstash()
 
 

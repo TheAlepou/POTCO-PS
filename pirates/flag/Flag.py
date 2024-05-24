@@ -5,8 +5,8 @@ from direct.interval.IntervalGlobal import *
 from direct.gui.DirectGui import *
 from pandac.PandaModules import *
 from pirates.util.PythonUtil import *
-import FlagGlobals
-from FlagDNA import FlagDNA
+from . import FlagGlobals
+from .FlagDNA import FlagDNA
 
 class Flag(NodePath):
     notify = directNotify.newCategory('Flag')
@@ -185,8 +185,8 @@ class Flag(NodePath):
         val = self.dna.bgData[0]
         bgTexCol = self.bgNode.findAllTextures('*_%02d_*' % val)
         bgTexCol = [ bgTexCol[x] for x in range(bgTexCol.getNumTextures()) ]
-        sortDict = [](_[1]([ `x` for x in bgTexCol ], bgTexCol))
-        keys = sortDict.keys()
+        sortDict = [](_[1]([ repr(x) for x in bgTexCol ], bgTexCol))
+        keys = list(sortDict.keys())
         keys.sort()
         bgTexCol = [ sortDict[name] for name in keys ]
         for bgnum in range(0, len(bgTexCol) + 1):
@@ -571,8 +571,8 @@ if __name__ == '__main__':
     f = Flag('testflag')
     f.setDNAString(p.getDNAString())
     f.reparentTo(render)
-    print f
-    print `f`
+    print(f)
+    print((repr(f)))
     base.mouseInterface.node().setPos(0, 3, 0)
     run()
 

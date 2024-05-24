@@ -221,7 +221,7 @@ class PChatInputTyped(FSM.FSM, DirectEntry):
 
     
     def checkKey(self, key):
-        print 'key typed: %s' % key.getKeycode()
+        print(('key typed: %s' % key.getKeycode()))
 
     
     def movingRight(self):

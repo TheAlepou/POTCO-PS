@@ -8,8 +8,8 @@ from direct.interval.IntervalGlobal import *
 from direct.actor import Actor
 from pirates.piratesbase import PiratesGlobals
 from pirates.effects import PolyTrail
-from PooledEffect import PooledEffect
-from EffectController import EffectController
+from .PooledEffect import PooledEffect
+from .EffectController import EffectController
 import random
 
 class VoodooProjectile(PooledEffect, EffectController):
@@ -109,7 +109,7 @@ class VoodooProjectile(PooledEffect, EffectController):
                     endZ = targetPos[2]
                 
                 throwTrack = ProjectileInterval(self, endZ = endZ, startPos = self.getPos(), wayPoint = targetPos, timeToWayPoint = 1.0, gravityMult = 1.0)
-        except StandardError:
+        except Exception:
             e = None
             throwTrack = None
 

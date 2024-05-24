@@ -1,6 +1,6 @@
 # File: S (Python 2.4)
 
-from ColorSpace import *
+from .ColorSpace import *
 
 class SCColorScheme:
     

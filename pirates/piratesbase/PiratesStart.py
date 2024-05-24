@@ -1,19 +1,19 @@
-import random, gc, sys, os, time, __builtin__
-import PiratesPreloader
+import random, gc, sys, os, time, builtins
+from . import PiratesPreloader
 from pirates.launcher.PiratesLauncher import PiratesLauncher
-print ':PiratesStart: Starting the game.'
+print(':PiratesStart: Starting the game.')
 
 class game:
     name = 'pirates'
     process = 'client'
 
-__builtin__.game = game()
-__builtin__.launcher = PiratesLauncher()
+builtins.game = game()
+builtins.launcher = PiratesLauncher()
 
 gc.disable()
 
 from direct.gui import DirectGuiGlobals
-import PiratesGlobals
+from . import PiratesGlobals
 DirectGuiGlobals.setDefaultFontFunc(PiratesGlobals.getInterfaceFont)
 launcher.setPandaErrorCode(7)
 
@@ -22,7 +22,7 @@ loadPrcFile("config/config_dev.prc")
 for dtool in ('children', 'parent', 'name'):
     del NodePath.DtoolClassDict[dtool]
 
-import PiratesBase
+from . import PiratesBase
 PiratesBase.PiratesBase()
 
 from direct.showbase.ShowBaseGlobal import *
@@ -30,7 +30,7 @@ if base.config.GetBool('want-preloader', False):
     base.preloader = PiratesPreloader.PiratesPreloader()
 
 if base.win == None:
-    print ':PiratesStart: Unable to open window; aborting.'
+    print(':PiratesStart: Unable to open window; aborting.')
     sys.exit()
 
 launcher.setPandaErrorCode(0)
@@ -54,7 +54,7 @@ from pirates.seapatch.Reflection import Reflection
 Reflection.initialize(render)
 
 serverVersion = base.config.GetString('server-version', 'no_version_set')
-print ':PiratesStart: serverVersion: ', serverVersion
+print((':PiratesStart: serverVersion: ', serverVersion))
 
 from pirates.distributed import PiratesClientRepository
 cr = PiratesClientRepository.PiratesClientRepository(serverVersion, launcher)

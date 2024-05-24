@@ -272,7 +272,7 @@ class ShardPanel(DirectFrame):
 
     
     def refreshShardLabels(self):
-        shardIds = self.shards.keys()
+        shardIds = list(self.shards.keys())
         shardIds.sort()
         startPos = Point3(0, 0, -0.050000000000000003)
         offset = Point3(0, 0, -0.070000000000000007)

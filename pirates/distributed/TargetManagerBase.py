@@ -20,7 +20,7 @@ class TargetManagerBase:
 
     
     def removeTarget(self, nodePathId):
-        if self.objectDict.has_key(nodePathId):
+        if nodePathId in self.objectDict:
             del self.objectDict[nodePathId]
         
 

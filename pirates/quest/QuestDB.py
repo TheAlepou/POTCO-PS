@@ -1623,16 +1623,16 @@ QuestDict = {
     'OQB.visitNathanielE': QuestDNA(obsolete = False, questInt = 30354, tasks = (VisitTaskDNA(npcId = NPCIds.NATHANIEL_TRUEHOUND),), rewards = (ClothingQuestReward(amount = ClothingGlobals.BASIC_OUTFIT_PART_D, bonus = False),), returnGiverIds = (NPCIds.NATHANIEL_TRUEHOUND,), combineOp = QuestDNA.OR, droppable = False, playStinger = True, displayGoal = True, progressBlock = False, finalQuest = False, acquireOnce = True, requiresVoyage = False, completeRequiresVisit = True, velvetRoped = False, minLevel = 0, minWeapLevel = 0, hideButton = False, timeLimit = 0),
     'OQB.visitBartholomewWatkins': QuestDNA(obsolete = False, questInt = 30360, tasks = (VisitTaskDNA(npcId = NPCIds.BARTHOLOMEW_WATKINS),), rewards = (ReputationReward(amount = ExpRewards.SMALL),), returnGiverIds = (NPCIds.BARTHOLOMEW_WATKINS,), combineOp = QuestDNA.OR, droppable = False, playStinger = True, displayGoal = True, progressBlock = False, finalQuest = False, acquireOnce = True, requiresVoyage = False, completeRequiresVisit = True, velvetRoped = False, minLevel = 0, minWeapLevel = 0, hideButton = False, timeLimit = 0),
     'OQB.visitNathanielF': QuestDNA(obsolete = False, questInt = 30366, tasks = (VisitTaskDNA(npcId = NPCIds.NATHANIEL_TRUEHOUND),), rewards = (ClothingQuestReward(amount = ClothingGlobals.BASIC_OUTFIT_PART_E, bonus = False),), returnGiverIds = (NPCIds.NATHANIEL_TRUEHOUND,), combineOp = QuestDNA.OR, droppable = False, playStinger = True, displayGoal = True, progressBlock = False, finalQuest = False, acquireOnce = True, requiresVoyage = False, completeRequiresVisit = True, velvetRoped = False, minLevel = 0, minWeapLevel = 0, hideButton = False, timeLimit = 0) }
-for (questId, questDNA) in QuestDict.items():
+for (questId, questDNA) in list(QuestDict.items()):
     questDNA.setQuestId(questId)
 
 if __dev__:
-    for questDNA in QuestDict.values():
+    for questDNA in list(QuestDict.values()):
         questDNA.check()
     
 
 questIntDict = { }
-for (questId, questDNA) in QuestDict.items():
+for (questId, questDNA) in list(QuestDict.items()):
     questIntDict[questDNA.questInt] = questId
 
 

@@ -29,11 +29,11 @@ class QuestGoal:
     def __init__(self, typeInfo):
         self._QuestGoal__goalDataStr = None
         if typeInfo == None:
-            self._QuestGoal__goalType = types.ListType
+            self._QuestGoal__goalType = list
             self._QuestGoal__goalData = []
             return None
         
-        if type(typeInfo) == types.StringType:
+        if type(typeInfo) == bytes:
             typeInfo = [
                 typeInfo]
         
@@ -42,14 +42,14 @@ class QuestGoal:
 
     
     def getType(self):
-        if self._QuestGoal__goalType == types.DictType:
+        if self._QuestGoal__goalType == dict:
             return self.Type_Custom
         
         return self.Type_Uid
 
     
     def getTargetType(self):
-        if self._QuestGoal__goalType == types.DictType:
+        if self._QuestGoal__goalType == dict:
             return self._QuestGoal__goalData.get(self.TYPE_IDX)
         
         return (0, 0, 0, 0)
@@ -60,13 +60,13 @@ class QuestGoal:
 
     
     def getLocation(self):
-        if self._QuestGoal__goalType == types.DictType:
+        if self._QuestGoal__goalType == dict:
             return self._QuestGoal__goalData.get(self.LOCATION_IDX)
         
 
     
     def compareTo(self, object, goalOwner = None):
-        if self._QuestGoal__goalType == types.DictType:
+        if self._QuestGoal__goalType == dict:
             goalLevel = self._QuestGoal__goalData.get(self.LEVEL_IDX, 0)
             if goalLevel > 0 and goalLevel > object.getLevel():
                 return 1
@@ -134,13 +134,13 @@ class QuestGoal:
                 (0, '')]
         else:
             results = ''
-        if self._QuestGoal__goalType == types.ListType:
+        if self._QuestGoal__goalType == list:
             if all:
                 uidData = self._QuestGoal__goalData
             else:
                 uidData = self._QuestGoal__goalData[:1]
             if uidMgr:
-                results = zip(map(lambda x: uidMgr.getDoId(x, None), uidData), uidData)
+                results = list(zip([uidMgr.getDoId(x, None) for x in uidData], uidData))
             elif len(uidData) == 0:
                 results = ''
             else:
@@ -156,7 +156,7 @@ class QuestGoal:
         if self._QuestGoal__goalData == None:
             resultStr = ''
         
-        if self._QuestGoal__goalType == types.ListType:
+        if self._QuestGoal__goalType == list:
             resultStr = str(self._QuestGoal__goalData)
         else:
             strRep = ''
@@ -224,7 +224,7 @@ class QuestStep:
 
     
     def __repr__(self):
-        return 'QuestStep(%d, %d, %d, %s, %s, %s, %s, %s, %s, %s)' % (self.getOriginDoId(), self.getStepDoId(), self.getStepType(), `self.getPosH()`, self.getIsland(), self.getTargetArea(), self.targetAvatarType, self.nodeSizes, self.nearOffset, self.nearVis)
+        return 'QuestStep(%d, %d, %d, %s, %s, %s, %s, %s, %s, %s)' % (self.getOriginDoId(), self.getStepDoId(), self.getStepType(), repr(self.getPosH()), self.getIsland(), self.getTargetArea(), self.targetAvatarType, self.nodeSizes, self.nearOffset, self.nearVis)
 
     
     def __cmp__(self, other):

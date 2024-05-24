@@ -61,7 +61,7 @@ class DistributedPVPTeamBattle(DistributedPVPInstance):
     def getScoreList(self):
         scoreList = []
         teamScores = { }
-        for (playerId, stats) in self.stats.items():
+        for (playerId, stats) in list(self.stats.items()):
             if playerId not in self.names:
                 continue
             
@@ -77,7 +77,7 @@ class DistributedPVPTeamBattle(DistributedPVPInstance):
                     'Score': playerScore })
                 continue
         
-        for (teamName, teamScore) in teamScores.items():
+        for (teamName, teamScore) in list(teamScores.items()):
             scoreList.append({
                 'Team': teamName,
                 'Score': teamScore })

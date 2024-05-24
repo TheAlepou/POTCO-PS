@@ -6,7 +6,7 @@ from pirates.makeapirate import ClothingGlobals
 from pirates.inventory.ItemConstants import DYE_COLORS
 from pirates.pirate import BodyDefs
 from pirates.inventory import ItemGlobals, DropGlobals
-import TattooGlobals
+from . import TattooGlobals
 from otp.otpbase import OTPRender
 import copy
 TX = 0
@@ -1472,7 +1472,7 @@ class PirateFemale(DirectObject.DirectObject):
             lodNP = self.pirate.getLOD(lod)
             faceSet = lodNP.findAllMatches('**/body_master_face')
             faceSet.addPathsFrom(lodNP.findAllMatches('**/eyelid*'))
-            for i in xrange(faceSet.getNumPaths()):
+            for i in range(faceSet.getNumPaths()):
                 faceSet[i].clearColorScale()
                 faceSet[i].copyTo(flattenMe)
             
@@ -1483,7 +1483,7 @@ class PirateFemale(DirectObject.DirectObject):
             faceData.addPathsFrom(faceParts)
             flattenMe = NodePath('flattenMe')
             eyeballs = lodNP.findAllMatches('**/eye_ball*')
-            for i in xrange(eyeballs.getNumPaths()):
+            for i in range(eyeballs.getNumPaths()):
                 eyeballs[i].copyTo(flattenMe)
             
             flattenMe.flattenStrong()
@@ -1493,7 +1493,7 @@ class PirateFemale(DirectObject.DirectObject):
             eyeData.addPathsFrom(eyeBallParts)
             irisSet = lodNP.findAllMatches('**/eye_iris*')
             flattenMe = NodePath('flattenMe')
-            for i in xrange(irisSet.getNumPaths()):
+            for i in range(irisSet.getNumPaths()):
                 irisSet[i].copyTo(flattenMe)
             
             flattenMe.flattenStrong()
@@ -1521,7 +1521,7 @@ class PirateFemale(DirectObject.DirectObject):
             '500']:
             eyebrows = self.pirate.getLOD(lod).findAllMatches('**/hair_eyebrow_*')
             flattenMe = NodePath('flattenMe')
-            for i in xrange(eyebrows.getNumPaths()):
+            for i in range(eyebrows.getNumPaths()):
                 eyebrows[i].copyTo(flattenMe)
             
             flattenMe.flattenStrong()
@@ -1773,7 +1773,7 @@ class PirateFemale(DirectObject.DirectObject):
         self.accBody.stash()
         self.accFace.stash()
         self.jewelrySets = { }
-        for key in jewelry_options.keys():
+        for key in list(jewelry_options.keys()):
             self.jewelrySets[key] = []
             options = jewelry_options[key]
             if key == 'LHand' or key == 'RHand':
@@ -1855,7 +1855,7 @@ class PirateFemale(DirectObject.DirectObject):
         self.bodyIdx = 0
         self.body = geom.findAllMatches('**/body_*')
         faceParts = []
-        for i in xrange(self.body.getNumPaths()):
+        for i in range(self.body.getNumPaths()):
             if self.body[i].getName().find('master_face') >= 0:
                 faceParts.append(self.body[i])
             
@@ -1990,7 +1990,7 @@ class PirateFemale(DirectObject.DirectObject):
             leftArm,
             rightArm,
             self.faces[0]]
-        for i in self.bodyPiecesToGroup.items():
+        for i in list(self.bodyPiecesToGroup.items()):
             self.currentTattooZones[i[1]].addPath(self.layerBodyLODs[i[0]]['2000'])
             self.currentTattooZones[i[1]].addPath(self.layerBodyLODs[i[0]]['1000'])
             self.currentTattooZones[i[1]].addPath(self.layerBodyLODs[i[0]]['500'])
@@ -2235,7 +2235,7 @@ class PirateFemale(DirectObject.DirectObject):
         self.partLayer['SHOE'] = self.clothingsLayer1
         self.partLayer['HAT'] = self.clothingsLayer1
         self.clothesTextures = loader.loadModel('models/misc/female_clothes.bam')
-        for type in clothes_textures.values():
+        for type in list(clothes_textures.values()):
             for model in type:
                 for texInfo in model:
                     textures = texInfo[0].split('+')
@@ -3427,7 +3427,7 @@ class PirateFemale(DirectObject.DirectObject):
             pieces.sort()
         
         bodyTuple = [ tuple(x) for x in bodyList ]
-        for i in xrange(3):
+        for i in range(3):
             if bodyTuple[i] not in self.bodySets[i]:
                 flattenedSet = NodePathCollection()
                 for lod in self.pirate.getLODNames():
@@ -3771,7 +3771,7 @@ class PirateFemale(DirectObject.DirectObject):
             'Mouth': self.pirate.style.getJewelryZone6(),
             'LHand': self.pirate.style.getJewelryZone7(),
             'RHand': self.pirate.style.getJewelryZone8() }
-        for key in self.currentJewelry.keys():
+        for key in list(self.currentJewelry.keys()):
             primaryColor = HumanDNA.jewelryColors[jewelryDNA[key][1]]
             secondaryColor = HumanDNA.jewelryColors[jewelryDNA[key][2]]
             oldIdx = self.currentJewelry[key][0]
@@ -3904,7 +3904,7 @@ class PirateFemale(DirectObject.DirectObject):
                         'shortCoat': NodePathCollection(),
                         'navyCoat': NodePathCollection() } } }
 
-        for pantIdx in xrange(len(self.clothingsPant)):
+        for pantIdx in range(len(self.clothingsPant)):
             pant = self.clothingsPant[pantIdx]
             texName = clothes_textures['PANT'][pantIdx][0]
             tex = self.texDict.get(texName[0])
@@ -3916,7 +3916,7 @@ class PirateFemale(DirectObject.DirectObject):
                 pantData = getBasicData()
                 for idx in pant[0]:
                     pieceSet = self.layer1LODs[idx][lod]
-                    for i in xrange(pieceSet.getNumPaths()):
+                    for i in range(pieceSet.getNumPaths()):
                         piece = pieceSet[i]
                         name = piece.getName()
                         longCoat = False
@@ -4079,7 +4079,7 @@ class PirateFemale(DirectObject.DirectObject):
     
     def generateHatSets(self):
         self.hatSets = []
-        for hatIdx in xrange(len(self.clothingsHat)):
+        for hatIdx in range(len(self.clothingsHat)):
             hat = self.clothingsHat[hatIdx]
             texName = clothes_textures['HAT'][hatIdx][0]
             sTex = texName[0].split('+')
@@ -4095,7 +4095,7 @@ class PirateFemale(DirectObject.DirectObject):
                 for idx in hat[0]:
                     hatData = NodePathCollection()
                     pieceSet = self.layer1LODs[idx][lod]
-                    for i in xrange(pieceSet.getNumPaths()):
+                    for i in range(pieceSet.getNumPaths()):
                         piece = pieceSet[i]
                         hatData.addPath(piece)
                     
@@ -4109,7 +4109,7 @@ class PirateFemale(DirectObject.DirectObject):
     
     def generateShoeSets(self):
         self.shoeSets = []
-        for shoeIdx in xrange(len(self.clothingsShoe)):
+        for shoeIdx in range(len(self.clothingsShoe)):
             shoe = self.clothingsShoe[shoeIdx]
             texName = clothes_textures['SHOE'][shoeIdx][0]
             tex = self.texDict.get(texName[0])
@@ -4131,7 +4131,7 @@ class PirateFemale(DirectObject.DirectObject):
                     'skirt': NodePathCollection() }
                 for idx in shoe[0]:
                     pieceSet = self.layer1LODs[idx][lod]
-                    for i in xrange(pieceSet.getNumPaths()):
+                    for i in range(pieceSet.getNumPaths()):
                         piece = pieceSet[i]
                         if shoeIdx == 4:
                             if piece.getName().find('top') < 0:
@@ -4172,7 +4172,7 @@ class PirateFemale(DirectObject.DirectObject):
                     'coat': NodePathCollection(),
                     'noCoat': NodePathCollection() } }
 
-        for shirtIdx in xrange(len(self.clothingsShirt)):
+        for shirtIdx in range(len(self.clothingsShirt)):
             shirt = self.clothingsShirt[shirtIdx]
             texName = clothes_textures['SHIRT'][shirtIdx][0]
             tex = self.texDict.get(texName[0])
@@ -4184,7 +4184,7 @@ class PirateFemale(DirectObject.DirectObject):
                 shirtData = getBasicData()
                 for idx in shirt[0]:
                     pieceSet = self.layer1LODs[idx][lod]
-                    for i in xrange(pieceSet.getNumPaths()):
+                    for i in range(pieceSet.getNumPaths()):
                         piece = pieceSet[i]
                         name = piece.getName()
                         front = name.find('front') < 0
@@ -4265,7 +4265,7 @@ class PirateFemale(DirectObject.DirectObject):
                         'skirt': NodePathCollection() } } }
 
         self.vestSets = []
-        for vestIdx in xrange(len(self.clothingsVest)):
+        for vestIdx in range(len(self.clothingsVest)):
             vest = self.clothingsVest[vestIdx]
             texName = clothes_textures['VEST'][vestIdx][0]
             tex = self.texDict.get(texName[0])
@@ -4277,7 +4277,7 @@ class PirateFemale(DirectObject.DirectObject):
                 vestData = getBasicData()
                 for idx in vest[0]:
                     pieceSet = self.layer2LODs[idx][lod]
-                    for i in xrange(pieceSet.getNumPaths()):
+                    for i in range(pieceSet.getNumPaths()):
                         piece = pieceSet[i]
                         name = piece.getName()
                         pants = name.find('bottom_skirt') < 0
@@ -4337,7 +4337,7 @@ class PirateFemale(DirectObject.DirectObject):
     
     def generateCoatSets(self):
         self.coatSets = []
-        for coatIdx in xrange(len(self.clothingsCoat)):
+        for coatIdx in range(len(self.clothingsCoat)):
             coat = self.clothingsCoat[coatIdx]
             texName = clothes_textures['COAT'][coatIdx][0]
             tex = self.texDict.get(texName[0])
@@ -4356,7 +4356,7 @@ class PirateFemale(DirectObject.DirectObject):
     def generateBeltSets(self):
         self.beltSets = []
         tex = self.clothesTextures.findTexture(clothes_textures['VEST'][1][0][0].split('+')[0])
-        for beltIdx in xrange(len(self.clothingsBelt)):
+        for beltIdx in range(len(self.clothingsBelt)):
             belt = self.clothingsBelt[beltIdx]
             texName = clothes_textures['BELT'][beltIdx][0]
             tex = self.texDict.get(texName[0])
@@ -4380,7 +4380,7 @@ class PirateFemale(DirectObject.DirectObject):
                         NodePathCollection()] }
                 idx1 = belt[0][0]
                 pieceSet1 = self.layer2LODs[idx1][lod]
-                for i in xrange(pieceSet1.getNumPaths()):
+                for i in range(pieceSet1.getNumPaths()):
                     piece = pieceSet1[i]
                     name = piece.getName()
                     beltData['full'][0].addPath(piece)
@@ -4391,7 +4391,7 @@ class PirateFemale(DirectObject.DirectObject):
                 if len(belt[0]) > 2:
                     idx3 = belt[0][2]
                     pieceSet3 = self.layer2LODs[idx3][lod]
-                    for i in xrange(pieceSet3.getNumPaths()):
+                    for i in range(pieceSet3.getNumPaths()):
                         piece = pieceSet3[i]
                         name = piece.getName()
                         beltData['full'][0].addPath(piece)
@@ -4403,7 +4403,7 @@ class PirateFemale(DirectObject.DirectObject):
                 if len(belt[0]) > 1:
                     idx2 = belt[0][1]
                     pieceSet2 = self.layer2LODs[idx2][lod]
-                    for i in xrange(pieceSet2.getNumPaths()):
+                    for i in range(pieceSet2.getNumPaths()):
                         piece = pieceSet2[i]
                         name = piece.getName()
                         beltData['full'][1].addPath(piece)
@@ -4420,7 +4420,7 @@ class PirateFemale(DirectObject.DirectObject):
                         1]:
                         data = beltData[style]
                         flattenNode = NodePath('flatten Me')
-                        for j in xrange(data[i].getNumPaths()):
+                        for j in range(data[i].getNumPaths()):
                             nc = data[i][j]
                             nc.copyTo(flattenNode)
                         
@@ -4467,7 +4467,7 @@ class PirateFemale(DirectObject.DirectObject):
         
         def getBasicData():
             data = []
-            for i in xrange(len(self.hats)):
+            for i in range(len(self.hats)):
                 data.append(NodePathCollection())
             
             return data
@@ -4484,10 +4484,10 @@ class PirateFemale(DirectObject.DirectObject):
             '2000': { },
             '1000': { },
             '500': { } }
-        for hairIdx in xrange(len(self.hairs)):
+        for hairIdx in range(len(self.hairs)):
             hairParts = self.hairs[hairIdx]
             flattenedSet = getBasicData()
-            for hatIdx in xrange(len(self.hats)):
+            for hatIdx in range(len(self.hats)):
                 for lod in [
                     '2000',
                     '1000',
@@ -4503,7 +4503,7 @@ class PirateFemale(DirectObject.DirectObject):
                             hairData.addPathsFrom(hair)
                             continue
                         cutFound = 0
-                        for j in xrange(hairCut.getNumPaths()):
+                        for j in range(hairCut.getNumPaths()):
                             if hairCut[j].getName().find(cuts[hatIdx]) >= 0:
                                 hairCutIndices.add(partIdx)
                                 hairData.addPath(hairCut[j])
@@ -4551,7 +4551,7 @@ class PirateFemale(DirectObject.DirectObject):
         flattenMe = NodePath('flattenMe')
         for i in parts:
             geomData = layerSet[i][lod]
-            for j in xrange(geomData.getNumPaths()):
+            for j in range(geomData.getNumPaths()):
                 geomData[j].copyTo(flattenMe)
             
         
@@ -4567,7 +4567,7 @@ class PirateFemale(DirectObject.DirectObject):
     
     def flattenData(self, geomData, lod, texStrip = True, overrideNode = None, flattenStrong = True):
         flattenMe = NodePath('flattenMe')
-        for i in xrange(geomData.getNumPaths()):
+        for i in range(geomData.getNumPaths()):
             geomData[i].copyTo(flattenMe)
         
         if flattenStrong:
@@ -4594,11 +4594,11 @@ class PirateFemale(DirectObject.DirectObject):
     
     def flattenHatData(self, geomData, lod):
         flattenMe = NodePath('flattenMe')
-        for i in xrange(geomData.getNumPaths()):
+        for i in range(geomData.getNumPaths()):
             geomPart = geomData[i].copyTo(flattenMe)
             geomPart.setState(geomPart.getState().removeAttrib(TextureAttrib.getClassType()))
             geomNode = geomPart.node()
-            for j in xrange(geomNode.getNumGeoms()):
+            for j in range(geomNode.getNumGeoms()):
                 geomState = geomNode.getGeomState(j)
                 if not geomState.isEmpty():
                     if geomState.getAttrib(TextureAttrib.getClassType()).getTexture():
@@ -4610,7 +4610,7 @@ class PirateFemale(DirectObject.DirectObject):
             
         
         geomSet = flattenMe.findAllMatches('**/+GeomNode')
-        for i in xrange(geomSet.getNumPaths()):
+        for i in range(geomSet.getNumPaths()):
             geomSet.reparentTo(self.pirate.getLOD(lod).getChild(0))
             geomSet.stash()
         
@@ -4618,9 +4618,9 @@ class PirateFemale(DirectObject.DirectObject):
 
     
     def stripTexture(self, geomSet):
-        for i in xrange(geomSet.getNumPaths()):
+        for i in range(geomSet.getNumPaths()):
             geomNode = geomSet[i].node()
-            for j in xrange(geomNode.getNumGeoms()):
+            for j in range(geomNode.getNumGeoms()):
                 geomState = geomNode.getGeomState(j)
                 geomNode.setGeomState(j, geomState.removeAttrib(TextureAttrib.getClassType()))
             

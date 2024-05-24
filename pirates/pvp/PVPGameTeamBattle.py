@@ -106,7 +106,7 @@ class PVPGameTeamBattle(PVPGameBase):
     def getScoreList(self):
         scoreList = []
         teamScores = { }
-        for (playerId, stats) in self.stats.items():
+        for (playerId, stats) in list(self.stats.items()):
             playerScore = stats[PVPGlobals.SCORE]
             if playerId in base.cr.doId2do:
                 playerTeam = base.cr.doId2do.get(playerId).getTeam()
@@ -121,7 +121,7 @@ class PVPGameTeamBattle(PVPGameBase):
                 
             playerId == localAvatar.doId
         
-        for (teamName, teamScore) in teamScores.items():
+        for (teamName, teamScore) in list(teamScores.items()):
             scoreList.append({
                 'Team': teamName,
                 'Score': teamScore })

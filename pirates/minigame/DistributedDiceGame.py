@@ -108,7 +108,7 @@ class DistributedDiceGame(DistributedGameTable.DistributedGameTable):
 
     
     def localAvatarGotUp(self, seatIndex):
-        print 'DistributedDiceGame:localAvatarGotUp'
+        print('DistributedDiceGame:localAvatarGotUp')
         self.extraGuiDestroy()
         self.gui.destroy()
         del self.gui
@@ -138,9 +138,9 @@ class DistributedDiceGame(DistributedGameTable.DistributedGameTable):
 
     
     def yourTurn(self, activeSeat):
-        print 'DistributedDiceGame:yourTurn - activeSeat %d' % activeSeat
+        print(('DistributedDiceGame:yourTurn - activeSeat %d' % activeSeat))
         if activeSeat != self.mySeat:
-            print 'DistributedDiceGame:yourTurn - not my seat (%d)' % self.mySeat
+            print(('DistributedDiceGame:yourTurn - not my seat (%d)' % self.mySeat))
             return None
         
         if self.gameState == DiceGlobals.DSTATE_DOROLL:

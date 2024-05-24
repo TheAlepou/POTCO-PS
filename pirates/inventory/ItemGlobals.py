@@ -4,19 +4,26 @@ from direct.showbase.PythonUtil import *
 from direct.showbase import AppRunnerGlobal
 import string
 import os
-from ItemConstants import *
+from .ItemConstants import *
 from pirates.uberdog.UberDogGlobals import InventoryType, InventoryCategory
 from pirates.battle.EnemySkills import *
-import ItemData
+from . import ItemData
 
 __itemInfo = ItemData.itemInfo
-__columnHeadings = __itemInfo.pop('columnHeadings')
-for (heading, value) in __columnHeadings.items():
+if 'columnHeadings' in __itemInfo:
+    __columnHeadings = __itemInfo.pop('columnHeadings')
+else:
+    __columnHeadings = {}  # or some default value
+
+#__columnHeadings = __itemInfo.pop('columnHeadings')
+for (heading, value) in list(__columnHeadings.items()):
     heading = string.replace(heading, '\r', '')
-    exec '%s = %s' % (heading, value) in globals()
+    exec('%s = %s' % (heading, value), globals())
+
 
 for item in __itemInfo:
-    exec '%s = %s' % (__itemInfo[item][CONSTANT_NAME], item) in globals()
+    print(__itemInfo[item])
+    exec('%s = %s' % (__itemInfo[item][CONSTANT_NAME], item), globals())
 
 del __columnHeadings
 GOLD_SALE_MULTIPLIER = 0.050000000000000003
@@ -28,7 +35,7 @@ BLOOD_FIRE_TIMER = 30.0
 BLOOD_FIRE_BONUS = 0.050000000000000003
 
 def getAllItemIds():
-    return __itemInfo.keys()
+    return list(__itemInfo.keys())
 
 
 def getAllWeaponIds(type = None):

@@ -97,7 +97,7 @@ class Holder(Creature, TentacleUtils):
                 2000,
                 24000]
         else:
-            raise StandardError, 'Invalid avatar-detail: %s' % avatarDetail
+            raise Exception('Invalid avatar-detail: %s' % avatarDetail)
         cls.actor.setLODNode()
         cls.actor.addLOD('hi', dist[1], dist[0])
         cls.actor.addLOD('med', dist[2], dist[1])

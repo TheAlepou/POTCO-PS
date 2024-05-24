@@ -1,6 +1,6 @@
 # File: S (Python 2.4)
 
-from SCColorScheme import SCColorScheme
+from .SCColorScheme import SCColorScheme
 from otp.otpbase import OTPLocalizer
 
 class SCSettings:

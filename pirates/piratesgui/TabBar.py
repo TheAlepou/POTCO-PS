@@ -140,7 +140,7 @@ class TabBar(DirectFrame):
 
     
     def destroy(self):
-        for tab in self.tabs.itervalues():
+        for tab in list(self.tabs.values()):
             tab.destroy()
         
         self.bParent = None
@@ -172,7 +172,7 @@ class TabBar(DirectFrame):
         try:
             self.activeIndex = self.tabOrder.index(name)
             self.refreshTabs()
-            for tab in self.tabs.itervalues():
+            for tab in list(self.tabs.values()):
                 tab['selected'] = False
             
             activeName = self.tabOrder[self.activeIndex]
@@ -212,14 +212,14 @@ class TabBar(DirectFrame):
     
     def stash(self):
         DirectFrame.stash(self)
-        for tab in self.tabs.itervalues():
+        for tab in list(self.tabs.values()):
             tab.stash()
         
 
     
     def unstash(self):
         DirectFrame.unstash(self)
-        for tab in self.tabs.itervalues():
+        for tab in list(self.tabs.values()):
             tab.unstash()
         
 

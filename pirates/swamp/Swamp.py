@@ -40,7 +40,7 @@ class Swamp(Water):
         self.patchNP = NodePath(self.seamodel)
         self.patchNP.reparentTo(self.parentNP)
         self.hidden = False
-        mask = 0xFFFFFFFFL
+        mask = 0xFFFFFFFF
         if self.use_water_bin:
             self.seamodel.setBin('water', 1)
             stencil = StencilAttrib.make(1, StencilAttrib.SCFAlways, StencilAttrib.SOKeep, StencilAttrib.SOKeep, StencilAttrib.SOReplace, 1, mask, mask)

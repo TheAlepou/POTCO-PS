@@ -269,7 +269,7 @@ class DistributedInstanceBase(NodePath, DistributedObject, StagedObject):
     def handleOffStage(self, cacheAreas = []):
         if hasattr(self, 'islands'):
             self.stash()
-            for area in self.islands.values():
+            for area in list(self.islands.values()):
                 area.goOffStage(area in cacheAreas)
             
             if self.worldGrid:
@@ -289,7 +289,7 @@ class DistributedInstanceBase(NodePath, DistributedObject, StagedObject):
         self.cr.setActiveWorld(self)
         self.unstash()
         self.worldGrid.goOnStage()
-        for island in self.islands.values():
+        for island in list(self.islands.values()):
             if island:
                 island.goOnStage()
                 continue
@@ -370,7 +370,7 @@ class DistributedInstanceBase(NodePath, DistributedObject, StagedObject):
             areaParent = base.cr.doId2do[parentDoId]
             locationInfo = areaParent.builder.getLocationInfo(uniqueId)
             if locationInfo:
-                print 'left area %s' % locationInfo[2]
+                print(('left area %s' % locationInfo[2]))
                 localAvatar.sendUpdate('leaveAreaSphere', [
                     uniqueId,
                     parentUid])

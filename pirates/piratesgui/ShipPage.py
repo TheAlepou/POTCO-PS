@@ -34,7 +34,7 @@ class ShipPage(InventoryPage):
             self.tabBar.destroy()
             self.tabBar = None
         
-        for panel in self.panels.itervalues():
+        for panel in list(self.panels.values()):
             panel.destroy()
         
         self.panels = None
@@ -97,7 +97,7 @@ class ShipPage(InventoryPage):
 
     
     def clearBlankPanels(self):
-        for id in self.panels.keys():
+        for id in list(self.panels.keys()):
             if id <= 2:
                 self.removePanel(id)
                 continue
@@ -216,7 +216,7 @@ class ShipPage(InventoryPage):
 
     
     def showPanel(self, shipId):
-        for panel in self.panels.itervalues():
+        for panel in list(self.panels.values()):
             panel.hide()
         
         if shipId in self.panels:

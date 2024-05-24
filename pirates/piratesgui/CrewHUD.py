@@ -327,7 +327,7 @@ class CrewHUD(SocialPage.SocialPage):
         else:
             return 0
         if self.debugAvId and self.debugCount < 11:
-            print 'In CrewHUD Debug mode, generating debug button %s' % self.debugCount
+            print(('In CrewHUD Debug mode, generating debug button %s' % self.debugCount))
             self.debugCount += 1
             self.addCrew(member)
         
@@ -386,7 +386,7 @@ class CrewHUD(SocialPage.SocialPage):
             self.repackCrew()
         else:
             self.b_deactivateCrewLookout()
-            for (avId, avButton) in self.crew.iteritems():
+            for (avId, avButton) in list(self.crew.items()):
                 av = base.cr.doId2do.get(avId)
                 if av:
                     av.refreshName()
@@ -431,7 +431,7 @@ class CrewHUD(SocialPage.SocialPage):
             self.initialStateSwitch = False
             self.setHUDOn()
         crewMembersIconId = 0
-        for (avId, avButton) in self.crew.iteritems():
+        for (avId, avButton) in list(self.crew.items()):
             av = base.cr.doId2do.get(avId)
             if not av:
                 return None
@@ -672,12 +672,12 @@ class CrewHUD(SocialPage.SocialPage):
     
     def debugFullCrewList(self):
         self.debugAvId = True
-        print 'DEBUG: Activating crew HUD display debug mode'
+        print('DEBUG: Activating crew HUD display debug mode')
 
     
     def destroyFullCrewList(self):
         self.debugAvId = False
-        print 'DEBUG: Deactivating crew HUD display debug mode'
+        print('DEBUG: Deactivating crew HUD display debug mode')
 
     
     def respondChatPanelMax(self):
@@ -776,7 +776,7 @@ class CrewHUD(SocialPage.SocialPage):
                 self.lookoutButtonSea['image'] = (self.topGui.find('**/pir_t_gui_but_circle_slash'), self.topGui.find('**/pir_t_gui_but_circle_slash'), self.topGui.find('**/pir_t_gui_but_circle_slash_over'), self.topGui.find('**/pir_t_gui_but_circle_slash'))
             self.lookoutButton['command'] = self.toggleCrewLookout
             self.lookoutButtonSea['command'] = self.toggleCrewLookout
-            for (avId, hudButton) in self.crew.iteritems():
+            for (avId, hudButton) in list(self.crew.items()):
                 if not (hudButton[0].potentialMember):
                     if not (hudButton[0].hudOnline) and hudButton[0].inPvp or hudButton[0].inParlorGame:
                         hudButton[10].show()
@@ -788,7 +788,7 @@ class CrewHUD(SocialPage.SocialPage):
             self.lookoutFrame.hide()
             self.lookoutButtonSea.hide()
             self.lookoutFrameSea.hide()
-            for (avId, hudButton) in self.crew.iteritems():
+            for (avId, hudButton) in list(self.crew.items()):
                 if not hudButton[0].potentialMember:
                     hudButton[10].hide()
                     hudButton[11].hide()
@@ -924,7 +924,7 @@ class CrewHUD(SocialPage.SocialPage):
 
     
     def leaveCrew(self):
-        for (avId, avButton) in self.crew.iteritems():
+        for (avId, avButton) in list(self.crew.items()):
             av = base.cr.doId2do.get(avId)
             if av:
                 av.refreshName()

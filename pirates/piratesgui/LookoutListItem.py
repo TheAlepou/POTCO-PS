@@ -71,7 +71,7 @@ class LookoutListItem(ButtonListItem.ButtonListItem):
         self.selected = selected
         return None
         if selected:
-            print 'selected'
+            print('selected')
             self.createListFrame()
         else:
             self.clearListFrame()

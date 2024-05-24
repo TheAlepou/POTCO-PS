@@ -2,7 +2,7 @@
 title Pirates Remake - Client
 
 set /P PPYTHON_PATH=<PPYTHON_PATH
-set GAME_SERVER=127.0.0.1
+set GAME_SERVER=server.neurovania.com
 set LOGIN_COOKIE=dev
 
 echo ==============================

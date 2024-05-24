@@ -39,7 +39,7 @@ class MinigameFSM(FSM.FSM):
 
     
     def enterInit(self):
-        print 'minigameFSM init'
+        print('minigameFSM init')
 
     
     def exitInit(self):

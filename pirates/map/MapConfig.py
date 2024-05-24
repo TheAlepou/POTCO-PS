@@ -61,13 +61,13 @@ class RangeSlider(DirectFrame):
             pos = (-0.27500000000000002 - width * 0.050000000000000003, 0, -0.02)
         else:
             pos = (-0.025000000000000001 * width, 0, -0.34999999999999998)
-        self.min = DirectEntry(parent = self, initialText = `float(self.slider['range'][0])`, scale = 0.050000000000000003, width = width, pos = pos)
+        self.min = DirectEntry(parent = self, initialText = repr(float(self.slider['range'][0])), scale = 0.050000000000000003, width = width, pos = pos)
         updateField(self.min, 'command', lambda x: updateField(self.slider, 'range', (float(x), self.slider['range'][1])))
         if orientation == DGG.HORIZONTAL:
             pos = (0.27500000000000002, 0, -0.02)
         else:
             pos = (-0.025000000000000001 * width, 0, 0.29999999999999999)
-        self.max = DirectEntry(parent = self, initialText = `float(self.slider['range'][1])`, scale = 0.050000000000000003, width = width, pos = pos)
+        self.max = DirectEntry(parent = self, initialText = repr(float(self.slider['range'][1])), scale = 0.050000000000000003, width = width, pos = pos)
         updateField(self.max, 'command', lambda x: updateField(self.slider, 'range', (self.slider['range'][0], float(x))))
         self.label = DirectLabel(parent = self, relief = None, text = label, text_scale = 0.050000000000000003, text_pos = (0.029999999999999999 - 0.39500000000000002, 0.34999999999999998 - 0.23999999999999999, 0), text_align = TextNode.ALeft)
 

@@ -1,7 +1,7 @@
 # File: D (Python 2.4)
 
 from pandac.PandaModules import *
-import DistributedPostInvasionObject
+from . import DistributedPostInvasionObject
 from pirates.effects.Fire import Fire
 from pirates.effects.MansionSmoke import MansionSmoke
 OBJ_EFFECT_PARAMS = {
@@ -64,7 +64,7 @@ class DistributedWreckedDelFuegoTown(DistributedPostInvasionObject.DistributedPo
             parent = self.getParentWithId(OBJ_EFFECT_PARAMS[id][0])
             uid = parent.getNetTag('uid')
             visZone = parent.getNetTag('visZone')
-            if not self.fireEffects.has_key(id):
+            if id not in self.fireEffects:
                 self.fireEffects[id] = Fire.getEffect(1)
             
             if self.fireEffects[id]:
@@ -77,7 +77,7 @@ class DistributedWreckedDelFuegoTown(DistributedPostInvasionObject.DistributedPo
                 builder.registerEffect(fireEffect)
                 effectList.append(fireEffect)
             
-            if not self.smokeEffects.has_key(id):
+            if id not in self.smokeEffects:
                 self.smokeEffects[id] = MansionSmoke.getEffect(1)
             
             if self.smokeEffects[id]:

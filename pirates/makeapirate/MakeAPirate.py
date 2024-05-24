@@ -31,22 +31,22 @@ from pirates.pirate import MasterHuman
 from pirates.effects import DynamicLight
 from pirates.audio import SoundGlobals
 from pirates.audio.SoundGlobals import loadSfx
-from MakeAPirateGlobals import *
+from .MakeAPirateGlobals import *
 from pirates.leveleditor import CustomAnims
 from pirates.inventory import ItemGlobals
 import random
-import PirateMale
-import PirateFemale
-import GenderGUI
-import BodyGUI
-import HeadGUI
-import ClothesGUI
-import HairGUI
-import TattooGUI
-import JewelryGUI
-import NameGUI
-import NPCGUI
-from CharGuiBase import CharGuiSlider
+from . import PirateMale
+from . import PirateFemale
+from . import GenderGUI
+from . import BodyGUI
+from . import HeadGUI
+from . import ClothesGUI
+from . import HairGUI
+from . import TattooGUI
+from . import JewelryGUI
+from . import NameGUI
+from . import NPCGUI
+from .CharGuiBase import CharGuiSlider
 from pirates.pirate import BodyDefs
 import copy
 MakeAPiratePageIcons = {
@@ -923,7 +923,7 @@ class MakeAPirate(DirectObject, StateData.StateData, FSM.FSM):
             self.filterUsageNpcButton = DirectButton(parent = self.toggleFilterFrame, relief = DGG.SUNKEN, pos = (1.085, 0.0, -0.20000000000000001), scale = 0.34999999999999998, command = lambda : self.updateFilter('Npc'), frameSize = (-0.25, 0.25, -0.10000000000000001, 0.10000000000000001), borderWidth = (0.02, 0.02), text = 'NPC', text_pos = (0, -0.050000000000000003), text_scale = 0.20000000000000001, text_align = TextNode.ACenter)
             DirectLabel(parent = self.toggleFilterFrame, scale = 0.080000000000000002, text = 'Holiday', frameColor = (1, 1, 1, 0), pos = (-0.20000000000000001, 0, -0.33000000000000002))
             self.filterHolidayMenu = DirectOptionMenu(parent = self.toggleFilterFrame, scale = 0.080000000000000002, items = [
-                'All'] + CATALOG_HOLIDAYS.keys(), initialitem = 0, highlightColor = (0.65000000000000002, 0.65000000000000002, 0.65000000000000002, 1), pos = (0.0, 0, -0.33000000000000002), command = self.updateFilter)
+                'All'] + list(CATALOG_HOLIDAYS.keys()), initialitem = 0, highlightColor = (0.65000000000000002, 0.65000000000000002, 0.65000000000000002, 1), pos = (0.0, 0, -0.33000000000000002), command = self.updateFilter)
             self.toggleAnimFrame = DirectFrame(parent = base.a2dTopRightNs, relief = DGG.FLAT, frameSize = (-0.34999999999999998, 0.59999999999999998, -0.40000000000000002, 0.10000000000000001), frameColor = (0.80000000000000004, 0.80000000000000004, 0.80000000000000004, 0.5), text = PLocalizer.AnimateFrame, text_scale = 0.10000000000000001, text_pos = (-0.14999999999999999, -0.025000000000000001), text_align = TextNode.ACenter, text_fg = (1, 1, 1, 1), text_shadow = (0, 0, 0, 1), scale = 0.5, pos = (-1, 0, -0.39000000000000001))
             self.toggleAnimFrame.hide()
             self.stopAnimButton = DirectButton(parent = self.toggleAnimFrame, relief = DGG.RAISED, pos = (0.29999999999999999, 0.0, 0.0), command = self.stopAnim, frameSize = (-0.20000000000000001, 0.20000000000000001, -0.059999999999999998, 0.059999999999999998), borderWidth = (0.01, 0.01), text = 'PAUSE', text_pos = (0, -0.025000000000000001), text_scale = 0.080000000000000002)
@@ -954,7 +954,7 @@ class MakeAPirate(DirectObject, StateData.StateData, FSM.FSM):
                     anim], command = self.handleSetAnim))
             
             propDict = CustomAnims.getHandHeldPropsDict()
-            propNames = propDict.keys()
+            propNames = list(propDict.keys())
             propNames.sort()
             propNames.insert(0, 'None')
             prop_count = len(propNames)
@@ -2112,7 +2112,7 @@ class MakeAPirate(DirectObject, StateData.StateData, FSM.FSM):
     
     def handleSetProp(self, pgs):
         propDict = CustomAnims.getHandHeldPropsDict()
-        propNames = propDict.keys()
+        propNames = list(propDict.keys())
         propNames.sort()
         propNames.insert(0, 'None')
         if self.skeleton:
@@ -2333,7 +2333,7 @@ class MakeAPirate(DirectObject, StateData.StateData, FSM.FSM):
                 if self.lastDialog:
                     self.lastDialog.stop()
                 
-                choice = random.choice(range(0, optionsLeft))
+                choice = random.choice(list(range(0, optionsLeft)))
                 dialog = self.JSD_ANYTIME[idx][choice]
                 base.playSfx(dialog)
                 self.lastDialog = dialog
@@ -2540,7 +2540,7 @@ class MakeAPirate(DirectObject, StateData.StateData, FSM.FSM):
         if self.inRandomAll:
             return None
         
-        choice = random.choice(range(12))
+        choice = random.choice(list(range(12)))
         if choice != 0:
             return None
         
@@ -2551,7 +2551,7 @@ class MakeAPirate(DirectObject, StateData.StateData, FSM.FSM):
                     return None
                 
             
-            choice = random.choice(range(0, optionsLeft))
+            choice = random.choice(list(range(0, optionsLeft)))
             dialog = self.JSD_CLOTHING[self.pirate.gender][clothesType][choice]
             base.playSfx(dialog)
             self.lastDialog = dialog
@@ -2661,7 +2661,7 @@ class MakeAPirate(DirectObject, StateData.StateData, FSM.FSM):
             'PANT',
             'SHOE']:
             result += '\n\n%s\n' % clothesType
-            for itemId in avatar.choices[clothesType].keys():
+            for itemId in list(avatar.choices[clothesType].keys()):
                 if itemId == 0:
                     continue
                 
@@ -2686,6 +2686,6 @@ class MakeAPirate(DirectObject, StateData.StateData, FSM.FSM):
                 f.close()
             
 
-        print 'Finished writing to a file'
+        print('Finished writing to a file')
 
 

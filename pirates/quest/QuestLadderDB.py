@@ -103,7 +103,7 @@ def __buildFortunePaths(node, ladderName):
 
 
 def buildFortunePathHelper():
-    for ladderName in FortuneQuestLadderDict.keys():
+    for ladderName in list(FortuneQuestLadderDict.keys()):
         ladder = FortuneQuestLadderDict[ladderName]
         __buildFortunePaths(ladder, ladderName)
     
@@ -120,7 +120,7 @@ def __buildFamePaths(node, ladderName):
 
 
 def buildFamePathHelper():
-    for ladderName in FameQuestLadderDict.keys():
+    for ladderName in list(FameQuestLadderDict.keys()):
         ladder = FameQuestLadderDict[ladderName]
         __buildFamePaths(ladder, ladderName)
     
@@ -128,11 +128,11 @@ def buildFamePathHelper():
 LaddersInitialized = False
 
 def initializeLadders():
-    print 'Initializing quest ladders...'
-    for ladder in FameQuestLadderDict.values():
+    print('Initializing quest ladders...')
+    for ladder in list(FameQuestLadderDict.values()):
         ladder.initialize()
     
-    for ladder in FortuneQuestLadderDict.values():
+    for ladder in list(FortuneQuestLadderDict.values()):
         ladder.initializeFortune(ladder.getDroppable())
     
     buildFamePathHelper()
@@ -144,13 +144,13 @@ if not LaddersInitialized:
 
 
 def getLadder(name):
-    for ladder in FameQuestLadderDict.values():
+    for ladder in list(FameQuestLadderDict.values()):
         container = ladder.getContainer(name)
         if container:
             return ladder
             continue
     
-    for ladder in FortuneQuestLadderDict.values():
+    for ladder in list(FortuneQuestLadderDict.values()):
         container = ladder.getContainer(name)
         if container:
             return ladder
@@ -159,13 +159,13 @@ def getLadder(name):
 
 
 def getContainer(name):
-    for ladder in FameQuestLadderDict.values():
+    for ladder in list(FameQuestLadderDict.values()):
         container = ladder.getContainer(name)
         if container:
             return container
             continue
     
-    for ladder in FortuneQuestLadderDict.values():
+    for ladder in list(FortuneQuestLadderDict.values()):
         container = ladder.getContainer(name)
         if container:
             return container
@@ -174,13 +174,13 @@ def getContainer(name):
 
 
 def getParentContainer(ctr):
-    for ladder in FameQuestLadderDict.values():
+    for ladder in list(FameQuestLadderDict.values()):
         container = ladder.getParentContainer(ctr)
         if container:
             return container
             continue
     
-    for ladder in FortuneQuestLadderDict.values():
+    for ladder in list(FortuneQuestLadderDict.values()):
         container = ladder.getParentContainer(ctr)
         if container:
             return container
@@ -218,7 +218,7 @@ def getFamePath(name):
             
         
     else:
-        for ladder in FameQuestLadderDict.values():
+        for ladder in list(FameQuestLadderDict.values()):
             (found, path) = __getPath(ladder, path, name)
             if found:
                 path.insert(0, ladder)
@@ -241,7 +241,7 @@ def getFortunePath(name):
             
         
     else:
-        for ladder in FortuneQuestLadderDict.values():
+        for ladder in list(FortuneQuestLadderDict.values()):
             (found, path) = __getPath(ladder, path, name)
             if found:
                 path.insert(0, ladder)
@@ -254,10 +254,10 @@ def getFortunePath(name):
 def compileStats(name = None):
     questStatData = QuestStatData()
     if not name:
-        for ladder in FameQuestLadderDict.values():
+        for ladder in list(FameQuestLadderDict.values()):
             ladder.compileStats(questStatData)
         
-        for ladder in FortuneQuestLadderDict.values():
+        for ladder in list(FortuneQuestLadderDict.values()):
             ladder.compileStats(questStatData)
         
     else:
@@ -265,19 +265,19 @@ def compileStats(name = None):
         if ladder:
             ladder.compileStats(questStatData)
         
-    print '========================================================='
-    print questStatData
-    print '========================================================='
+    print('=========================================================')
+    print(questStatData)
+    print('=========================================================')
 
 
 def generateRogerFile(dict):
-    for (key, quest) in dict.items():
+    for (key, quest) in list(dict.items()):
         recGenerateRogerFile(quest)
     
 
 
 def recGenerateRogerFile(ladder):
-    print '{"%s", %s},' % (ladder.getQuestId(), ladder.getQuestInt())
+    print(('{"%s", %s},' % (ladder.getQuestId(), ladder.getQuestInt())))
     if ladder.isContainer():
         for container in ladder.containers:
             recGenerateRogerFile(container)
@@ -319,22 +319,22 @@ def verifyQuestInts():
         
     
     questInts.sort()
-    print questInts
+    print(questInts)
     uniqueQuestInts = []
     for questInt in questInts:
         if questInt not in uniqueQuestInts:
             uniqueQuestInts.append(questInt)
             continue
-        print 'REPEATED QuestInt: ', questInt
+        print(('REPEATED QuestInt: ', questInt))
     
-    print 'Available Quest Ints:'
+    print('Available Quest Ints:')
     rangelist = []
     for i in range(1000, 35000):
         if i not in uniqueQuestInts:
             rangelist.append(i)
             continue
         if len(rangelist):
-            print str(rangelist[0]) + ' - ' + str(rangelist[-1])
+            print((str(rangelist[0]) + ' - ' + str(rangelist[-1])))
             rangelist = []
             continue
     
@@ -376,7 +376,7 @@ def calculateContainerWeight(containerId, itemCount):
     return (totalWeight, itemCount)
 
 QuestWeightTable = { }
-for ladderId in FameQuestLadderDict.keys():
+for ladderId in list(FameQuestLadderDict.keys()):
     calculateContainerWeight(ladderId, 0)
 
 
@@ -423,94 +423,94 @@ def printContainerStrings(container, printAll = True):
     if isinstance(container, QuestLadderDNA):
         name = container.getName()
         strings = PLocalizer.QuestStrings[name]
-        print 'QuestLadder: ' + name
-        if strings.has_key('title'):
-            print raw('Title: ' + strings['title'])
+        print(('QuestLadder: ' + name))
+        if 'title' in strings:
+            print((raw('Title: ' + strings['title'])))
         
         if printAll:
-            if strings.has_key('description'):
-                print raw('Story: ' + strings['description'])
+            if 'description' in strings:
+                print((raw('Story: ' + strings['description'])))
             
         
-        print ''
+        print('')
         containerList = getFilteredContainerList(name)
         for cont in containerList:
             printContainerStrings(cont, printAll)
         
         if printAll:
-            if strings.has_key('stringAfter'):
-                print raw('Dialog: ' + strings['stringAfter'])
+            if 'stringAfter' in strings:
+                print((raw('Dialog: ' + strings['stringAfter'])))
             
         
-        print '# END OF LADDER: ' + name
+        print(('# END OF LADDER: ' + name))
     elif isinstance(container, QuestBranchDNA):
         name = container.getName()
         strings = PLocalizer.QuestStrings[name]
-        print 'QuestBranch: ' + name
-        if strings.has_key('title'):
-            print raw('Title: ' + strings['title'])
+        print(('QuestBranch: ' + name))
+        if 'title' in strings:
+            print((raw('Title: ' + strings['title'])))
         
         if printAll:
-            if strings.has_key('description'):
-                print raw('Story: ' + strings['description'])
+            if 'description' in strings:
+                print((raw('Story: ' + strings['description'])))
             
         
-        print ''
+        print('')
         containerList = getFilteredContainerList(name)
         for cont in containerList:
             printContainerStrings(cont, printAll)
         
         if printAll:
-            if strings.has_key('stringAfter'):
-                print raw('Dialog: ' + strings['stringAfter'])
+            if 'stringAfter' in strings:
+                print((raw('Dialog: ' + strings['stringAfter'])))
             
         
-        print '# END OF BRANCH: ' + name
+        print(('# END OF BRANCH: ' + name))
     elif isinstance(container, QuestChoiceDNA):
         name = container.getName()
         strings = PLocalizer.QuestStrings[name]
-        print 'QuestChoice: ' + name
-        if strings.has_key('title'):
-            print raw('Title: ' + strings['title'])
+        print(('QuestChoice: ' + name))
+        if 'title' in strings:
+            print((raw('Title: ' + strings['title'])))
         
         if printAll:
-            if strings.has_key('description'):
-                print raw('Story: ' + strings['description'])
+            if 'description' in strings:
+                print((raw('Story: ' + strings['description'])))
             
         
-        print 'Tasks:\n'
+        print('Tasks:\n')
         containerList = getFilteredContainerList(name)
         for cont in containerList:
             printContainerStrings(cont, printAll)
         
         if printAll:
-            if strings.has_key('stringAfter'):
-                print raw('Dialog: ' + strings['stringAfter'])
+            if 'stringAfter' in strings:
+                print((raw('Dialog: ' + strings['stringAfter'])))
             
         
-        print '# END OF CHOICE: ' + name
+        print(('# END OF CHOICE: ' + name))
     elif isinstance(container, QuestDNA):
         name = container.getName()
         strings = PLocalizer.QuestStrings[name]
-        print 'Quest: ' + name
-        if strings.has_key('title'):
-            print raw('Title: ' + strings['title'])
+        print(('Quest: ' + name))
+        if 'title' in strings:
+            print((raw('Title: ' + strings['title'])))
         
         if container.getTasks():
             taskStr = container.getTasks()[0].getDescriptionText(0)
             taskStr = taskStr.replace('\x01questObj\x01', '').replace('\x02', '')
-            print raw('Task: ' + taskStr)
+            print((raw('Task: ' + taskStr)))
         
         if printAll:
-            if strings.has_key('description'):
-                print raw('Story: ' + strings['description'])
+            if 'description' in strings:
+                print((raw('Story: ' + strings['description'])))
             
-            if strings.has_key('stringAfter'):
-                print raw('Dialog: ' + strings['stringAfter'])
+            if 'stringAfter' in strings:
+                print((raw('Dialog: ' + strings['stringAfter'])))
             
         
     
-    print ''
+    print('')
 
 
 def printQuestStrings(containerId, printAll = True):
@@ -520,8 +520,8 @@ def printQuestStrings(containerId, printAll = True):
 
 def getAllLadders():
     return [
-        FameQuestLadderDict.values(),
-        FortuneQuestLadderDict.values()]
+        list(FameQuestLadderDict.values()),
+        list(FortuneQuestLadderDict.values())]
 
 containerIntDict = { }
 for currLadderTree in getAllLadders():
@@ -612,7 +612,7 @@ objectRefCache = { }
 objectRefCacheFilled = False
 
 def cacheObjectRef(objId, container):
-    if objectRefCache.has_key(objId):
+    if objId in objectRefCache:
         if container not in objectRefCache[objId]:
             objectRefCache[objId].append(container)
         

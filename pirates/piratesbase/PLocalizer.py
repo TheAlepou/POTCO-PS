@@ -10,10 +10,10 @@ _PDialogStrings = 'pirates.piratesbase.PDialogStrings' + language
 _PGreetingStrings = 'pirates.piratesbase.PGreetingStrings' + language
 
 try:
-	exec 'from ' + _PLocalizer + ' import *'
-	exec 'from ' + _PQuestStrings + ' import *'
-	exec 'from ' + _PDialogStrings + ' import *'
-	exec 'from ' + _PGreetingStrings + ' import *'
+	exec('from ' + _PLocalizer + ' import *')
+	exec('from ' + _PQuestStrings + ' import *')
+	exec('from ' + _PDialogStrings + ' import *')
+	exec('from ' + _PGreetingStrings + ' import *')
 	notify.info("Running in language: %s" % language)
 except:
 	notify.warning("Language '%s' not found! Setting as default (English)" % language)

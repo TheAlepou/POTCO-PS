@@ -76,7 +76,7 @@ class SkillPage(InventoryPage.InventoryPage):
 
     
     def destroy(self):
-        for spot in self.skillFrames.keys():
+        for spot in list(self.skillFrames.keys()):
             self.skillFrames[spot].destroy()
         
         if self.tabBar:

@@ -193,6 +193,6 @@ class UsesAnimationMixer:
 
     
     def printMixer(self):
-        print self._UsesAnimationMixer__mixer
+        print((self._UsesAnimationMixer__mixer))
 
 

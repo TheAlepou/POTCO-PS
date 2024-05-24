@@ -329,7 +329,7 @@ class AmmoPanel(DirectFrame):
 
     
     def updateQuantities(self):
-        for button in base.localAvatar.guiMgr.combatTray.skillTray.tray.itervalues():
+        for button in list(base.localAvatar.guiMgr.combatTray.skillTray.tray.values()):
             if button.skillId != InventoryType.DefenseCannonEmpty:
                 if button.skillId in self.ammoQuantities:
                     button.updateQuantity(self.ammoQuantities[button.skillId])

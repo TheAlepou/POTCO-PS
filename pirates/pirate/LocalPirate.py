@@ -65,9 +65,9 @@ from pirates.map.MinimapObject import GridMinimapObject
 from pirates.pirate import TitleGlobals
 from pirates.uberdog.UberDogGlobals import InventoryCategory, InventoryType
 from pirates.uberdog.DistributedInventoryBase import DistributedInventoryBase
-import Pirate
-import LocalPirateGameFSM
-from DistributedPlayerPirate import DistributedPlayerPirate
+from . import Pirate
+from . import LocalPirateGameFSM
+from .DistributedPlayerPirate import DistributedPlayerPirate
 from pirates.pirate import PlayerStateGlobals
 from pirates.pirate import AvatarTypes
 from pirates.makeapirate import ClothingGlobals
@@ -1352,7 +1352,7 @@ class LocalPirate(DistributedPlayerPirate, LocalAvatar):
             
         
         strPos = '\nMaya Pos: \n%.1f, %.1f, %.1f' % (pos[0], pos[2], -pos[1]) + '\nPanda Pos: \n%.1f, %.1f, %.1f' % (pos[0], pos[1], pos[2]) + '\nH: %.1f' % hpr[0] + '\nModel: %s' % model + '\nTexture: %s, Terrain: %s, Avatar: %s' % (base.options.getTextureScaleString(), base.options.getGameOptionString(base.options.getTerrainDetailSetting()), base.options.getGameOptionString(base.options.getCharacterDetailSetting())) + '\nLoc: (%s, %s)' % (str(parentId), str(zoneId)) + ',\nVer: %s, ' % serverVersion + '\nDistrict: %s' % districtName
-        print 'Current position=', strPos.replace('\n', ', ')
+        print(('Current position=', strPos.replace('\n', ', ')))
         self.setChatAbsolute(strPos, CFThought | CFTimeout)
 
     
@@ -1425,7 +1425,7 @@ class LocalPirate(DistributedPlayerPirate, LocalAvatar):
         
         self.notify.debug('speedMult = %s' % speedMult)
         oldSpeeds = PiratesGlobals.PirateSpeeds[self.speedIndex]
-        newSpeeds = map(lambda x: speedMult * x, oldSpeeds)
+        newSpeeds = [speedMult * x for x in oldSpeeds]
         self.controlManager.setSpeeds(*newSpeeds)
 
     
@@ -1482,16 +1482,16 @@ class LocalPirate(DistributedPlayerPirate, LocalAvatar):
         if enable:
             
             def doPrint(task, self = self):
-                print 'AnimBlends:'
+                print('AnimBlends:')
                 self.printAnimBlends()
-                print ''
+                print('')
                 return task.cont
 
             taskMgr.add(doPrint, 'printAnimBlends')
-            print 'togglePrintAnimBlends ON'
+            print('togglePrintAnimBlends ON')
         else:
             taskMgr.remove('printAnimBlends')
-            print 'togglePrintAnimBlends OFF'
+            print('togglePrintAnimBlends OFF')
 
     
     def toggleOsdAnimBlends(self, enable = None):
@@ -1509,10 +1509,10 @@ class LocalPirate(DistributedPlayerPirate, LocalAvatar):
                 return task.cont
 
             taskMgr.add(doOsd, 'osdAnimBlends')
-            print 'toggleOsdAnimBlends ON'
+            print('toggleOsdAnimBlends ON')
         else:
             taskMgr.remove('osdAnimBlends')
-            print 'toggleOsdAnimBlends OFF'
+            print('toggleOsdAnimBlends OFF')
 
     
     def toggleAvVis(self):
@@ -1580,7 +1580,7 @@ class LocalPirate(DistributedPlayerPirate, LocalAvatar):
         return numInterests
 
     def replaceInterestTag(self, oldTag, newTag):
-        for i in xrange(len(self.interestHandles)):
+        for i in range(len(self.interestHandles)):
             tags, ctx = self.interestHandles.pop(0)
             newTags = [tag if tag != oldTag else newTag for tag in tags]
             self.interestHandles.append([newTags, ctx])

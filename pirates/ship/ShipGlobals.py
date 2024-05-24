@@ -4230,7 +4230,7 @@ def getRandomShipLevel(shipClass):
     if shipClass not in notRandomized:
         baselevel += random.randint(-1, 1)
     
-    baselevel = min(len(__shipLevelStatMultiplier.keys()) - 1, baselevel)
+    baselevel = min(len(list(__shipLevelStatMultiplier.keys())) - 1, baselevel)
     return baselevel
 
 

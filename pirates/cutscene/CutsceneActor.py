@@ -67,7 +67,7 @@ class CutsceneActor:
     def foundIt(self, npc):
         if npc == None:
             self.notify.debug('Movie cast not created yet')
-        elif not base.cr.doId2do.has_key(npc):
+        elif npc not in base.cr.doId2do:
             self.notify.debug('Movie cast not in doId2do')
         else:
             self.modelLoaded = base.cr.doId2do[npc]
@@ -373,7 +373,7 @@ class CutLocators(CutGenericActor):
             'interceptor': self.find('**/locator_ship_interceptor'),
             'warship': self.find('**/locator_ship_interceptor'),
             'blackpearl': self.find('**/locator_ship_ghostship') }
-        for (name, node) in self._locators.items():
+        for (name, node) in list(self._locators.items()):
             pass
         
         geomNode = self.find('**/+GeomNode')
@@ -392,7 +392,7 @@ class CutLocators(CutGenericActor):
 
     
     def destroy(self):
-        for (name, node) in self._locators.items():
+        for (name, node) in list(self._locators.items()):
             node.removeNode()
         
         del self._locators
@@ -492,7 +492,7 @@ class CutShip(CutsceneActor):
     
     def buildCannons(self):
         cannonLocators = self.ship.locators.findAllMatches('**/cannon_*;+s')
-        for i in xrange(len(cannonLocators)):
+        for i in range(len(cannonLocators)):
             cannon = Cannon.Cannon(base.cr)
             cannon.loadModel(CannonDNA.CannonDNA())
             self.cannons[i] = [
@@ -1306,7 +1306,7 @@ class CutLocalPirate(CutsceneActor):
                 dna.setBodyShape(shape)
                 if base.pe.panel.useNPCinCutscene.get():
                     currNpcList = base.pe.getNPCList()
-                    if currNpcList.NPC_LIST.has_key(base.pe.cutLocalPirateId):
+                    if base.pe.cutLocalPirateId in currNpcList.NPC_LIST:
                         dnaDict = currNpcList.NPC_LIST[base.pe.cutLocalPirateId]
                         dna = HumanDNA()
                         dna.loadFromNPCDict(dnaDict)

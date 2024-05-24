@@ -146,7 +146,7 @@ class OptionMenu(DirectOptionMenu):
             item = self['items'][self.selectedIndex]
             self['text'] = item
             if fCommand and self['command']:
-                apply(self['command'], [
+                self['command'](*[
                     item,
                     index] + self['extraArgs'])
             

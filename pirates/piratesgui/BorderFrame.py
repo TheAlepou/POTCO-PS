@@ -7,7 +7,7 @@ import types
 
 class BorderFrame(DirectFrame):
     pieceNames = ('headBoard', 'background', 'top', 'right', 'bottom', 'left', 'topRight', 'bottomRight', 'bottomLeft', 'topLeft')
-    nodeNames = dict(zip(pieceNames, ('headBoard', 'middle', 'top1', 'right', 'bottom', 'left', 'topRight', 'bottomRight', 'bottomLeft', 'topLeft')))
+    nodeNames = dict(list(zip(pieceNames, ('headBoard', 'middle', 'top1', 'right', 'bottom', 'left', 'topRight', 'bottomRight', 'bottomLeft', 'topLeft'))))
 
     def __init__(self, parent = None, **kw):
         optiondefs = (('relief', None, None), ('borderScale', 0.29999999999999999, self.setBorderScale), ('bgBuffer', 0.025000000000000001, self.setBgBuffer), ('bgColorScale', VBase4(1, 1, 1, 1), self.setBgColorScale), ('bgTransparency', 0, self.setBgTransparent), ('imageColorScale', VBase4(1, 1, 1, 1), None), ('cornerWidth', 0.14999999999999999, None), ('draggable', 0, None), ('frameSize', (-0.5, 0.5, -0.5, 0.5), self.setFrameSize), ('modelName', 'general_frame_f', None), ('showHeadBoard', False, None), ('nameTag', '', None), ('state', DGG.NORMAL, self.setState), ('showBackground', True, None), ('flatten', 1, None))
@@ -99,7 +99,7 @@ class BorderFrame(DirectFrame):
         for pieceName in self.pieceNames:
             self.guiComponents[pieceName] = self.copyFlattenedChild(self.pieces[pieceName], self.background)
         if self['draggable']:
-            zip(self.pieceNames[1:]([](_[1], [ DirectButton(parent = self.frameParent, guiId = self.guiId + '-' + pieceName, relief = None, state = self['state'], geom = self.pieces[pieceName], rolloverSound = None, clickSound = None, pressEffect = 0) for pieceName in self.pieceNames[1:] ])))
+            list(zip(self.pieceNames[1:]([](_[1], [ DirectButton(parent = self.frameParent, guiId = self.guiId + '-' + pieceName, relief = None, state = self['state'], geom = self.pieces[pieceName], rolloverSound = None, clickSound = None, pressEffect = 0) for pieceName in self.pieceNames[1:] ]))))
         self.guiComponents['background'].setColorScale(self['bgColorScale'])
         self.guiComponents['background'].setTransparency(self['bgTransparency'])
         for guiComp in self.guiComponents:

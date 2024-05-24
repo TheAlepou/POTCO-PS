@@ -5,8 +5,8 @@ from direct.showbase.BulletinBoardGlobal import *
 from direct.task.TaskManagerGlobal import *
 from direct.showbase.JobManagerGlobal import *
 from direct.showbase.EventManagerGlobal import *
-from direct.showbase.PythonUtil import *
-from direct.showbase import PythonUtil
+from pirates.util.PythonUtil import *
+from pirates.util import PythonUtil
 from direct.interval.IntervalManager import ivalMgr
 from direct.task import Task
 from direct.showbase import EventManager
@@ -30,7 +30,7 @@ class AIBase:
             if self.config.GetBool('use-vfs', 1):
                 vfs = VirtualFileSystem.getGlobalPtr()
             else:
-                vfs = 
+                vfs = null
             self.wantTk = self.config.GetBool('want-tk', 0)
             self.AISleep = self.config.GetFloat('ai-sleep', 0.040000000000000001)
             self.AIRunningNetYield = self.config.GetBool('ai-running-net-yield', 0)
@@ -41,8 +41,8 @@ class AIBase:
             self.taskMgr = taskMgr
             Task.TaskManager.taskTimerVerbose = self.config.GetBool('task-timer-verbose', 0)
             Task.TaskManager.extendedExceptions = self.config.GetBool('extended-exceptions', 0)
-            self.sfxManagerList = 
-            self.musicManager = 
+            self.sfxManagerList = None
+            self.musicManager = None
             self.jobMgr = jobMgr
             self.hidden = NodePath('hidden')
             self.graphicsEngine = GraphicsEngine()
@@ -64,7 +64,7 @@ class AIBase:
             taskMgr.resumeFunc = PStatClient.resumeAfterPause
             defaultValue = 1
             if __dev__:
-                defaultValue = 0
+                defaultValue = 1
             wantFakeTextures = self.config.GetBool('want-fake-textures-ai', defaultValue)
             if (wantFakeTextures and loadPrcFileData('aibase', 'textures-header-only 1')):
                 pass
@@ -118,9 +118,9 @@ class AIBase:
             return False
         if (PStatClient.isConnected() and PStatClient.disconnect()):
             pass
-        if (hostname is ):
+        if (hostname is None):  # Add a colon after the condition
             hostname = ''
-        if (port is ):
+        if (port is None):  # Add a colon after the condition
             port = -1
         PStatClient.connect(hostname, port)
         return PStatClient.isConnected()

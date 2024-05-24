@@ -120,7 +120,7 @@ INSTANCE_WORLD_LIST = [
     'DelFuegoCannonWorld',
     'PortRoyalCannonWorld',
     'TortugaCannonWorld']
-HANDHELD_PROP_NAMES = CustomAnims.getHandHeldPropsDict().keys()
+HANDHELD_PROP_NAMES = list(CustomAnims.getHandHeldPropsDict().keys())
 HANDHELD_PROP_NAMES.sort()
 HANDHELD_PROP_NAMES.insert(0, 'None')
 HANDHELD_PROP_FX = [
@@ -1213,13 +1213,13 @@ AVAIL_OBJ_LIST = {
                 PROP_UI_ENTRY],
             'type': [
                 PROP_UI_COMBO,
-                PiratesGlobals.SearchableModels.keys()] },
+                list(PiratesGlobals.SearchableModels.keys())] },
         'Defaults': {
             'Aggro Radius': 5.0,
             'searchTime': '6.0',
             'type': 'Crate' },
         'Visual': {
-            'Models': PiratesGlobals.SearchableModels.values() } },
+            'Models': list(PiratesGlobals.SearchableModels.values()) } },
     'Quest Prop': {
         'NonRpmNode': 1,
         'Create': None,
@@ -1239,7 +1239,7 @@ AVAIL_OBJ_LIST = {
             'Aggro Radius': 5.0,
             'hitPoints': 0 },
         'Visual': {
-            'Models': PiratesGlobals.QUEST_PROP_MODELS.values() } },
+            'Models': list(PiratesGlobals.QUEST_PROP_MODELS.values()) } },
     'Treasure Bank': {
         'NonRpmNode': 1,
         'Create': None,
@@ -1316,7 +1316,7 @@ AVAIL_OBJ_LIST = {
                     'Rock']],
             'Environment': [
                 PROP_UI_COMBO,
-                TODGlobals.ENVIRONMENT_NAMES_TO_ID.keys(),
+                list(TODGlobals.ENVIRONMENT_NAMES_TO_ID.keys()),
                 'self.setEnvironment'] },
         'NonAreaProps': [
             'Undockable',
@@ -1407,7 +1407,7 @@ AVAIL_OBJ_LIST = {
                     'Rock']],
             'Environment': [
                 PROP_UI_COMBO,
-                TODGlobals.ENVIRONMENT_NAMES_TO_ID.keys(),
+                list(TODGlobals.ENVIRONMENT_NAMES_TO_ID.keys()),
                 'self.setEnvironment'] },
         'NonAreaProps': [
             'Minimap',
@@ -3195,7 +3195,7 @@ AVAIL_OBJ_LIST = {
                 'Name': [
                     PROP_UI_COMBO,
                     [
-                        ''] + PLocalizer.LocationNames.keys()] },
+                        ''] + list(PLocalizer.LocationNames.keys())] },
             'Defaults': {
                 'Instanced': False,
                 'Name': '' } },
@@ -3872,7 +3872,7 @@ AVAIL_OBJ_LIST = {
                     'self.setAnimAvSubCategory'],
                 'Effect Type': [
                     PROP_UI_COMBO,
-                    ObjectEffects.OBJECT_EFFECTS.keys(),
+                    list(ObjectEffects.OBJECT_EFFECTS.keys()),
                     'self.applyObjectEffects'],
                 'PoseAnim': [
                     PROP_UI_ENTRY],
@@ -3979,7 +3979,7 @@ AVAIL_OBJ_LIST = {
             'Raycast': 1,
             'Selectable': 1,
             'Visual': {
-                'Models': CustomAnims.PROP_ANIMS.keys(),
+                'Models': list(CustomAnims.PROP_ANIMS.keys()),
                 'Properties': {
                     'Animate': [
                         PROP_UI_COMBO,
@@ -6304,7 +6304,7 @@ AVAIL_OBJ_LIST = {
             'Properties': {
                 'SFX Group': [
                     PROP_UI_COMBO,
-                    SFXList.SOUND_FX_LIST.keys(),
+                    list(SFXList.SOUND_FX_LIST.keys()),
                     'self.setSfxGroup'],
                 'SoundFX': [
                     PROP_UI_COMBO,

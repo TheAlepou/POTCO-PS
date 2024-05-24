@@ -180,6 +180,6 @@ class FeedbackPanel(GuiPanel.GuiPanel):
 
     
     def _catSelect(self, item):
-        print 'Item Selected is %s' % item
+        print(('Item Selected is %s' % item))
 
 

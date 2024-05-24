@@ -183,7 +183,7 @@ class RadarGui(GuiTray, FSM):
 
     
     def destroy(self):
-        for (currDoLater, ival) in self.flashCleanupTasks.values():
+        for (currDoLater, ival) in list(self.flashCleanupTasks.values()):
             taskMgr.remove(currDoLater)
             ival.finish()
         
@@ -318,7 +318,7 @@ class RadarGui(GuiTray, FSM):
         'args'], dConfigParam = 'quest-indicator')(restoreCachedObject)
     
     def restoreStickyCachedObjects(self):
-        cachedKeys = self._RadarGui__cachedRadarObjects.keys()
+        cachedKeys = list(self._RadarGui__cachedRadarObjects.keys())
         for currObjKey in cachedKeys:
             if self._RadarGui__cachedRadarObjects[currObjKey]['type'] != RADAR_OBJ_TYPE_DEFAULT or self._RadarGui__cachedRadarObjects[currObjKey]['type'] != RADAR_OBJ_TYPE_EXIT:
                 dummyObjNode = self._RadarGui__cachedRadarObjects[currObjKey]['dummySrcObjNode']
@@ -461,7 +461,7 @@ class RadarGui(GuiTray, FSM):
         'args'], dConfigParam = 'quest-indicator')(addRadarObjectAtLoc)
     
     def removeAllObjects(self):
-        objects = self._RadarGui__radarObjects.keys()
+        objects = list(self._RadarGui__radarObjects.keys())
         for key in objects:
             self.moveRadarObjToCache(key)
         
@@ -489,7 +489,7 @@ class RadarGui(GuiTray, FSM):
         'args'], dConfigParam = 'quest-indicator')(moveRadarObjToCache)
     
     def clearCache(self):
-        objects = self._RadarGui__cachedRadarObjects.keys()
+        objects = list(self._RadarGui__cachedRadarObjects.keys())
         for key in objects:
             objInfo = self._RadarGui__cachedRadarObjects[key]
             objInfo['radarObjNode'].removeNode()
@@ -502,7 +502,7 @@ class RadarGui(GuiTray, FSM):
 
     
     def printRadarObjects(self):
-        print self._RadarGui__radarObjects
+        print((self._RadarGui__radarObjects))
 
     
     def getRadarObjects(self):
@@ -798,7 +798,7 @@ class RadarGui(GuiTray, FSM):
 
     
     def flashRadarObject(self, objId, duration = None, scaleMin = Point3(0.5, 0.5, 0.5), scaleMax = Point3(1.0, 1.0, 1.0)):
-        if duration != None and self.flashCleanupTasks.has_key(objId):
+        if duration != None and objId in self.flashCleanupTasks:
             task = self.flashCleanupTasks[objId][0]
             task.delayTime = duration
             task.recalcWakeTime()
@@ -880,7 +880,7 @@ class RadarGui(GuiTray, FSM):
         else:
             raise 'RadarException'
         if objectInfo and not offRadar:
-            if objectInfo.has_key('oldInfo'):
+            if 'oldInfo' in objectInfo:
                 objectInfo['type'] = objectInfo['oldInfo']['type']
                 radarObjNode = objectInfo.get('radarObjNode')
                 if radarObjNode and not radarObjNode.isEmpty():
@@ -907,7 +907,7 @@ class RadarGui(GuiTray, FSM):
                     dummySrcObjNode.removeNode()
                 
                 objectInfo['dummySrcObjNode'] = objectInfo['oldInfo']['dummySrcObjNode']
-                if radarObjNodeShown == False and objectInfo.has_key('dummySrcObjNode') and objectInfo['dummySrcObjNode']:
+                if radarObjNodeShown == False and 'dummySrcObjNode' in objectInfo and objectInfo['dummySrcObjNode']:
                     objectInfo['dummySrcObjNode'].show()
                 
                 del objectInfo['oldInfo']

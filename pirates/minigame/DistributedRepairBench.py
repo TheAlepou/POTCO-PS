@@ -5,7 +5,7 @@ from pandac.PandaModules import *
 from panda3d.core import TextNode
 from pirates.distributed.DistributedInteractive import DistributedInteractive
 from pirates.piratesbase import PLocalizer
-import RepairGlobals
+from . import RepairGlobals
 from pirates.piratesbase import PiratesGlobals
 from pirates.piratesgui import PiratesGuiGlobals
 DifficultyText = {

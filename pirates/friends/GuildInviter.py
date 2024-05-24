@@ -457,7 +457,7 @@ class GuildInviter(DirectFrame):
 
     
     def _GuildInviter__handleGuildAcceptInvite(self, avId):
-        print 'Received accept invite event on inviter'
+        print('Received accept invite event on inviter')
         self.fsm.request('yes')
 
     

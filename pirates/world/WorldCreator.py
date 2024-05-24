@@ -49,7 +49,7 @@ class WorldCreator(WorldCreatorBase.WorldCreatorBase, DirectObject.DirectObject)
             fileDict = {
                 filename: fileData }
             if merge:
-                subUid = fileData['Objects'].keys()[0]
+                subUid = list(fileData['Objects'].keys())[0]
                 self.loadAdditionalObjectsByUid(subUid, parent, parentUid, dynamic = dynamic, fileDict = fileDict)
             else:
                 self.loadObjectsByUid(parent, parentUid, dynamic = dynamic, fileDict = fileDict)
@@ -67,10 +67,10 @@ class WorldCreator(WorldCreatorBase.WorldCreatorBase, DirectObject.DirectObject)
         self.loadWaypointDataFromDict(filename, fileData)
         links = fileData.get(WorldDataGlobals.LINK_TYPE_AI_NODE, [])
         for link in links:
-            if not self.waypoints[filename].has_key(link[0]):
+            if link[0] not in self.waypoints[filename]:
                 continue
             
-            if not self.waypoints[filename].has_key(link[1]):
+            if link[1] not in self.waypoints[filename]:
                 continue
             
             if link[2] in [
@@ -87,7 +87,7 @@ class WorldCreator(WorldCreatorBase.WorldCreatorBase, DirectObject.DirectObject)
 
     
     def loadWaypointDataFromDict(self, filename, fileDict):
-        for key in fileDict.iterkeys():
+        for key in list(fileDict.keys()):
             if isinstance(fileDict[key], type({ })):
                 if fileDict[key].get('Type') in WorldDataGlobals.WAYPOINT_TYPES:
                     self.waypoints[filename][key] = {
@@ -138,16 +138,16 @@ class WorldCreator(WorldCreatorBase.WorldCreatorBase, DirectObject.DirectObject)
         if objDict != None:
             self.loadObjectDict(objDict, parent, parentUid, dynamic)
         
-        if objectInfo.has_key('AdditionalData'):
+        if 'AdditionalData' in objectInfo:
             additionalFiles = objectInfo['AdditionalData']
             for currFile in additionalFiles:
                 self.loadObjectsFromFile(currFile + '.py', parent, parentUid, dynamic, merge = True)
             
-            if objectInfo.has_key('AdditionalData'):
+            if 'AdditionalData' in objectInfo:
                 additionalFiles = objectInfo['AdditionalData']
                 for currFile in additionalFiles:
-                    if self.fileDicts.has_key(currFile + '.py'):
-                        altParentUid = self.fileDicts[currFile + '.py']['Objects'].keys()[0]
+                    if currFile + '.py' in self.fileDicts:
+                        altParentUid = list(self.fileDicts[currFile + '.py']['Objects'].keys())[0]
                         addObjDict = self.fileDicts[currFile + '.py']['Objects'][altParentUid]['Objects']
                         self.loadObjectDict(addObjDict, parent, parentUid, dynamic)
                         yieldThread('load object')
@@ -174,7 +174,7 @@ class WorldCreator(WorldCreatorBase.WorldCreatorBase, DirectObject.DirectObject)
         if objDict != None:
             self.loadObjectDict(objDict, parent, parentUid, dynamic)
         
-        if objectInfo.has_key('AdditionalData'):
+        if 'AdditionalData' in objectInfo:
             additionalFiles = objectInfo['AdditionalData']
             for currFile in additionalFiles:
                 self.loadObjectsFromFile(currFile + '.py', parent, parentUid, dynamic)
@@ -187,9 +187,9 @@ class WorldCreator(WorldCreatorBase.WorldCreatorBase, DirectObject.DirectObject)
 
     
     def findObjectCategory(self, objectType):
-        cats = ObjectList.AVAIL_OBJ_LIST.keys()
+        cats = list(ObjectList.AVAIL_OBJ_LIST.keys())
         for currCat in cats:
-            types = ObjectList.AVAIL_OBJ_LIST[currCat].keys()
+            types = list(ObjectList.AVAIL_OBJ_LIST[currCat].keys())
             if objectType in types:
                 return currCat
                 continue
@@ -223,11 +223,11 @@ class WorldCreator(WorldCreatorBase.WorldCreatorBase, DirectObject.DirectObject)
                     
                     OTPRender.renderReflection(False, light, 'p_light', None)
                 elif objParent:
-                    if object.has_key('Color'):
-                        if not object.has_key('Visual'):
+                    if 'Color' in object:
+                        if 'Visual' not in object:
                             object['Visual'] = { }
                         
-                        if not object['Visual'].has_key('Color'):
+                        if 'Color' not in object['Visual']:
                             object['Visual']['Color'] = object['Color']
                         
                     
@@ -268,7 +268,7 @@ class WorldCreator(WorldCreatorBase.WorldCreatorBase, DirectObject.DirectObject)
             if objParent:
                 pos = object['Pos']
                 hpr = object['Hpr']
-                if object.has_key('Scale'):
+                if 'Scale' in object:
                     scale = object['Scale']
                 else:
                     scale = Point3(1.0, 1.0, 1.0)
@@ -499,7 +499,7 @@ class WorldCreator(WorldCreatorBase.WorldCreatorBase, DirectObject.DirectObject)
         objType = levelObj.data.get('Type')
         objectCat = self.findObjectCategory(objType)
         newObj = None
-        if ObjectList.AVAIL_OBJ_LIST[objectCat][objType].has_key('Entity'):
+        if 'Entity' in ObjectList.AVAIL_OBJ_LIST[objectCat][objType]:
             properties = ObjectList.AVAIL_OBJ_LIST[objectCat][objType]['Properties']
             newObj = gameArea.builder.addEntityNode(objectCat, objType, properties, levelObj)
         elif objType == 'Cutscene Origin Node':
@@ -520,7 +520,7 @@ class WorldCreator(WorldCreatorBase.WorldCreatorBase, DirectObject.DirectObject)
         elif objType == 'SFX Node':
             newObj = gameArea.builder.addChildObj(levelObj)
             base.theSFX = newObj
-            print "Before it's #*$ up %s" % newObj.getPos(render)
+            print(("Before it's #*$ up %s" % newObj.getPos(render)))
         elif objType == 'Portal Node':
             node = gameArea.builder.areaGeometry.attachNewNode(ModelNode(levelObj.data.get('Name', '')))
             node.node().setPreserveTransform(ModelNode.PTLocal)

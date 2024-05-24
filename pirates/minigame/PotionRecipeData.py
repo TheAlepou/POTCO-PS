@@ -6,7 +6,7 @@ from pirates.inventory import ItemGlobals
 from pirates.minigame import PotionGlobals
 
 def safeSubstitute(text, dict):
-    for key in dict.keys():
+    for key in list(dict.keys()):
         text = text.replace('$'+key, str(dict[key]))
     return text
 

@@ -355,7 +355,7 @@ class PistolUpgradeReward(QuestReward):
 
     
     def getDescriptionText(self):
-        if PLocalizer.InventoryTypeNames.has_key(self.amount):
+        if self.amount in PLocalizer.InventoryTypeNames:
             return PLocalizer.InventoryTypeNames.get(self.amount)
         else:
             return PLocalizer.PistolRewardDesc
@@ -448,7 +448,7 @@ class DaggerUpgradeReward(QuestReward):
 
     
     def getDescriptionText(self):
-        if PLocalizer.InventoryTypeNames.has_key(self.amount):
+        if self.amount in PLocalizer.InventoryTypeNames:
             return PLocalizer.InventoryTypeNames.get(self.amount)
         else:
             return PLocalizer.DaggerRewardDesc
@@ -488,7 +488,7 @@ class WeaponItemReward(QuestReward):
 
     
     def getDescriptionText(self):
-        if PLocalizer.ItemNames.has_key(self.amount):
+        if self.amount in PLocalizer.ItemNames:
             return PLocalizer.ItemNames.get(self.amount)
         else:
             return 'No named Weapon'
@@ -537,7 +537,7 @@ class CutlassUpgradeReward(QuestReward):
 
     
     def getDescriptionText(self):
-        if PLocalizer.InventoryTypeNames.has_key(self.amount):
+        if self.amount in PLocalizer.InventoryTypeNames:
             return PLocalizer.InventoryTypeNames.get(self.amount)
         else:
             return PLocalizer.CutlassRewardDesc
@@ -584,7 +584,7 @@ class DollUpgradeReward(QuestReward):
 
     
     def getDescriptionText(self):
-        if PLocalizer.InventoryTypeNames.has_key(self.amount):
+        if self.amount in PLocalizer.InventoryTypeNames:
             return PLocalizer.InventoryTypeNames.get(self.amount)
         else:
             return PLocalizer.DollRewardDesc
@@ -631,7 +631,7 @@ class WandUpgradeReward(QuestReward):
 
     
     def getDescriptionText(self):
-        if PLocalizer.InventoryTypeNames.has_key(self.amount):
+        if self.amount in PLocalizer.InventoryTypeNames:
             return PLocalizer.InventoryTypeNames.get(self.amount)
         else:
             return PLocalizer.StaffRewardDesc

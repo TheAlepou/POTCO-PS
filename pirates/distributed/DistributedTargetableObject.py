@@ -140,13 +140,13 @@ class DistributedTargetableObject(DistributedNode.DistributedNode):
                     sfxs = getMissSfxFunc()
                 
             if sfxs:
-                if type(sfxs) == types.DictType:
+                if type(sfxs) == dict:
                     if weaponSubType:
                         sfxList = sfxs.get(weaponSubType)
                         soundFx = random.choice(sfxList)
                     else:
                         soundFx = sfxs.get(ammoSkillId)
-                elif type(sfxs) == types.TupleType:
+                elif type(sfxs) == tuple:
                     soundFx = random.choice(sfxs)
                 else:
                     soundFx = sfxs
@@ -477,7 +477,7 @@ class DistributedTargetableObject(DistributedNode.DistributedNode):
                 targetEffects[0] -= bonus
             
             if skillResult == WeaponGlobals.RESULT_MISTIMED_HIT:
-                if type(targetEffects) is types.TupleType:
+                if type(targetEffects) is tuple:
                     targetEffects = (int(targetEffects[0] * WeaponGlobals.MISTIME_PENALTY),) + targetEffects[1:]
                 else:
                     targetEffects[0] = int(targetEffects[0] * WeaponGlobals.MISTIME_PENALTY)

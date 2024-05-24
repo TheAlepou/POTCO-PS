@@ -194,7 +194,7 @@ class ParamObj:
             else:
                 assert len(args) == 0
                 if __debug__:
-                    for arg in kwArgs.keys():
+                    for arg in list(kwArgs.keys()):
                         assert arg in self.getParams()
                 self.paramVals = dict(kwArgs)
         def getValue(self, param):
@@ -217,7 +217,7 @@ class ParamObj:
         def getParams(cls):
             # returns safely-mutable list of param names
             cls._compileDefaultParams()
-            return cls._Params.keys()
+            return list(cls._Params.keys())
         @classmethod
         def getDefaultValue(cls, param):
             cls._compileDefaultParams()
@@ -510,7 +510,7 @@ class POD:
         if __debug__:
             # make sure all of the keyword arguments passed in
             # are present in our data set
-            for arg in kwArgs.keys():
+            for arg in list(kwArgs.keys()):
                 assert arg in self.getDataNames(), (
                     "unknown argument for %s: '%s'" % (
                     self.__class__, arg))
@@ -558,7 +558,7 @@ class POD:
     def getDataNames(cls):
         # returns safely-mutable list of datum names
         cls._compileDefaultDataSet()
-        return cls._DataSet.keys()
+        return list(cls._DataSet.keys())
     @classmethod
     def getDefaultValue(cls, name):
         cls._compileDefaultDataSet()
@@ -681,7 +681,7 @@ def describeException(backTrace = 4):
         lnotab = array.array('B', code.co_lnotab)
 
         line   = code.co_firstlineno
-        for i in xrange(0, len(lnotab), 2):
+        for i in range(0, len(lnotab), 2):
             byte -= lnotab[i]
             if byte <= 0:
                 return line
@@ -713,12 +713,12 @@ def describeException(backTrace = 4):
     stack.append("%s:%s, " % (module, lineno))
 
     description = ""
-    for i in xrange(len(stack) - 1, max(len(stack) - backTrace, 0) - 1, -1):
+    for i in range(len(stack) - 1, max(len(stack) - backTrace, 0) - 1, -1):
         description += stack[i]
 
     description += "%s: %s" % (exceptionName, extraInfo)
     return description
 
-import __builtin__
-__builtin__.describeException = describeException
-__builtin__.config = get_config_showbase()
+import builtins
+builtins.describeException = describeException
+builtins.config = get_config_showbase()

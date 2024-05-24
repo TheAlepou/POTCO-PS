@@ -12,7 +12,7 @@ from pirates.piratesbase import PLocalizer
 from pirates.leveleditor import NPCList
 from pirates.pirate import HumanDNA
 from pirates.pirate import AvatarTypes
-import NavySailor
+from . import NavySailor
 import random
 
 class DistributedNPCNavySailor(DistributedBattleNPC.DistributedBattleNPC, NavySailor.NavySailor):
@@ -57,7 +57,7 @@ class DistributedNPCNavySailor(DistributedBattleNPC.DistributedBattleNPC, NavySa
 
     
     def setDNAId(self, dnaId):
-        if dnaId and NPCList.NPC_LIST.has_key(dnaId):
+        if dnaId and dnaId in NPCList.NPC_LIST:
             dnaDict = NPCList.NPC_LIST[dnaId]
             customDNA = HumanDNA.HumanDNA()
             customDNA.loadFromNPCDict(dnaDict)

@@ -7,16 +7,16 @@ AnyAvatar = AvatarType()
 AnyShip = AvatarType()
 BossType = AvatarType(boss = 1)
 
-MovieCasts = [AvatarType() for x in xrange(6)]
+MovieCasts = [AvatarType() for x in range(6)]
 JackSparrow, ElizabethSwan, CaptBarbossa, WillTurner, TiaDalma, JoshameeGibbs = MovieCasts
 
-Factions = [AvatarType(faction=x) for x in xrange(9)]
+Factions = [AvatarType(faction=x) for x in range(9)]
 Undead, Navy, Creature, Townfolk, Pirate, TradingCo, Ghost, VoodooZombie, BountyHunter = Factions
 
-CreatureTracks = [AvatarType(base=Creature, track=x) for x in xrange(5)]
+CreatureTracks = [AvatarType(base=Creature, track=x) for x in range(5)]
 LandCreature, SeaCreature, AirCreature, SeaMonster, Animal = CreatureTracks
 
-LandCreatures = [AvatarType(base=LandCreature, id=x) for x in xrange(24)]
+LandCreatures = [AvatarType(base=LandCreature, id=x) for x in range(24)]
 Crab, StoneCrab, RockCrab, GiantCrab, CrusherCrab, Chicken, Rooster, Pig, Stump, TwistedStump, FlyTrap, RancidFlyTrap, AncientFlyTrap, Scorpion, DireScorpion, DreadScorpion, Alligator, BayouGator, BigGator, HugeGator, Dog, Seagull, Raven, Monkey = LandCreatures
 
 LandCrab = AvatarTypeSet(PL.LandCrabStrings, Crab, RockCrab, GiantCrab, CrusherCrab)
@@ -51,13 +51,13 @@ Trapjaw = BigGatorBosses[0]
 HugeGatorBosses = [AvatarType(base=HugeGator, boss=1)]
 SwampTerror = HugeGatorBosses[0]
 
-Animals = [AvatarType(base=Animal, id=x) for x in xrange(6)]
+Animals = [AvatarType(base=Animal, id=x) for x in range(6)]
 Chicken, Rooster, Pig, Dog, Seagull, Raven = Animals
 
-SeaCreatures = [AvatarType(base=SeaCreature, id=x) for x in xrange(1)]
+SeaCreatures = [AvatarType(base=SeaCreature, id=x) for x in range(1)]
 Fish = SeaCreatures[0]
 
-AirCreatures = [AvatarType(base=AirCreature, id=x) for x in xrange(10)]
+AirCreatures = [AvatarType(base=AirCreature, id=x) for x in range(10)]
 Seagull, Raven, Bat, RabidBat, VampireBat, FireBat, Wasp, KillerWasp, AngryWasp, SoldierWasp = AirCreatures
 
 BatBosses = [AvatarType(base=Bat, boss=1)]
@@ -72,16 +72,16 @@ Firesting = WaspBosses[0]
 AngryWaspBosses = [AvatarType(base=AngryWasp, boss=1)]
 Devilwing = AngryWaspBosses[0]
 
-SeaMonsters = [AvatarType(base=SeaMonster, id=x) for x in xrange(7)]
+SeaMonsters = [AvatarType(base=SeaMonster, id=x) for x in range(7)]
 SeaKraken, Kraken, KrakenBody, KrakenHead, GrabberTentacle, HolderTentacle, SeaSerpent = SeaMonsters
 
-UndeadTracks = [AvatarType(base=Undead, track=x) for x in xrange(9)]
+UndeadTracks = [AvatarType(base=Undead, track=x) for x in range(9)]
 Earth, Air, Fire, Water, Classic, Boss, French, Spanish, EarthSpecial = UndeadTracks
 
-EarthUndead = [AvatarType(base=Earth, id=x) for x in xrange(15)]
+EarthUndead = [AvatarType(base=Earth, id=x) for x in range(15)]
 Clod, Sludge, Mire, MireKnife, Muck, MuckCutlass, Corpse, CorpseCutlass, Carrion, CarrionKnife, Cadaver, CadaverCutlass, Zombie, CaptMudmoss, Mossman = EarthUndead
 
-ClodBosses = [AvatarType(base=Clod, boss=x) for x in xrange(4)]
+ClodBosses = [AvatarType(base=Clod, boss=x) for x in range(4)]
 WillBurybones, FoulCrenshaw, EvanTheDigger, ThadIllFortune = ClodBosses
 
 SludgeBosses = [AvatarType(base=Sludge, boss=1)]
@@ -111,27 +111,27 @@ JeremyColdhand = CaptMudmossBosses[0]
 MossmanBosses = [AvatarType(base=Mossman, boss=1)]
 Stench = MossmanBosses[0]
 
-AirUndead = [AvatarType(base=Air, id=x) for x in xrange(10)]
+AirUndead = [AvatarType(base=Air, id=x) for x in range(10)]
 Whiff, Reek, Billow, Stench, Shade, Specter, Phantom, Wraith, CaptZephyr, Squall = AirUndead
 
-FireUndead = [AvatarType(base=Fire, id=x) for x in xrange(10)]
+FireUndead = [AvatarType(base=Fire, id=x) for x in range(10)]
 Glint, Flicker, Smolder, Spark, Imp, Brand, Lumen, Fiend, CaptCinderbones, Torch = FireUndead
 
-WaterUndead = [AvatarType(base=Water, id=x) for x in xrange(10)]
+WaterUndead = [AvatarType(base=Water, id=x) for x in range(10)]
 Drip, Damp, Drizzle, Spray, Splatter, Drool, Drench, Douse, CaptBriney, Spout = WaterUndead
 
 ClassicUndead = list()
 
-BossUndead = [AvatarType(base=Boss, id=x) for x in xrange(1)]
+BossUndead = [AvatarType(base=Boss, id=x) for x in range(1)]
 JollyRoger = BossUndead[0]
 
-FrenchUndead = [AvatarType(base=French, id=x) for x in xrange(5)]
+FrenchUndead = [AvatarType(base=French, id=x) for x in range(5)]
 FrenchUndeadA, FrenchUndeadB, FrenchUndeadC, FrenchUndeadD, FrenchBoss = FrenchUndead
 
 FrenchBosses = [AvatarType(base=FrenchBoss, boss=1)]
 FrenchBossA = FrenchBosses[0]
 
-SpanishUndead = [AvatarType(base=Spanish, id=x) for x in xrange(5)]
+SpanishUndead = [AvatarType(base=Spanish, id=x) for x in range(5)]
 SpanishUndeadA, SpanishUndeadB, SpanishUndeadC, SpanishUndeadD, SpanishBoss = SpanishUndead
 
 SpanishBosses = [AvatarType(base=SpanishBoss, boss=1)]
@@ -185,13 +185,13 @@ def randomUndead(level):
     
     return EarthUndead[retval]
 
-NavyTracks = [AvatarType(base=Navy, track=x) for x in xrange(3)]
+NavyTracks = [AvatarType(base=Navy, track=x) for x in range(3)]
 Soldier, Marksman, Leader = NavyTracks
 
-Soldiers = [AvatarType(base=Soldier, id=x) for x in xrange(5)]
+Soldiers = [AvatarType(base=Soldier, id=x) for x in range(5)]
 Axeman, Swordsman, RoyalGuard, MasterSwordsman, WeaponsMaster = Soldiers
 
-Marksmen = [AvatarType(base=Marksman, id=x) for x in xrange(7)]
+Marksmen = [AvatarType(base=Marksman, id=x) for x in range(7)]
 Cadet, Guard, Marine, Sergeant, Veteran, Officer, Dragoon = Marksmen
 
 CadetBosses = [AvatarType(base=Cadet, boss=1)]
@@ -209,7 +209,7 @@ SidShiver = VeteranBosses[0]
 OfficerBosses = [AvatarType(base=Officer, boss=1)]
 IanRamjaw = OfficerBosses[0]
 
-Leaders = [AvatarType(base=Leader, id=x) for x in xrange(5)]
+Leaders = [AvatarType(base=Leader, id=x) for x in range(5)]
 FirstMate, Captain, Lieutenant, Admiral, Commodore = Leaders
 
 NavyCommon = (Cadet, Guard, Sergeant, Veteran, Officer)
@@ -238,34 +238,34 @@ def pickTrading(tradlow, tradhigh):
 def pickNavy(navylow, navyhigh):
     return Marksmen[random.randint(navylow, navyhigh)]
 
-TownfolkTracks = [AvatarType(base=Townfolk, track=x) for x in xrange(3)]
+TownfolkTracks = [AvatarType(base=Townfolk, track=x) for x in range(3)]
 Commoner, StoreOwner, Cast = TownfolkTracks
 
 Commoners = [AvatarType(base=Commoner, id=1)]
 Peasant = Commoners[0]
 
-StoreOwners = [AvatarType(base=StoreOwner, id=x) for x in xrange(21)]
+StoreOwners = [AvatarType(base=StoreOwner, id=x) for x in range(21)]
 Gypsy, Blacksmith, Shipwright, Cannoneer, Merchant, Bartender, Gunsmith, Grenadier, MedicineMan, Tailor, Tattoo, Jeweler, Barber, Musician, Trainer, PvPRewards, Stowaway, Fishmaster, Cannonmaster, CatalogRep, ScrimmageMaster = StoreOwners
 
 CastBosses = [AvatarType(base=Cast, boss=1)]
 Kudgel = CastBosses[0]
 
-PirateTracks = [AvatarType(base=Pirate, track=x) for x in xrange(3)]
+PirateTracks = [AvatarType(base=Pirate, track=x) for x in range(3)]
 Player, Brawler, Gunner = PirateTracks
 
-Players = [AvatarType(base=Player, id=x) for x in xrange(2)]
+Players = [AvatarType(base=Player, id=x) for x in range(2)]
 LocalPirateType, NonLocalPirateType = Players
 
-Brawlers = [AvatarType(base=Brawler, id=x) for x in xrange(5)]
+Brawlers = [AvatarType(base=Brawler, id=x) for x in range(5)]
 Landlubber, Scallywag, Buccaneer, Swashbuckler, Warmonger = Brawlers
 
-Gunners = [AvatarType(base=Gunner, id=x) for x in xrange(5)]
+Gunners = [AvatarType(base=Gunner, id=x) for x in range(5)]
 Bandit, Brigand, Sharpshooter, Rifleman, Gunner = Gunners
 
-GhostTracks = [AvatarType(base=Ghost, track=x) for x in xrange(2)]
+GhostTracks = [AvatarType(base=Ghost, track=x) for x in range(2)]
 GhostPirates, KillerGhosts = GhostTracks
 
-GhostPirates = [AvatarType(base=GhostPirates, id=x) for x in xrange(6)]
+GhostPirates = [AvatarType(base=GhostPirates, id=x) for x in range(6)]
 Revenant, MutineerGhost, DeviousGhost, TraitorGhost, CrewGhost, LeaderGhost = GhostPirates
 
 KillerGhosts = [AvatarType(base=KillerGhosts, id=1)]
@@ -277,7 +277,7 @@ ElPatron = LeaderGhostBosses[0]
 VoodooZombieTracks = [AvatarType(base=VoodooZombie, track=1)]
 VoodooZombiePirates = VoodooZombieTracks[0]
 
-VoodooZombiePirates = [AvatarType(base=VoodooZombiePirates, id=x) for x in xrange(8)]
+VoodooZombiePirates = [AvatarType(base=VoodooZombiePirates, id=x) for x in range(8)]
 PressGangVoodooZombie, CookVoodooZombie, SwabbieVoodooZombie, LookoutVoodooZombie, AngryVoodooZombie, OfficerVoodooZombie, SlaveDriverVoodooZombie, VoodooZombieBoss = VoodooZombiePirates
 
 VoodooZombieBosses = [AvatarType(base=VoodooZombieBoss, boss=1)]
@@ -286,7 +286,7 @@ LaSchafe = VoodooZombieBosses[0]
 BountyHunterTracks = [AvatarType(base=BountyHunter, track=1)]
 BountyHunters = BountyHunterTracks[0]
 
-BountyHunters = [AvatarType(base=BountyHunters, id=x) for x in xrange(7)]
+BountyHunters = [AvatarType(base=BountyHunters, id=x) for x in range(7)]
 PettyHunter, BailHunter, ScallyWagHunter, BanditHunter, PirateHunter, WitchHunter, MasterHunter = BountyHunters
 
 def pickGhost(minVal = 0, maxVal = len(GhostPirates) - 1):
@@ -300,10 +300,10 @@ def pickVoodooZombie(minVal = 0, maxVal = len(VoodooZombiePirates) - 1):
 def pickBountyHunter(minVal = 0, maxVal = len(BountyHunters) - 1):
     return BountyHunters[random.randint(minVal, maxVal)]
 
-TradingCoTracks = [AvatarType(base=TradingCo, track=x) for x in xrange(3)]
+TradingCoTracks = [AvatarType(base=TradingCo, track=x) for x in range(3)]
 Mercenary, Assassin, Official = TradingCoTracks
 
-Mercenaries = [AvatarType(base=Mercenary, id=x) for x in xrange(5)]
+Mercenaries = [AvatarType(base=Mercenary, id=x) for x in range(5)]
 Thug, Grunt, Hiredgun, Mercenary, Assassin = Mercenaries
 
 ThugBosses = [AvatarType(base=Thug, boss=1)]
@@ -321,10 +321,10 @@ PhineasFowl = MercenaryBosses[0]
 AssassinBosses = [AvatarType(base=Assassin, boss=1)]
 EdwardLohand = AssassinBosses[0]
 
-Officials = [AvatarType(base=Official, id=x) for x in xrange(5)]
+Officials = [AvatarType(base=Official, id=x) for x in range(5)]
 OffA, OffB, OffC, OffD, Viceroy = Officials
 
-Assassins = [AvatarType(base=Assassin, id=x) for x in xrange(5)]
+Assassins = [AvatarType(base=Assassin, id=x) for x in range(5)]
 Rogue, Stalker, Cutthroat, Executioner, Professional = Assassins
 
 AVATAR_TYPE_IDX = 0

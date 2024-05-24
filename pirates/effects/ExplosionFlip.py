@@ -2,8 +2,8 @@
 
 from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
-from PooledEffect import PooledEffect
-from EffectController import EffectController
+from .PooledEffect import PooledEffect
+from .EffectController import EffectController
 import random
 
 class ExplosionFlip(PooledEffect, EffectController):

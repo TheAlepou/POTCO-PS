@@ -1,6 +1,6 @@
 # File: D (Python 2.4)
 
-import DistributedMiniGameWorld
+from . import DistributedMiniGameWorld
 from pirates.piratesgui.CannonDefenseCountdownUI import CannonDefenseCountdownUI
 from pirates.piratesbase import PiratesGlobals
 from pirates.piratesbase import PLocalizer

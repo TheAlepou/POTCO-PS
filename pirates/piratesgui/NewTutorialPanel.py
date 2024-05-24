@@ -8,7 +8,7 @@ from direct.interval.IntervalGlobal import *
 from pirates.battle import CannonGlobals
 from pirates.audio import SoundGlobals
 from pirates.audio.SoundGlobals import loadSfx
-import DialogButton
+from . import DialogButton
 import string
 
 class NewTutorialPanel(GuiPanel.GuiPanel):

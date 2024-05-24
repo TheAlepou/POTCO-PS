@@ -21,7 +21,7 @@ from pirates.effects.Immolate import Immolate
 from pirates.effects.LightningStrike import LightningStrike
 from pirates.audio import SoundGlobals
 from pirates.audio.SoundGlobals import loadSfx
-import Ghost
+from . import Ghost
 import random
 
 class DistributedKillerGhost(DistributedBattleNPC.DistributedBattleNPC, Ghost.Ghost):
@@ -108,7 +108,7 @@ class DistributedKillerGhost(DistributedBattleNPC.DistributedBattleNPC, Ghost.Gh
 
     
     def setDNAId(self, dnaId):
-        if dnaId and NPCList.NPC_LIST.has_key(dnaId):
+        if dnaId and dnaId in NPCList.NPC_LIST:
             dnaDict = NPCList.NPC_LIST[dnaId]
             customDNA = HumanDNA.HumanDNA()
             customDNA.loadFromNPCDict(dnaDict)

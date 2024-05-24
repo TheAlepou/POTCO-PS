@@ -28,7 +28,7 @@ class ScreenshotViewer:
         buttons = loader.loadModel('models/gui/lookout_gui')
         closeButton = (buttons.find('**/lookout_close_window'), buttons.find('**/lookout_close_window_down'), buttons.find('**/lookout_close_window_over'))
         xs = 1.2
-        self.nextButton = DirectButton(parent = imageFrame, relief = None, command = self.next, pos = (0.69999999999999996, 0, 0), image = arrow, image_scale = (-xs, xs, xs), sortOrder = -5)
+        self.nextButton = DirectButton(parent = imageFrame, relief = None, command = self.__next__, pos = (0.69999999999999996, 0, 0), image = arrow, image_scale = (-xs, xs, xs), sortOrder = -5)
         self.prevButton = DirectButton(parent = imageFrame, relief = None, command = self.prev, pos = (-0.69999999999999996, 0, 0), image = arrow, image_scale = xs, sortOrder = -5)
         self.closeButton = DirectButton(parent = imageFrame, relief = None, command = self.close, pos = (0.78000000000000003, 0, -0.5), image = closeButton, image_scale = 0.29999999999999999, text = PLocalizer.lClose, text_fg = PiratesGuiGlobals.TextFG1, text_scale = 0.050000000000000003, text_pos = (0, -0.10000000000000001), sortOrder = -5)
         self.showIval = Sequence(Func(imageFrame.show), Wait(1), Parallel(LerpPosInterval(self.closeButton, 0.20000000000000001, Vec3(0.78000000000000003, 0, -0.80000000000000004), Vec3(0.78000000000000003, 0, -0.5)), LerpPosInterval(self.nextButton, 0.20000000000000001, Vec3(1, 0, 0), Vec3(0.69999999999999996, 0, 0)), LerpPosInterval(self.prevButton, 0.20000000000000001, Vec3(-1, 0, 0), Vec3(-0.69999999999999996, 0, 0))), Func(self.imageLabel.show))
@@ -70,7 +70,7 @@ class ScreenshotViewer:
             self.nextButton['state'] = DGG.NORMAL
 
     
-    def next(self):
+    def __next__(self):
         self.currentIndex = (self.currentIndex + 1) % len(self.screens)
         
         try:

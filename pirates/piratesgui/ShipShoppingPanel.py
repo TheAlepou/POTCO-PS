@@ -29,7 +29,7 @@ class ShipShoppingPanel(ShipSelectionPanel):
             interactNPC = base.cr.interactionMgr.getCurrent()
             if interactNPC is not None:
                 repairButtonState = DGG.DISABLED
-                for frames in self.shipFrames.itervalues():
+                for frames in list(self.shipFrames.values()):
                     for frame in frames:
                         shipOV = frame.snapShot['shipOV']
                         if shipOV is not None:

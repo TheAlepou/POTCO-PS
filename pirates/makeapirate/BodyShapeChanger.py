@@ -111,7 +111,7 @@ class BodyShapeChanger(BorderFrame):
 
     
     def doConfirmBody(self, choice):
-        print 'doConfirmBody %s' % choice
+        print(('doConfirmBody %s' % choice))
         if localAvatar.getGameState() not in 'Halt':
             self.destroy()
             return None

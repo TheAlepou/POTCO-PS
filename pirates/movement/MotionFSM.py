@@ -121,7 +121,7 @@ class MotionAnimFSM(FSM):
             if self.av is not localAvatar or style or scale:
                 if scale:
                     newScale = moveSpeed * scale
-                elif type(style) is not types.StringType:
+                elif type(style) is not bytes:
                     style = style.getBodyShape()
                 
                 animFileName = self.av.getAnimFilename(self.av.getCurrentAnim())

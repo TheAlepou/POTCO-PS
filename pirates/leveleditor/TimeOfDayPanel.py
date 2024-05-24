@@ -8,7 +8,7 @@ from direct.tkwidgets import Floater
 from direct.tkwidgets import Slider
 from direct.tkwidgets import VectorWidgets
 from direct.tkwidgets import Valuator
-import tkColorChooser
+import tkinter.colorchooser
 from direct.directtools.DirectUtil import getTkColorString
 import Pmw
 from direct.gui import DirectGuiGlobals as DGG
@@ -16,7 +16,7 @@ from pirates.piratesbase import PLocalizer as PL
 from pirates.piratesbase import PiratesGlobals
 from pirates.piratesbase import TODGlobals
 from pandac.PandaModules import *
-from Tkinter import *
+from tkinter import *
 
 class TimeOfDayPanel(AppShell):
     appname = 'Time Of Day Panel'
@@ -192,7 +192,7 @@ class TimeOfDayPanel(AppShell):
         def popupFogColorPicker():
             baseColor = self.todMgr.getFogColor()
             initColor = self.clipLightValue(baseColor * 255.0, 255.0)
-            color = tkColorChooser.askcolor(parent = interior, initialcolor = (initColor[0], initColor[1], initColor[2]))
+            color = tkinter.colorchooser.askcolor(parent = interior, initialcolor = (initColor[0], initColor[1], initColor[2]))
             if color[0] is not None:
                 self.fogColor.set((round(color[0][0] / 255.0, 2), round(color[0][1] / 255.0, 2), round(color[0][2] / 255.0, 2)))
             
@@ -276,7 +276,7 @@ class TimeOfDayPanel(AppShell):
         def popupAmbientColorPicker():
             baseColor = self.todMgr.getFillLightColor()
             initColor = self.clipLightValue(baseColor * 255.0, 255.0)
-            color = tkColorChooser.askcolor(parent = interior, initialcolor = (initColor[0], initColor[1], initColor[2]))
+            color = tkinter.colorchooser.askcolor(parent = interior, initialcolor = (initColor[0], initColor[1], initColor[2]))
             if color[0] is not None:
                 self.ambientColor.set((round(color[0][0] / 255.0, 2), round(color[0][1] / 255.0, 2), round(color[0][2] / 255.0, 2)))
             
@@ -312,7 +312,7 @@ class TimeOfDayPanel(AppShell):
         def popupDirectionalColorPicker():
             baseColor = self.todMgr.getFrontLightColor()
             initColor = self.clipLightValue(baseColor * 127.5, 255.0)
-            color = tkColorChooser.askcolor(parent = interior, initialcolor = (initColor[0], initColor[1], initColor[2]))
+            color = tkinter.colorchooser.askcolor(parent = interior, initialcolor = (initColor[0], initColor[1], initColor[2]))
             if color[0] is not None:
                 self.directionalColor.set((round(color[0][0] / 127.5, 2), round(color[0][1] / 127.5, 2), round(color[0][2] / 127.5, 2)))
             
@@ -347,7 +347,7 @@ class TimeOfDayPanel(AppShell):
         def popupBackColorPicker():
             baseColor = self.todMgr.getBackLightColor()
             initColor = self.clipLightValue(baseColor * 127.5, 255.0)
-            color = tkColorChooser.askcolor(parent = interior, initialcolor = (initColor[0], initColor[1], initColor[2]))
+            color = tkinter.colorchooser.askcolor(parent = interior, initialcolor = (initColor[0], initColor[1], initColor[2]))
             if color[0] is not None:
                 self.backLightColor.set((round(color[0][0] / 127.5, 2), round(color[0][1] / 127.5, 2), round(color[0][2] / 127.5, 2)))
             

@@ -28,8 +28,8 @@ from otp.otpbase import OTPGlobals
 from otp.otpbase import OTPLocalizer
 from pirates.piratesgui import PDialog
 from pirates.chat.PWhiteList import PWhiteList
-import PiratesGlobals
-import __builtin__
+from . import PiratesGlobals
+import builtins
 
 try:
     import embedded
@@ -60,7 +60,7 @@ class PiratesBase(OTPBase):
     
     def __init__(self):
         OTPBase.__init__(self, windowType = 'none')
-        print cpMgr
+        print(cpMgr)
         self.hasEmbedded = hasEmbedded
         self.shipFactory = None
         self.firstMateVoiceOn = 1
@@ -131,7 +131,7 @@ class PiratesBase(OTPBase):
         else:
             self.getDisplayResolutions(bits_per_pixel, base.pipe)
         if options_loaded:
-            print 'state = %s' % options.state
+            print(('state = %s' % options.state))
             if __dev__:
                 options.save(Options.DEFAULT_FILE_PATH, Options.WORKING_STATE)
             elif options.state == Options.DEFAULT_STATE or options.state == Options.NEW_STATE:
@@ -720,7 +720,7 @@ class PiratesBase(OTPBase):
         elif gridDetail == 'low':
             self.farCull.setPos(0, 200, 0)
         else:
-            raise StandardError, 'Invalid grid-detail: %s' % gridDetail
+            raise Exception('Invalid grid-detail: %s' % gridDetail)
 
     
     def disableFarCull(self):
@@ -855,7 +855,7 @@ class PiratesBase(OTPBase):
         def nullYield(comment = ''):
             pass
 
-        __builtin__.yieldThread = nullYield
+        builtins.yieldThread = nullYield
         del nullYield
         base.graphicsEngine.renderFrame()
         self.downloadWatcher = PiratesDownloadWatcher.PiratesDownloadWatcher(PLocalizer.LauncherPhaseNames)

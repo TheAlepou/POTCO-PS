@@ -1,6 +1,6 @@
 # File: A (Python 2.4)
 
-from AITrade import AITrade
+from .AITrade import AITrade
 from pirates.uberdog.UberDogGlobals import GiftOrigin, InventoryCategory, InventoryType, InventoryId
 from direct.directnotify.DirectNotifyGlobal import directNotify
 

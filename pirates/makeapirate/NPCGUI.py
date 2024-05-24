@@ -116,7 +116,7 @@ class NPCGUI(DirectFrame, StateData.StateData):
 
     
     def randomPick(self):
-        cList = range(0, 16)
+        cList = list(range(0, 16))
         cList.remove(self.main.skeletonType)
         choice = random.choice(cList)
         if choice == 0:

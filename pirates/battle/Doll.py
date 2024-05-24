@@ -1,8 +1,8 @@
 # File: D (Python 2.4)
 
 import random
-import Weapon
-import WeaponGlobals
+from . import Weapon
+from . import WeaponGlobals
 from direct.interval.IntervalGlobal import *
 from pandac.PandaModules import *
 from pirates.battle.EnemySkills import *

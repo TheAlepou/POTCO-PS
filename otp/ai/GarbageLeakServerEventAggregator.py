@@ -40,7 +40,7 @@ class GarbageLeakServerEventAggregator(DirectObject):
 
 
     def _sendLeaks(self, task = None):
-        for (desc, curNum,) in self._curLeakDesc2num.iteritems():
+        for (desc, curNum,) in list(self._curLeakDesc2num.items()):
             self._sentLeakDesc2num.setdefault(desc, 0)
             num = (curNum - self._sentLeakDesc2num[desc])
             if ((num > 0) and self.cr.timeManager.d_setClientGarbageLeak(num, desc)):

@@ -1,7 +1,7 @@
 # File: T (Python 2.4)
 
-import Weapon
-import WeaponGlobals
+from . import Weapon
+from . import WeaponGlobals
 from pirates.audio import SoundGlobals
 from pirates.audio.SoundGlobals import loadSfx
 from direct.interval.IntervalGlobal import *

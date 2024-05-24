@@ -149,7 +149,7 @@ class DistributedQuestGiver(Avatar.Avatar):
         AvailableQuests = []
         inventory = localAvatar.getInventory()
         prereqExcludes = base.config.GetString('exclude-prereq-quests', '')
-        for (questId, questDNA) in QuestDB.QuestDict.items():
+        for (questId, questDNA) in list(QuestDB.QuestDict.items()):
             if len(prereqExcludes):
                 if questId in prereqExcludes:
                     continue
@@ -712,7 +712,7 @@ class DistributedQuestGiver(Avatar.Avatar):
                     animSet = quest.getAnimSetAfter()
                     self.notify.debug('%s stringAfter: %s' % (questId, questStr))
                     if hasattr(self, '_questRewardsEarned'):
-                        print 'GOT questRewardsEarned: %s' % self._questRewardsEarned
+                        print(('GOT questRewardsEarned: %s' % self._questRewardsEarned))
                         self.questRewardGUI = QuestRewardGUI(quest, self._questRewardsEarned)
                         localAvatar.guiMgr.subtitler.setPageChat('', options = [
                             PLocalizer.Continue], callback = handleOption, extraArgs = [
@@ -956,7 +956,7 @@ class DistributedQuestGiver(Avatar.Avatar):
         offerDict = { }
         fromQuests = []
         prereqExcludes = base.config.GetString('exclude-prereq-quests', '')
-        for (questId, questDNA) in QuestDB.QuestDict.items():
+        for (questId, questDNA) in list(QuestDB.QuestDict.items()):
             if prereqExcludes and questId in prereqExcludes:
                 continue
             

@@ -3,7 +3,7 @@
 from pandac.PandaModules import *
 from direct.showbase.DirectObject import *
 from direct.interval.IntervalGlobal import *
-from EffectController import EffectController
+from .EffectController import EffectController
 
 class RingOfFog(NodePath, EffectController):
     

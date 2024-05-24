@@ -19,11 +19,11 @@ class TimeOfDayManagerBase:
 
     
     def printNumbers(self, num1, num2):
-        print 'Print Numbers %s %s' % (num1, num2)
+        print(('Print Numbers %s %s' % (num1, num2)))
 
     
     def printTime(self, index = None):
-        print 'Print Index %s Time %s' % (index, self.getCurrentIngameTime())
+        print(('Print Index %s Time %s' % (index, self.getCurrentIngameTime())))
 
     
     def addthingy(self):

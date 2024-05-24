@@ -1893,28 +1893,28 @@ def printGlobals():
     for entryKey in HULL_TYPES:
         hullData = HULL_TYPES[entryKey]
         if hullData['Available'] == 1:
-            print 'Hull Type: %s' % hullData['Name']
-            print ''
-            print '  Upgrade Values'
+            print(('Hull Type: %s' % hullData['Name']))
+            print('')
+            print('  Upgrade Values')
             for attribName in [
                 'Armor',
                 'Speed',
                 'Turning',
                 'Cargo']:
                 attribValue = hullData.get(attribName, 1.0)
-                print '    %s : %s%%' % (attribName, int(attribValue * 100))
+                print(('    %s : %s%%' % (attribName, int(attribValue * 100))))
                 broadsideType = hullData.get('BroadsideType')
             
             if broadsideType:
                 broadsideAmount = int(hullData.get('BroadsideAmount') * 100)
                 broadsideName = PLocalizer.InventoryTypeNames.get(broadsideType, 'Error')
-                print '    broadsides %s%% %s' % (broadsideAmount, broadsideName)
+                print(('    broadsides %s%% %s' % (broadsideAmount, broadsideName)))
             
-            print ''
-            print '  Upgrade Costs'
+            print('')
+            print('  Upgrade Costs')
             costDict = hullData.get('Cost', { })
             for shipClass in HULLS_THAT_CAN_UPGRADE:
-                print '    %s' % PLocalizer.ShipClassNames[shipClass]
+                print(('    %s' % PLocalizer.ShipClassNames[shipClass]))
                 for currency in COST_LIST:
                     fixedCost = 0
                     relativeCost = 0
@@ -1934,34 +1934,34 @@ def printGlobals():
                     else:
                         currencyName = PLocalizer.InventoryTypeNames.get(currency, 'Unknown Currency')
                     if totalCost:
-                        print '      %s %s' % (currencyName, totalCost)
+                        print(('      %s %s' % (currencyName, totalCost)))
                         continue
                 
             
-            print ''
+            print('')
             continue
     
     for entryKey in RIGGING_TYPES:
         riggingData = RIGGING_TYPES[entryKey]
         if riggingData['Available'] == 1:
-            print 'Sail Type: %s' % riggingData['Name']
-            print ''
-            print '  Upgrade Values'
+            print(('Sail Type: %s' % riggingData['Name']))
+            print('')
+            print('  Upgrade Values')
             boostInfo = riggingData['SkillBoosts']
             if boostInfo:
-                for skillId in boostInfo.keys():
+                for skillId in list(boostInfo.keys()):
                     skillLevel = boostInfo[skillId]
                     skillName = PLocalizer.InventoryTypeNames[skillId]
                     if skillLevel:
-                        print '    %s %s' % (skillName, skillLevel)
+                        print(('    %s %s' % (skillName, skillLevel)))
                         continue
                 
             
-            print ''
-            print '  Upgrade Costs'
+            print('')
+            print('  Upgrade Costs')
             costDict = riggingData.get('Cost', { })
             for shipClass in HULLS_THAT_CAN_UPGRADE:
-                print '    %s' % PLocalizer.ShipClassNames[shipClass]
+                print(('    %s' % PLocalizer.ShipClassNames[shipClass]))
                 for currency in COST_LIST:
                     fixedCost = 0
                     relativeCost = 0
@@ -1981,11 +1981,11 @@ def printGlobals():
                     else:
                         currencyName = PLocalizer.InventoryTypeNames.get(currency, 'Unknown Currency')
                     if totalCost:
-                        print '      %s %s' % (currencyName, totalCost)
+                        print(('      %s %s' % (currencyName, totalCost)))
                         continue
                 
             
-            print ''
+            print('')
             continue
     
 

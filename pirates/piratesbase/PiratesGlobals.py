@@ -1,7 +1,7 @@
 # File: P (Python 2.4)
 
 from pandac.PandaModules import *
-import PLocalizer
+from . import PLocalizer
 from otp.otpbase.OTPGlobals import *
 from direct.gui import DirectFrame
 from direct.gui import DirectButton

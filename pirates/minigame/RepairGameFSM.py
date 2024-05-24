@@ -1,6 +1,6 @@
 # File: R (Python 2.4)
 
-from MinigameFSM import MinigameFSM
+from .MinigameFSM import MinigameFSM
 from direct.directnotify import DirectNotifyGlobal
 
 class RepairGameFSM(MinigameFSM):

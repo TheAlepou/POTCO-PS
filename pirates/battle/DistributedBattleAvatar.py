@@ -269,8 +269,8 @@ class DistributedBattleAvatar(DistributedReputationAvatar, WeaponBase, Teamable)
         
         def set_hp(self, hp):
             if type(hp) in [
-                types.IntType,
-                types.FloatType]:
+                int,
+                float]:
                 self._DistributedBattleAvatar__hp = hp
             else:
                 self._DistributedBattleAvatar__hp = 0
@@ -283,8 +283,8 @@ class DistributedBattleAvatar(DistributedReputationAvatar, WeaponBase, Teamable)
         
         def set_maxHp(self, maxHp):
             if type(maxHp) in [
-                types.IntType,
-                types.FloatType]:
+                int,
+                float]:
                 self._DistributedBattleAvatar__maxHp = maxHp
             else:
                 self._DistributedBattleAvatar__maxHp = 1
@@ -2352,7 +2352,7 @@ class DistributedBattleAvatar(DistributedReputationAvatar, WeaponBase, Teamable)
     def setSkillEffects(self, buffs):
         for (effectId, attackerId, timestamp, duration, timeLeft, recur, buffData) in buffs:
             buffKeyId = '%s-%s' % (effectId, attackerId)
-            if buffKeyId not in self.skillEffects.keys():
+            if buffKeyId not in list(self.skillEffects.keys()):
                 self.skillEffects[buffKeyId] = [
                     effectId,
                     attackerId,
@@ -2367,7 +2367,7 @@ class DistributedBattleAvatar(DistributedReputationAvatar, WeaponBase, Teamable)
             effect[4] = timestamp
         
         killList = []
-        for buffKeyId in self.skillEffects.keys():
+        for buffKeyId in list(self.skillEffects.keys()):
             foundEntry = 0
             for entry in buffs:
                 id = '%s-%s' % (entry[0], entry[1])
@@ -2388,7 +2388,7 @@ class DistributedBattleAvatar(DistributedReputationAvatar, WeaponBase, Teamable)
     
     def findAllBuffCopyKeys(self, effectId):
         buffCopies = []
-        for buffKeyId in self.skillEffects.keys():
+        for buffKeyId in list(self.skillEffects.keys()):
             if self.skillEffects[buffKeyId][0] == effectId:
                 buffCopies.append(buffKeyId)
                 continue
@@ -2398,7 +2398,7 @@ class DistributedBattleAvatar(DistributedReputationAvatar, WeaponBase, Teamable)
     
     def getSkillEffects(self):
         buffIds = []
-        for buffKeyId in self.skillEffects.keys():
+        for buffKeyId in list(self.skillEffects.keys()):
             buffId = self.skillEffects[buffKeyId][0]
             if buffId not in buffIds:
                 buffIds.append(buffId)

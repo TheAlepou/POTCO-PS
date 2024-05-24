@@ -12,7 +12,7 @@ class DistributedDailyQuestSpot(DistributedNode.DistributedNode):
     def __init__(self, cr):
         NodePath.NodePath.__init__(self, 'QuestSpot')
         DistributedNode.DistributedNode.__init__(self, cr)
-        print 'New Daily Quest Spot'
+        print('New Daily Quest Spot')
         base.dqs = self
 
     

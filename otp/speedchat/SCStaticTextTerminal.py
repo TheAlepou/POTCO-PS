@@ -1,6 +1,6 @@
 # File: S (Python 2.4)
 
-from SCTerminal import SCTerminal
+from .SCTerminal import SCTerminal
 from otp.otpbase.OTPLocalizer import SpeedChatStaticText
 SCStaticTextMsgEvent = 'SCStaticTextMsg'
 

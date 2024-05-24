@@ -53,7 +53,7 @@ class Ship(DirectObject.DirectObject):
         self.char = self.modelRoot.find('**/+Character')
         self.riggingControls = { }
         numBundles = self.char.node().getNumBundles()
-        masts = self.breakAnims.keys()
+        masts = list(self.breakAnims.keys())
         masts.sort()
         self.sinkTimeScale = 1.0
         if self.breakSfx1 is None:
@@ -102,45 +102,47 @@ class Ship(DirectObject.DirectObject):
         self.sinkTrack = None
         self.isSplit = False
         self.owner = None
-        continue
-        self.mastCollisions = _[1]([ (int(x.getTag('Mast Code')), x) for x in self.modelCollisions.findAllMatches('**/collision_masts') ])
-        self.sailCollisions = self.modelCollisions.findAllMatches('**/collision_sails')
-        self.disableSails()
-        if self.metaAnims['rolldown'].getNumAnims():
-            self._Ship__rollDownIval = AnimControlInterval(self.metaAnims['rolldown'])
-            self.metaAnims['rolldown'].poseAll(0)
-        else:
-            self._Ship__rollDownIval = Interval('dummy', 0, 0)
-        if self.metaAnims['rollup'].getNumAnims():
-            self._Ship__rollUpIval = AnimControlInterval(self.metaAnims['rollup'])
-        else:
-            self._Ship__rollUpIval = Interval('dummy', 0, 0)
-        self.sailStartIval = Sequence(Func(self.stopIvals), Func(self.enableSails), self._Ship__rollDownIval, Func(self.metaAnims['idle'].loopAll, 1))
-        self.sailStopIval = Sequence(Func(self.stopIvals), self._Ship__rollUpIval, Func(self.disableSails), Func(self.metaAnims['tiedup'].playAll))
-        self.windTunnelEffect1 = None
-        self.windTunnelEffect2 = None
-        self.windConeEffect = None
-        self.powerRechargeEffect = None
-        self.protectionEffect = None
-        self.takeCoverEffect = None
-        self.openFireEffect = None
-        self.stormEffect = None
-        self.wake = None
-        self.fogEffect = None
-        self.leftSideFire = None
-        self.leftSideSmoke = None
-        self.leftSideFire2 = None
-        self.leftSideSmoke2 = None
-        self.rightSideFire = None
-        self.rightSideSmoke = None
-        self.rightSideFire2 = None
-        self.rightSideSmoke2 = None
-        self.rearSideFire = None
-        self.rearSideSmoke = None
-        self.fader = None
-        self.idleBounds = self.modelRoot.getTightBounds()
-        self.setupCollisions()
-
+        for i in range(10):
+            if i == 5:
+                continue
+            self.mastCollisions = _[1]([ (int(x.getTag('Mast Code')), x) for x in self.modelCollisions.findAllMatches('**/collision_masts') ])
+            self.sailCollisions = self.modelCollisions.findAllMatches('**/collision_sails')
+            self.disableSails()
+            if self.metaAnims['rolldown'].getNumAnims():
+                self._Ship__rollDownIval = AnimControlInterval(self.metaAnims['rolldown'])
+                self.metaAnims['rolldown'].poseAll(0)
+            else:
+                self._Ship__rollDownIval = Interval('dummy', 0, 0)
+            if self.metaAnims['rollup'].getNumAnims():
+                self._Ship__rollUpIval = AnimControlInterval(self.metaAnims['rollup'])
+            else:
+                self._Ship__rollUpIval = Interval('dummy', 0, 0)
+            self.sailStartIval = Sequence(Func(self.stopIvals), Func(self.enableSails), self._Ship__rollDownIval, Func(self.metaAnims['idle'].loopAll, 1))
+            self.sailStopIval = Sequence(Func(self.stopIvals), self._Ship__rollUpIval, Func(self.disableSails), Func(self.metaAnims['tiedup'].playAll))
+            self.windTunnelEffect1 = None
+            self.windTunnelEffect2 = None
+            self.windConeEffect = None
+            self.powerRechargeEffect = None
+            self.protectionEffect = None
+            self.takeCoverEffect = None
+            self.openFireEffect = None
+            self.stormEffect = None
+            self.wake = None
+            self.fogEffect = None
+            self.leftSideFire = None
+            self.leftSideSmoke = None
+            self.leftSideFire2 = None
+            self.leftSideSmoke2 = None
+            self.rightSideFire = None
+            self.rightSideSmoke = None
+            self.rightSideFire2 = None
+            self.rightSideSmoke2 = None
+            self.rearSideFire = None
+            self.rearSideSmoke = None
+            self.fader = None
+            self.idleBounds = self.modelRoot.getTightBounds()
+            self.setupCollisions()
+        
     
     def setOwner(self, owner, ownerIsModelRoot = False):
         self.owner = owner
@@ -319,7 +321,7 @@ class Ship(DirectObject.DirectObject):
     def stopIvals(self):
         self._Ship__rollDownIval.pause()
         self._Ship__rollUpIval.pause()
-        for ival in self._Ship__hitSailingIvals.values():
+        for ival in list(self._Ship__hitSailingIvals.values()):
             ival.pause()
         
 
@@ -584,7 +586,7 @@ class Ship(DirectObject.DirectObject):
         self.sailStartIval = None
         self.sailStopIval.pause()
         self.sailStopIval = None
-        for ival in self._Ship__breakIvals.values():
+        for ival in list(self._Ship__breakIvals.values()):
             ival.pause()
         
         self._Ship__breakIvals = { }
@@ -676,4 +678,5 @@ class Ship(DirectObject.DirectObject):
             def camLookAtDummy(t):
                 camera.lookAt(self.owner.lookAtDummy)
 
-            return Parallel(Func(camera.reparentTo, self.owner.attachNewNode('cameraDummy')), LerpPosInterval(camera, 16.0 * self.sinkTimeScale, camEndPos, startPos = camStartPos, blendType = 'easeInOut'), LerpPosInterval(self.owner.lookAtDummy, 18.0 * self.sinkTimeScale, Vec3(0, 80, 0)), LerpF
+            return Parallel(Func(camera.reparentTo, self.owner.attachNewNode('cameraDummy')), LerpPosInterval(camera, 16.0 * self.sinkTimeScale, camEndPos, startPos = camStartPos, blendType = 'easeInOut'), LerpPosInterval(self.owner.lookAtDummy, 18.0 * self.sinkTimeScale, Vec3(0, 80, 0)), LerpFunc(camLookAtDummy, 18.0 * self.sinkTimeScale, fromData = 0, toData = 1)) # Added missing closing parenthesis
+

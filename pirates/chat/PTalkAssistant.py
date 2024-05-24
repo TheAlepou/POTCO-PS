@@ -142,7 +142,7 @@ class PTalkAssistant(TalkAssistant):
         valid = True
         if comm in ('afk', 'away'):
             localAvatar.toggleAFK()
-        elif comm in PLocalizer.EmoteCommands.keys():
+        elif comm in list(PLocalizer.EmoteCommands.keys()):
             emoteCode = PLocalizer.EmoteCommands[comm]
             if type(emoteCode) == type((0,)):
                 emoteCode = random.choice(emoteCode)
@@ -198,7 +198,7 @@ class PTalkAssistant(TalkAssistant):
     
     def receiveOpenTalk(self, avatarId, avatarName, accountId, accountName, message, scrubbed = 0):
         if hasattr(base, 'localAvatar') and base.localAvatar.getDoId() == avatarId:
-            for playerId in base.localAvatar.playersNearby.keys():
+            for playerId in list(base.localAvatar.playersNearby.keys()):
                 chatFlags = base.localAvatar.playersNearby[playerId]
                 if not chatFlags[0]:
                     if chatFlags[1] and scrubbed:
@@ -374,7 +374,7 @@ class PTalkAssistant(TalkAssistant):
         if self.checkPartyTypedChat():
             localAvatar.bandMember.sendTalk(0, 0, '', message, 0, 0)
         else:
-            print 'Party chat error'
+            print('Party chat error')
             error = ERROR_NO_CREW_CHAT
         return error
 
@@ -384,7 +384,7 @@ class PTalkAssistant(TalkAssistant):
         if self.checkShipPVPTypedChat():
             base.cr.distributedDistrict.siegeManager.sendTalk(message)
         else:
-            print 'Ship PVP chat error: Crew typed Chat'
+            print('Ship PVP chat error: Crew typed Chat')
             error = ERROR_NO_SHIPPVP_CHAT
         return error
 
@@ -403,7 +403,7 @@ class PTalkAssistant(TalkAssistant):
         if self.checkPartySpeedChat():
             localAvatar.bandMember.b_setSpeedChat(msgIndex)
         else:
-            print 'Party chat error'
+            print('Party chat error')
             error = ERROR_NO_CREW_CHAT
         return error
 
@@ -413,7 +413,7 @@ class PTalkAssistant(TalkAssistant):
         if self.checkPartySpeedChat():
             localAvatar.bandMember.b_setSCQuestChat(questInt, msgType, taskNum)
         else:
-            print 'Quest Party chat error'
+            print('Quest Party chat error')
             error = ERROR_NO_CREW_CHAT
         msgIndex = taskNum
         return error
@@ -424,7 +424,7 @@ class PTalkAssistant(TalkAssistant):
         if self.checkGuildSpeedChat():
             base.cr.guildManager.sendSCQuest(questInt, msgType, taskNum)
         else:
-            print 'Quest Guild chat error'
+            print('Quest Guild chat error')
             error = ERROR_NO_GUILD_CHAT
         return error
 
@@ -434,7 +434,7 @@ class PTalkAssistant(TalkAssistant):
         if self.checkShipPVPSpeedChat():
             base.cr.distributedDistrict.siegeManager.sendSC(msgIndex)
         else:
-            print 'Ship PVP chat error: Crew Speed Chat'
+            print('Ship PVP chat error: Crew Speed Chat')
             error = ERROR_NO_SHIPPVP_CHAT
         return error
 
@@ -444,7 +444,7 @@ class PTalkAssistant(TalkAssistant):
         if self.checkShipPVPSpeedChat():
             base.cr.distributedDistrict.siegeManager.sendSCQuest(msgType, questInt, taskNum)
         else:
-            print 'Ship PVP chat error: SCQuest Chat'
+            print('Ship PVP chat error: SCQuest Chat')
             error = ERROR_NO_SHIPPVP_CHAT
         return error
 

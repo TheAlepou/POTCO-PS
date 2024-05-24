@@ -19,14 +19,14 @@ class QuestLadderDependency:
 
     
     def findIdDependency(self, questId):
-        if self.idDependencyMap.has_key(questId):
+        if questId in self.idDependencyMap:
             return self.idDependencyMap[questId]
         
         return 0
 
     
     def findIntDependency(self, questInt):
-        if self.idDependencyMap.has_key(questId):
+        if questId in self.idDependencyMap:
             return self.intDependencyMap[questId]
         
         return 0

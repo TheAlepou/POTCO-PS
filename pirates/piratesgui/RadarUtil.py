@@ -140,12 +140,12 @@ class RadarUtil(DirectFrame):
         self.setSavePathFromEntry()
         self.savePathButton = DirectButton(parent = self.ctrlPanel, pos = (-1.1699999999999999, 0, 0.60799999999999998), scale = 0.059999999999999998, borderWidth = (0.10000000000000001, 0.10000000000000001), text = 'Set Path', command = self.setSavePathFromEntry)
         self.sizeLabel = DirectLabel(parent = self.ctrlPanel, relief = None, pos = (-1.28, 0, 0.40000000000000002), text = 'size', text_scale = 0.050000000000000003)
-        self.sizeEntry = DirectEntry(parent = self.ctrlPanel, initialText = `int(base.camLens.getFilmSize()[0])`, scale = 0.050000000000000003, width = 3, pos = (-1.1870000000000001, 0, 0.40000000000000002), command = self.handleSizeEntryUpdated)
+        self.sizeEntry = DirectEntry(parent = self.ctrlPanel, initialText = repr(int(base.camLens.getFilmSize()[0])), scale = 0.050000000000000003, width = 3, pos = (-1.1870000000000001, 0, 0.40000000000000002), command = self.handleSizeEntryUpdated)
         self.xLabel = DirectLabel(parent = self.ctrlPanel, relief = None, pos = (-1.2769999999999999, 0, 0.22), text = 'x', text_scale = 0.050000000000000003)
-        self.xEntry = DirectEntry(parent = self.ctrlPanel, initialText = `self.camera.getX()`, scale = 0.050000000000000003, width = 3, pos = (-1.1870000000000001, 0, 0.22), command = self.handleXEntryUpdated)
+        self.xEntry = DirectEntry(parent = self.ctrlPanel, initialText = repr(self.camera.getX()), scale = 0.050000000000000003, width = 3, pos = (-1.1870000000000001, 0, 0.22), command = self.handleXEntryUpdated)
         self.yLabel = DirectLabel(parent = self.ctrlPanel, relief = None, pos = (-1.2769999999999999, 0, 0.10000000000000001), text = 'y', text_scale = 0.050000000000000003)
-        self.yEntry = DirectEntry(parent = self.ctrlPanel, initialText = `self.camera.getY()`, scale = 0.050000000000000003, width = 3, pos = (-1.1870000000000001, 0, 0.10000000000000001), command = self.handleYEntryUpdated)
-        self.gScaleLabel = DirectLabel(parent = self.resPanel, relief = None, scale = 0.050000000000000003, pos = (1.03, 0, -0.75), text = 'gScale = ' + `self.getGlobalScale()`, text_fg = Vec4(0, 0, 0, 1), text_bg = Vec4(1, 1, 1, 0), text_align = TextNode.ALeft, textMayChange = True)
+        self.yEntry = DirectEntry(parent = self.ctrlPanel, initialText = repr(self.camera.getY()), scale = 0.050000000000000003, width = 3, pos = (-1.1870000000000001, 0, 0.10000000000000001), command = self.handleYEntryUpdated)
+        self.gScaleLabel = DirectLabel(parent = self.resPanel, relief = None, scale = 0.050000000000000003, pos = (1.03, 0, -0.75), text = 'gScale = ' + repr(self.getGlobalScale()), text_fg = Vec4(0, 0, 0, 1), text_bg = Vec4(1, 1, 1, 0), text_align = TextNode.ALeft, textMayChange = True)
         self.gPosLabel = DirectLabel(parent = self.resPanel, relief = None, scale = 0.050000000000000003, pos = (1.03, 0, -0.84999999999999998), text = 'gPos = (0,0)', text_fg = Vec4(0, 0, 0, 1), text_bg = Vec4(1, 1, 1, 0), text_align = TextNode.ALeft, textMayChange = True)
         self.saveScreenButton = DirectButton(parent = self.ctrlPanel, pos = (-1.1671899999999999, 0, -0.75), scale = 0.059999999999999998, borderWidth = (0.10000000000000001, 0.10000000000000001), text = 'Save Screen', frameColor = (0, 1, 0, 1), command = self.saveScreenShot)
         self.exitButton = DirectButton(parent = self.ctrlPanel, pos = (-1.1671899999999999, 0, -0.90000000000000002), scale = 0.059999999999999998, borderWidth = (0.10000000000000001, 0.10000000000000001), text = 'Quit', frameColor = (0, 1, 0, 1), command = self.destroy)
@@ -259,8 +259,8 @@ class RadarUtil(DirectFrame):
     
     def setFilmSize(self, size):
         base.camLens.setFilmSize(size)
-        self.sizeEntry.enterText(`size`)
-        self.gScaleLabel['text'] = 'scale: ' + `self.getGlobalScale()`
+        self.sizeEntry.enterText(repr(size))
+        self.gScaleLabel['text'] = 'scale: ' + repr(self.getGlobalScale())
 
     
     def setCameraX(self, x):
@@ -285,9 +285,9 @@ class RadarUtil(DirectFrame):
             
             self.model = model
             self.model.reparentTo(render)
-            print modelName, ' loaded'
+            print((modelName, ' loaded'))
         else:
-            print modelName, ' not loaded'
+            print((modelName, ' not loaded'))
 
     
     def findModel(self, modelName):
@@ -303,7 +303,7 @@ class RadarUtil(DirectFrame):
             self.setCameraY(0)
             self.camera.setPos(0, 0, 0)
         else:
-            print modelName, ' not in scenegraph'
+            print((modelName, ' not in scenegraph'))
 
     
     def stashNamedNodes(self, names = []):
@@ -351,7 +351,7 @@ class RadarUtil(DirectFrame):
         self.savePath = Filename(fileName)
         self.savePath.touch()
         vfs.resolveFilename(self.savePath, DSearchPath('.'))
-        self.savePathEntry.set(`self.savePath`)
+        self.savePathEntry.set(repr(self.savePath))
 
     
     def resizeForPicture(self):
@@ -376,14 +376,14 @@ class RadarUtil(DirectFrame):
             self.pnm = PNMImage(base.win.getXSize(), base.win.getYSize())
         
         if not base.win.getScreenshot(self.pnm):
-            print 'Error: Screenshot not taken'
+            print('Error: Screenshot not taken')
         elif not filepath.touch():
-            print 'Error: invalid filepath: ' + `filepath`
+            print(('Error: invalid filepath: ' + repr(filepath)))
         elif not self.pnm.write(filepath):
-            print 'Error: Screenshot taken but not saved'
+            print('Error: Screenshot taken but not saved')
         else:
             filepath.resolveFilename(DSearchPath('.'))
-            print 'Screenshot saved to ' + `filepath`
+            print(('Screenshot saved to ' + repr(filepath)))
         self.resizeForViewing()
         self.ctrlPanel.show()
         self.resPanel.hide()

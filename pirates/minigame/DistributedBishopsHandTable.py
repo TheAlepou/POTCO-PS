@@ -216,7 +216,7 @@ class DistributedBishopsHandTable(DistributedGameTable.DistributedGameTable):
             
             def timerTask(task):
                 if task.time < task.timer:
-                    self.timerLabel['text'] = `int(PythonUtil.bound(task.timer - task.time, 0, time) + 1.0)`
+                    self.timerLabel['text'] = repr(int(PythonUtil.bound(task.timer - task.time, 0, time) + 1.0))
                     return Task.cont
                 else:
                     self.timerLabel['text'] = ''
@@ -230,7 +230,7 @@ class DistributedBishopsHandTable(DistributedGameTable.DistributedGameTable):
     def startRound(self, sequence, delay, timestamp):
         self.notify.debug('startRound')
         self.game.request('WaitingForRound')
-        self.notify.debug('Received sequence: ' + `sequence`)
+        self.notify.debug('Received sequence: ' + repr(sequence))
         if self.isLocalAvatarPlaying():
             self.notify.debug('initing round')
             self.game.initRound(sequence)

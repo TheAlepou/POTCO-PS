@@ -134,8 +134,8 @@ class InvItem(tuple):
 class InvItemList(dict):
     
     def __setitem__(self, key, value):
-        if self.has_key(key):
-            print 'error, item %s already exists (%s)! clear the item first' % (key, value)
+        if key in self:
+            print(('error, item %s already exists (%s)! clear the item first' % (key, value)))
             return False
         
         dict.__setitem__(self, key, value)
@@ -145,13 +145,13 @@ class InvItemList(dict):
     def swapItems(self, item1, item2):
         item1Loc = item1[TradableInventoryBase.ITEM_LOCATION_IDX]
         item2Loc = item2[TradableInventoryBase.ITEM_LOCATION_IDX]
-        if self.has_key(item2Loc):
+        if item2Loc in self:
             del self[item2Loc]
         
         if item2[TradableInventoryBase.ITEM_CAT_IDX]:
             self[item2Loc] = item2
         
-        if self.has_key(item1Loc):
+        if item1Loc in self:
             del self[item1Loc]
         
         if item1[TradableInventoryBase.ITEM_CAT_IDX]:
@@ -220,7 +220,7 @@ class TradableInventoryBase(DistributedInventoryBase):
                 (self.ITEM_CAT_IDX, itemCat),
                 (self.ITEM_ID_IDX, itemId)])
             if existingStacks:
-                existingStack = existingStacks.values()[0]
+                existingStack = list(existingStacks.values())[0]
                 if existingStack.getCount() >= self.getItemLimit(existingStack.getCat(), itemId):
                     return Locations.INVALID_LOCATION
                 
@@ -309,7 +309,7 @@ class TradableInventoryBase(DistributedInventoryBase):
                 
             itemType == existingItem.getType()
         
-        if existingItem and filter(lambda x: x.getLocation() == location, self.tempRems):
+        if existingItem and [x for x in self.tempRems if x.getLocation() == location]:
             existingItem = None
         
         if not existingItem == None and includeReserved == False:
@@ -330,7 +330,7 @@ class TradableInventoryBase(DistributedInventoryBase):
         if not self.areLocatablesReady:
             return None
         
-        self._locatableItems = InvItemList(map(lambda x: (x.getLocation(), x), receiveSwitchField(items, InvItem)))
+        self._locatableItems = InvItemList([(x.getLocation(), x) for x in receiveSwitchField(items, InvItem)])
         for currLoc in self._locatableItems:
             messenger.send(getLocationChangeMsg(self.doId), [
                 currLoc])
@@ -396,7 +396,7 @@ class TradableInventoryBase(DistributedInventoryBase):
     
     def _findLocatablesWithValues(self, fieldValues, countsOnly = False):
         locatables = { }
-        for currItem in self._locatableItems.itervalues():
+        for currItem in list(self._locatableItems.values()):
             for (currField, currValue) in fieldValues:
                 if len(currItem) <= currField:
                     break
@@ -410,11 +410,11 @@ class TradableInventoryBase(DistributedInventoryBase):
                 if itemCount == None:
                     itemCount = 1
                 
-                elif locatables.has_key(currItemType):
+                elif currItemType in locatables:
                     locatables[currItemType] += itemCount
                 else:
                     locatables[currItemType] = itemCount
-            locatables.has_key(currItemType)
+            currItemType in locatables
             locatables[currItem.getLocation()] = currItem
         
         return locatables
@@ -494,7 +494,7 @@ class TradableInventoryBase(DistributedInventoryBase):
                 nonLocatables.append(currItem)
                 continue
             
-            if itemCats.has_key(itemCat):
+            if itemCat in itemCats:
                 itemCats[itemCat][1].append(currItem)
                 continue
             itemCats[itemCat] = [
@@ -521,7 +521,7 @@ class TradableInventoryBase(DistributedInventoryBase):
             return int(goldCost2 - goldCost1)
 
         chosen = []
-        for (currCat, currCatInfo) in itemCats.items():
+        for (currCat, currCatInfo) in list(itemCats.items()):
             available = currCatInfo[0]
             items = currCatInfo[1]
             if available < len(items):
@@ -618,7 +618,7 @@ class TradableInventoryBase(DistributedInventoryBase):
             if verbose:
                 if not itemLimit:
                     pass
-                print 'item limit for item %s:%s passed (quantity: %s limit:%s)' % (itemCat, currItemId, quantity, 1)
+                print(('item limit for item %s:%s passed (quantity: %s limit:%s)' % (itemCat, currItemId, quantity, 1)))
                 continue
         
 
@@ -639,7 +639,7 @@ class TradableInventoryBase(DistributedInventoryBase):
                 
                 def tradeSuccess(tradeObj):
                     if verbose:
-                        print '  trade success'
+                        print('  trade success')
                     
                     self.testPending = False
 
@@ -648,13 +648,13 @@ class TradableInventoryBase(DistributedInventoryBase):
                     reasonStr = reason
                     RejectCode = RejectCode
                     import otp.uberdog.RejectCode
-                    for currCode in RejectCode.__dict__.keys():
+                    for currCode in list(RejectCode.__dict__.keys()):
                         if reason == RejectCode.__dict__[currCode]:
                             reasonStr = currCode
                             continue
                     
                     if verbose:
-                        print '  trade fail %s (%s)' % (reasonStr, tradeObj)
+                        print(('  trade fail %s (%s)' % (reasonStr, tradeObj)))
                     
                     if reason == RejectCode.OVERFLOW:
                         for currGiving in tradeObj.giving:
@@ -670,21 +670,21 @@ class TradableInventoryBase(DistributedInventoryBase):
                                 else:
                                     maxVal = minVal
                                 for currLocation in range(minVal, maxVal + 1):
-                                    if not self._locatableItems.has_key(currLocation):
-                                        print '    WARNING: trade %s failed with overflow when it should not have %s' % (tradeObj, currLocation)
+                                    if currLocation not in self._locatableItems:
+                                        print(('    WARNING: trade %s failed with overflow when it should not have %s' % (tradeObj, currLocation)))
                                         continue
                                 
                             
                         
                     elif reason == RejectCode.UNDERFLOW:
-                        print '    WARNING: trade %s failed with underflow when it should not have' % tradeObj
+                        print(('    WARNING: trade %s failed with underflow when it should not have' % tradeObj))
                     
                     self.testPending = False
 
                 
                 def tradeTimeout(tradeObj):
                     if verbose:
-                        print '  trade timeout'
+                        print('  trade timeout')
                     
                     self.testPending = False
 
@@ -714,7 +714,7 @@ class TradableInventoryBase(DistributedInventoryBase):
 
     
     def runSelfTests(self, itemCatFilter = None, testType = None, verbose = False):
-        print 'starting tests...'
+        print('starting tests...')
         
         def startTests(task = None):
             if testType == None or testType == TEST_TYPE_LIMITS:
@@ -733,12 +733,12 @@ class TradableInventoryBase(DistributedInventoryBase):
                         
                         testTradeInfo[1].sendTrade()
                         if verbose:
-                            print 'sending trade %s' % str(testTradeInfo[1])
+                            print(('sending trade %s' % str(testTradeInfo[1])))
                         
                         self.testPending = True
                     else:
                         self.selfTestsTask = None
-                        print 'finished tests.'
+                        print('finished tests.')
                         return Task.done
                 
                 return Task.cont
@@ -806,7 +806,7 @@ class TradableInventoryBase(DistributedInventoryBase):
                         fieldType = STUint8array
                     else:
                         fieldType = fieldType.getType()
-                    exec 'newVal = (' + type2gen.get(fieldType) + ',)'
+                    exec('newVal = (' + type2gen.get(fieldType) + ',)')
                 result = result[:] + newVal
             
         

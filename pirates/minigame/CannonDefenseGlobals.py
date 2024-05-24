@@ -803,7 +803,7 @@ _defenseCannonAmmoAmount = {
     InventoryType.DefenseCannonFireStorm: 25 }
 
 def getDefenseCannonAmmoAmount(ammoSkillId):
-    if _defenseCannonAmmoAmount.has_key(ammoSkillId):
+    if ammoSkillId in _defenseCannonAmmoAmount:
         return _defenseCannonAmmoAmount[ammoSkillId]
     
     return 1

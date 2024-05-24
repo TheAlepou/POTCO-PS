@@ -1,7 +1,7 @@
 # File: S (Python 2.4)
 
 from direct.gui.DirectGui import *
-from SCTerminal import SCTerminal
+from .SCTerminal import SCTerminal
 from otp.otpbase.OTPLocalizer import EmoteList, EmoteWhispers
 from otp.avatar import Emote
 SCEmoteMsgEvent = 'SCEmoteMsg'

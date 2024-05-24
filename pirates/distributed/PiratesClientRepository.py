@@ -1,4 +1,4 @@
-import types, random, gc, time, __builtin__
+import types, random, gc, time, builtins
 base.loadingScreen.beginStep('PCR', 20, 15)
 from direct.showbase.ShowBaseGlobal import *
 base.loadingScreen.tick()
@@ -18,7 +18,7 @@ from direct.showbase.PythonUtil import report
 base.loadingScreen.tick()
 from pirates.piratesbase.PiratesGlobals import *
 base.loadingScreen.tick()
-from PiratesMsgTypes import *
+from .PiratesMsgTypes import *
 base.loadingScreen.tick()
 from direct.directnotify.DirectNotifyGlobal import directNotify
 base.loadingScreen.tick()
@@ -62,8 +62,8 @@ from pirates.battle import DistributedBattleNPC
 from pirates.battle import CombatAnimations
 from pirates.band import DistributedBandMember
 from pirates.cutscene import Cutscene
-import PlayGame
-from ShardFSM import ShardFSM
+from . import PlayGame
+from .ShardFSM import ShardFSM
 from pirates.piratesbase import PiratesGlobals
 from pirates.battle import DistributedBattleNPC
 from pirates.ship import DistributedSimpleShip
@@ -207,11 +207,11 @@ class PiratesClientRepository(OTPClientRepository):
         self._interestsToTags = { }
         self._worldStack = []
         if __dev__:
-            __builtin__.go = self.getDo
-            __builtin__.gov = self.getOwnerView
+            builtins.go = self.getDo
+            builtins.gov = self.getOwnerView
             import pdb as pdb
-            __builtin__.trace = pdb.set_trace
-            __builtin__.pm = pdb.pm
+            builtins.trace = pdb.set_trace
+            builtins.pm = pdb.pm
             self.effectTypes = {
                 'damageSmoke': [
                     'BlackSmoke'],
@@ -324,7 +324,7 @@ class PiratesClientRepository(OTPClientRepository):
             bp.loginCfg()
             config_slot = base.config.GetInt('login-pirate-slot', -1)
             if config_slot >= 0 and len(avList) > 0:
-                config_subId = base.config.GetInt('login-pirate-subId', avList.keys()[0])
+                config_subId = base.config.GetInt('login-pirate-subId', list(avList.keys())[0])
                 slots = avList.get(config_subId, [])
                 if config_slot in range(len(slots)):
                     potAv = slots[config_slot]
@@ -534,7 +534,7 @@ class PiratesClientRepository(OTPClientRepository):
         self.ignore('avatarListFailed')
         self.ignore('avatarList')
         self.avList = { }
-        for (subId, avData) in avatars.items():
+        for (subId, avData) in list(avatars.items()):
             data = []
             self.avList[subId] = data
             for av in avData:
@@ -606,14 +606,14 @@ class PiratesClientRepository(OTPClientRepository):
         'deltaStamp'], dConfigParam = 'teleport')(handleAvatarResponseMsg)
     
     def enterWaitForDeleteAvatarResponse(self, potentialAvatar):
-        raise StandardError, 'This should be handled within AvatarChooser.py'
+        raise Exception('This should be handled within AvatarChooser.py')
 
     enterWaitForDeleteAvatarResponse = report(types = [
         'args',
         'deltaStamp'], dConfigParam = 'teleport')(enterWaitForDeleteAvatarResponse)
     
     def exitWaitForDeleteAvatarResponse(self):
-        raise StandardError, 'This should be handled within AvatarChooser.py'
+        raise Exception('This should be handled within AvatarChooser.py')
 
     exitWaitForDeleteAvatarResponse = report(types = [
         'args',
@@ -656,7 +656,7 @@ class PiratesClientRepository(OTPClientRepository):
         base.ambientMgr.delete()
         base.musicMgr.delete()
         messenger.send('clientLogout')
-        for (doId, obj) in self.doId2do.items():
+        for (doId, obj) in list(self.doId2do.items()):
             if not isinstance(obj, LocalPirate) and not isinstance(obj, DistributedDistrict.DistributedDistrict):
                 if hasattr(self, 'disableObject'):
                     self.disableObject(doId)

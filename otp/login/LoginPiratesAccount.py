@@ -1,4 +1,4 @@
-import LoginBase
+from . import LoginBase
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.MsgTypes import *
 from direct.directnotify.DirectNotifyGlobal import directNotify

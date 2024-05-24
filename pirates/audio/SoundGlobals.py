@@ -875,8 +875,8 @@ Music2IslandDict = {
         MUSIC_COMBAT: MUSIC_RAVENS_COVE_CAVE_BATTLE } }
 
 def getMainMusic(locationId):
-    if Music2IslandDict.has_key(locationId):
-        if Music2IslandDict.get(locationId).has_key(MUSIC_MAIN):
+    if locationId in Music2IslandDict:
+        if MUSIC_MAIN in Music2IslandDict.get(locationId):
             return Music2IslandDict.get(locationId).get(MUSIC_MAIN)
         
     
@@ -884,8 +884,8 @@ def getMainMusic(locationId):
 
 
 def getAltMusic(locationId):
-    if Music2IslandDict.has_key(locationId):
-        if Music2IslandDict.get(locationId).has_key(MUSIC_ALT):
+    if locationId in Music2IslandDict:
+        if MUSIC_ALT in Music2IslandDict.get(locationId):
             return Music2IslandDict.get(locationId).get(MUSIC_ALT)
         
     
@@ -893,8 +893,8 @@ def getAltMusic(locationId):
 
 
 def getCombatMusic(locationId):
-    if Music2IslandDict.has_key(locationId):
-        if Music2IslandDict.get(locationId).has_key(MUSIC_COMBAT):
+    if locationId in Music2IslandDict:
+        if MUSIC_COMBAT in Music2IslandDict.get(locationId):
             return Music2IslandDict.get(locationId).get(MUSIC_COMBAT)
         
     

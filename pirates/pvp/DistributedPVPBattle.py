@@ -54,7 +54,7 @@ class DistributedPVPBattle(DistributedPVPInstance):
     
     def getScoreList(self):
         scoreList = []
-        for (playerId, stats) in self.stats.items():
+        for (playerId, stats) in list(self.stats.items()):
             if playerId not in self.names:
                 continue
             

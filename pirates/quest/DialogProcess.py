@@ -235,7 +235,7 @@ class StepChoice(DialogProcess):
         DialogDict = DialogDict
         import pirates.quest.DialogTree
         textId = DialogDict.get(self.npc.getUniqueId()).get(self.dialogId).get(stepId)[index].getTextId()
-        if PLocalizer.DialogStringDict.get(self.dialogId).get(textId).has_key('choice'):
+        if 'choice' in PLocalizer.DialogStringDict.get(self.dialogId).get(textId):
             return PLocalizer.DialogStringDict.get(self.dialogId).get(textId).get('choice')
         else:
             return PLocalizer.DialogStringDict.get(self.dialogId).get(textId).get('dialog')

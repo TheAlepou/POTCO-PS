@@ -477,7 +477,7 @@ class ShipMeter(DirectObject, NodePath):
     
     def setShipInfo(self, shipClass, mastInfo):
         self.setHullType(shipClass)
-        for mast in mastInfo.iteritems():
+        for mast in list(mastInfo.items()):
             if mast[1]:
                 self.setMastType(mast[0], mast[1][0], mast[1][1])
                 continue
@@ -521,7 +521,7 @@ class ShipMeter(DirectObject, NodePath):
         woods.setColor(0.20000000000000001, 0.14999999999999999, 0, 1)
         self.flattenStrong()
         gn = self.find('**/+GeomNode')
-        for i in xrange(gn.node().getNumGeoms()):
+        for i in range(gn.node().getNumGeoms()):
             gn.node().setGeomState(i, RenderState.makeEmpty())
         
         gn.setTwoSided(1)

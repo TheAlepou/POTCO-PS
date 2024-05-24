@@ -12,7 +12,7 @@ from pandac.PandaModules import *
 from pirates.makeapirate import ClothingGlobals
 from pirates.piratesbase import PLocalizer
 from pirates.pirate import HumanDNA
-from CharGuiBase import CharGuiSlider, CharGuiPicker
+from .CharGuiBase import CharGuiSlider, CharGuiPicker
 from pirates.inventory import ItemGlobals
 from pirates.inventory.ItemConstants import DYE_COLORS
 import random
@@ -530,7 +530,7 @@ class ClothesGUI(DirectFrame, StateData.StateData):
             
             optionsLeft = len(self.main.JSD_CLOTHING_INTRO[idx])
             if optionsLeft:
-                choice = random.choice(range(0, optionsLeft))
+                choice = random.choice(list(range(0, optionsLeft)))
                 if self.main.lastDialog:
                     self.main.lastDialog.stop()
                 
@@ -586,7 +586,7 @@ class ClothesGUI(DirectFrame, StateData.StateData):
             'PANT',
             'BELT',
             'SHOE']:
-            id = random.choice(self.avatar.choices[type].keys())
+            id = random.choice(list(self.avatar.choices[type].keys()))
             itemId = self.avatar.choices[type][id][0]
             texId = self.avatar.choices[type][id][1]
             dyeItem = self.avatar.choices[type][id][2]
@@ -1136,7 +1136,7 @@ class ClothesGUI(DirectFrame, StateData.StateData):
             if dataId not in self.avatar.choices[type]:
                 self.notify.error('rrusso: how did it get here? dataId = %s' % dataId)
             
-            dataIds = self.avatar.choices[type].keys()
+            dataIds = list(self.avatar.choices[type].keys())
             currIdx = dataIds.index(dataId)
             if currIdx + 1 < len(dataIds):
                 dataId = dataIds[currIdx + 1]
@@ -1158,7 +1158,7 @@ class ClothesGUI(DirectFrame, StateData.StateData):
             currentTexIdx = itemTextures.index(textureId)
             texIdx = currentTexIdx + 1
             if texIdx >= len(itemTextures):
-                itemIds = self.avatar.choices[type].keys()
+                itemIds = list(self.avatar.choices[type].keys())
                 itemIds.sort()
                 currIdx = itemIds.index(itemId)
                 if currIdx + 1 < len(itemIds):
@@ -1186,7 +1186,7 @@ class ClothesGUI(DirectFrame, StateData.StateData):
             if dataId not in self.avatar.choices[type]:
                 self.notify.error('rrusso: how did it get here? dataId = %s' % dataId)
             
-            dataIds = self.avatar.choices[type].keys()
+            dataIds = list(self.avatar.choices[type].keys())
             currIdx = dataIds.index(dataId)
             if currIdx - 1 >= 0:
                 dataId = dataIds[currIdx - 1]
@@ -1209,7 +1209,7 @@ class ClothesGUI(DirectFrame, StateData.StateData):
             currentTexIdx = itemTextures.index(textureId)
             texIdx = currentTexIdx - 1
             if texIdx < 0:
-                itemIds = self.avatar.choices[type].keys()
+                itemIds = list(self.avatar.choices[type].keys())
                 itemIds.sort()
                 currIdx = itemIds.index(itemId)
                 itemId = itemIds[currIdx - 1]
@@ -1229,7 +1229,7 @@ class ClothesGUI(DirectFrame, StateData.StateData):
             'BELT',
             'SHOE']:
             (dataId, dyeItem, color) = self.avatar.currentClothing[clothesType]
-            models = self.avatar.choices[clothesType].keys()
+            models = list(self.avatar.choices[clothesType].keys())
             if dataId not in models:
                 nextItemId = models[0]
                 if self.main.pirate.style.gender == 'f':
@@ -1268,7 +1268,7 @@ class ClothesGUI(DirectFrame, StateData.StateData):
             else:
                 return dict[x][0] - dict[y][0]
 
-        return sorted(dict.keys(), cmp = modelId_compare)
+        return sorted(list(dict.keys()), cmp = modelId_compare)
 
     
     def getNextClothingModel(self, type):

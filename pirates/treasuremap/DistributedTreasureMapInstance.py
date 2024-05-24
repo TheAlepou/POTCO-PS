@@ -130,7 +130,7 @@ class DistributedTreasureMapInstance(DistributedInstanceWorld.DistributedInstanc
             self.pendingObjectiveRequest = base.cr.relatedObjectMgr.requestObjects([
                 currObjective], eachCallback = self.tagAsObjective)
         
-        print 'got new objectives list %s' % objectives
+        print(('got new objectives list %s' % objectives))
         messenger.send(self.getItemChangeMsg())
 
     

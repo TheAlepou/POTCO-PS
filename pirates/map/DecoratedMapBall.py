@@ -56,7 +56,7 @@ class DecoratedMapBall(MapBall):
 
     
     def removeNode(self):
-        for item in self.placedItems.keys():
+        for item in list(self.placedItems.keys()):
             self.removeDecorItem(item)
         
         del self.placedItems
@@ -217,7 +217,7 @@ class DecoratedMapBall(MapBall):
 
     
     def initGlobalStencil(self):
-        globalStencilAttrib = StencilAttrib.make(1, StencilAttrib.SCFAlways, StencilAttrib.SOKeep, StencilAttrib.SOKeep, StencilAttrib.SOReplace, 255, 0xFFFFFFFFL, 0xFFFFFFFFL)
+        globalStencilAttrib = StencilAttrib.make(1, StencilAttrib.SCFAlways, StencilAttrib.SOKeep, StencilAttrib.SOKeep, StencilAttrib.SOReplace, 255, 0xFFFFFFFF, 0xFFFFFFFF)
 
     
     def addAndPlaceItem(self, name, info):
@@ -286,7 +286,7 @@ class DecoratedMapBall(MapBall):
 
     
     def resetDecor(self):
-        for name in self.placedItems.keys():
+        for name in list(self.placedItems.keys()):
             self.removeDecorItem(name)
         
         for name in self.decorInfo:
@@ -377,7 +377,7 @@ class DecoratedMapBall(MapBall):
 
     
     def updateTextZoom(self, zoom):
-        for item in self.placedItems.values():
+        for item in list(self.placedItems.values()):
             if isinstance(item, DecorClasses[DecorTypes.TextIsland]) and isinstance(item, DecorClasses[DecorTypes.OceanAreaText]) or isinstance(item, DecorClasses[DecorTypes.Ship]):
                 item.updateZoom(zoom)
                 continue
@@ -394,7 +394,7 @@ class DecoratedMapBall(MapBall):
 
     
     def setReturnIsland(self, islandUid):
-        for item in self.placedItems.itervalues():
+        for item in list(self.placedItems.values()):
             if item.hasNetTag('islandUid'):
                 if islandUid and islandUid == item.getNetTag('islandUid'):
                     item.setAsReturnIsland(1)
@@ -405,7 +405,7 @@ class DecoratedMapBall(MapBall):
 
     
     def setPortOfCall(self, islandUid):
-        for item in self.placedItems.itervalues():
+        for item in list(self.placedItems.values()):
             if item.hasNetTag('islandUid'):
                 if islandUid and islandUid == item.getNetTag('islandUid'):
                     item.setAsPortOfCall(1)
@@ -416,7 +416,7 @@ class DecoratedMapBall(MapBall):
 
     
     def setCurrentIsland(self, islandUid):
-        for item in self.placedItems.itervalues():
+        for item in list(self.placedItems.values()):
             if item.hasNetTag('islandUid'):
                 if islandUid and islandUid == item.getNetTag('islandUid'):
                     item.setAsCurrentIsland(1)
@@ -427,7 +427,7 @@ class DecoratedMapBall(MapBall):
 
     
     def getCurrentIsland(self):
-        for item in self.placedItems.itervalues():
+        for item in list(self.placedItems.values()):
             if item.hasNetTag('islandUid') and item.isCurrentIsland():
                 return item
                 continue
@@ -436,7 +436,7 @@ class DecoratedMapBall(MapBall):
     
     def getIsland(self, islandUid):
         island = None
-        for item in self.placedItems.itervalues():
+        for item in list(self.placedItems.values()):
             if item.hasNetTag('islandUid'):
                 if islandUid and islandUid == item.getNetTag('islandUid'):
                     island = item
@@ -448,7 +448,7 @@ class DecoratedMapBall(MapBall):
 
     
     def getCurrentShip(self):
-        for item in self.placedItems.itervalues():
+        for item in list(self.placedItems.values()):
             if item.hasNetTag('shipName'):
                 return item
                 continue
@@ -636,7 +636,7 @@ class DecoratedMapBall(MapBall):
     def addIsland(self, name, islandUid, modelPath, worldPos, rotation):
         scale = 25.0
         if not name:
-            name = 'island-' + `self.itemCounter`
+            name = 'island-' + repr(self.itemCounter)
             info = (DecorTypes.Island, (name, islandUid, modelPath, False, scale), {
                 'pos': worldPos,
                 'rot': rotation })

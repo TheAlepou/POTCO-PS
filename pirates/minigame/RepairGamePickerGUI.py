@@ -4,7 +4,7 @@ import math
 from direct.gui.DirectGui import DirectFrame, DGG
 from direct.task import Task
 from pirates.piratesgui import GUIFactory
-from RepairGameButton import RepairGameButton
+from .RepairGameButton import RepairGameButton
 
 class RepairGamePickerGUI(DirectFrame):
     
@@ -29,7 +29,7 @@ class RepairGamePickerGUI(DirectFrame):
         if not (self.repairGame.gameFSM) or self.repairGame.gameFSM.state in ('Off', 'Init', 'CycleComplete', 'Final', 'Outro'):
             return None
         
-        for (key, b) in self.buttons.items():
+        for (key, b) in list(self.buttons.items()):
             b.downStateNode.reparentTo(b.stateNodePath[1])
             b.disabledStateNode.reparentTo(b.stateNodePath[3])
             b.hideGlow()
@@ -57,7 +57,7 @@ class RepairGamePickerGUI(DirectFrame):
             gameNamesToIndices[gameName.lower()] = i
         
         keysToRemove = []
-        for (key, button) in self.buttons.items():
+        for (key, button) in list(self.buttons.items()):
             if key.lower() not in gameNamesToIndices:
                 keysToRemove.append(key)
                 continue
@@ -77,7 +77,7 @@ class RepairGamePickerGUI(DirectFrame):
         self.enabled = enabled
         if enabled:
             self.unstash()
-            for (key, button) in self.buttons.items():
+            for (key, button) in list(self.buttons.items()):
                 button.showGlow()
                 button.skillGlow.setColorScale(1.0, 1.0, 1.0, 0.0)
             
@@ -88,7 +88,7 @@ class RepairGamePickerGUI(DirectFrame):
             self.totalTime = 0.0
             taskMgr.add(self.updateGui, 'RepairGameGUIUpdate')
         else:
-            for (key, button) in self.buttons.items():
+            for (key, button) in list(self.buttons.items()):
                 button['state'] = DGG.DISABLED
                 button.hideGlow()
             
@@ -114,7 +114,7 @@ class RepairGamePickerGUI(DirectFrame):
         self.buttons[self.gameIndicesToNames[gameIndex]].setProgress(percent)
         if percent >= 100:
             self.totalTime = 0.0
-            for (key, b) in self.buttons.items():
+            for (key, b) in list(self.buttons.items()):
                 b.showGlow()
                 b.skillGlow.setColorScale(1.0, 1.0, 1.0, 0.0)
             
@@ -132,7 +132,7 @@ class RepairGamePickerGUI(DirectFrame):
         for i in range(self.repairGame.getGameCount()):
             self.buttons[self.gameIndicesToNames[i]].updatePirateNameBox('')
         
-        for (k, v) in avIds2CurrentGameIndex.iteritems():
+        for (k, v) in list(avIds2CurrentGameIndex.items()):
             if k != localAvatar.doId:
                 pirateName = ''
                 handle = base.cr.identifyAvatar(k)

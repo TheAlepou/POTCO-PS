@@ -234,7 +234,7 @@ class Creature(UsesAnimationMixer, Avatar.Avatar, UsesEffectNode):
     def getDeathAnimName(self, animNum = None):
         animStrings = [
             'death']
-        if animNum not in range(len(animStrings)):
+        if animNum not in list(range(len(animStrings))):
             animNum = random.choice([
                 0])
         
@@ -280,7 +280,7 @@ class Creature(UsesAnimationMixer, Avatar.Avatar, UsesEffectNode):
                 20,
                 280]
         else:
-            raise StandardError, 'Invalid avatar-detail: %s' % avatarDetail
+            raise Exception('Invalid avatar-detail: %s' % avatarDetail)
         self.addLOD('hi', dist[1], dist[0])
         self.addLOD('med', dist[2], dist[1])
         self.addLOD('low', dist[3], dist[2])
@@ -322,7 +322,7 @@ class Creature(UsesAnimationMixer, Avatar.Avatar, UsesEffectNode):
                     20,
                     280]
             else:
-                raise StandardError, 'Invalid avatar-detail: %s' % avatarDetail
+                raise Exception('Invalid avatar-detail: %s' % avatarDetail)
             cls.actor.setLODNode()
             cls.actor.addLOD('hi', dist[1], dist[0])
             cls.actor.addLOD('med', dist[2], dist[1])

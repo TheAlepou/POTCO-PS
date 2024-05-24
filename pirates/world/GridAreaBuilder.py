@@ -61,7 +61,7 @@ class GridLODDef:
             superLow = self.lodNode.attachNewNode('Low')
             self.highLodNode = low
         else:
-            raise StandardError, 'Invalid grid-detail: %s' % gridDetail
+            raise Exception('Invalid grid-detail: %s' % gridDetail)
         low.setLightOff(base.cr.timeOfDayManager.sunLight)
         low.setLightOff(base.cr.timeOfDayManager.shadowLight)
         self.children = [
@@ -113,11 +113,11 @@ class GridAreaBuilder(AreaBuilderBase.AreaBuilderBase):
         if not objectCat == 'PROP_OBJ' and objectCat == 'BUILDING_OBJ' and objectType == 'Cell Portal Area':
             pass
         loadableType = objectType in ('Dinghy', 'Holiday Object', 'PotionTable')
-        if not loadableType and not objData.has_key('Objects'):
+        if not loadableType and 'Objects' not in objData:
             return None
         
-        if objData.has_key('Visual') and objData['Visual'].has_key('Model'):
-            if objData.has_key('SubObjs'):
+        if 'Visual' in objData and 'Model' in objData['Visual']:
+            if 'SubObjs' in objData:
                 objModel = self.loadTree(objData)
             else:
                 objModel = self.getModel(objData)
@@ -160,7 +160,7 @@ class GridAreaBuilder(AreaBuilderBase.AreaBuilderBase):
                 
             
             if objData['Type'] == 'Special':
-                if objData.has_key('Visual') and objData['Visual'].has_key('Model') and objData['Visual']['Model'] == 'models/misc/smiley':
+                if 'Visual' in objData and 'Model' in objData['Visual'] and objData['Visual']['Model'] == 'models/misc/smiley':
                     geomNodes = objModel.root.findAllMatches('**/+GeomNode')
                     for geomNode in geomNodes:
                         geomNode.removeNode()
@@ -181,7 +181,7 @@ class GridAreaBuilder(AreaBuilderBase.AreaBuilderBase):
                     effects = objModel.root.findAllMatches('**/*_effect_*')
                     effects.wrtReparentTo(self.staticGridRoot)
                 
-                if not self.GridLOD.has_key(zoneId):
+                if zoneId not in self.GridLOD:
                     self.GridLOD[zoneId] = GridLODDef(self, zoneId)
                 
                 gldef = self.GridLOD[zoneId]
@@ -205,7 +205,7 @@ class GridAreaBuilder(AreaBuilderBase.AreaBuilderBase):
                         
                     
                 else:
-                    for i in xrange(numGridLODs):
+                    for i in range(numGridLODs):
                         objModel.lod.getChild(numLODs - 1 - i).wrtReparentTo(lodChildren[numGridLODs - 1 - i])
                     
                 objModel.collisions.wrtReparentTo(gridNode)
@@ -359,7 +359,7 @@ class GridAreaBuilder(AreaBuilderBase.AreaBuilderBase):
 
     
     def delete(self):
-        for node in self.GridLOD.values():
+        for node in list(self.GridLOD.values()):
             node.cleanup()
         
         self.GridLOD = { }
@@ -398,7 +398,7 @@ class GridAreaBuilder(AreaBuilderBase.AreaBuilderBase):
             self.animControls = AnimControlCollection()
             autoBind(self.master.node(), self.animControls, 3)
             self.bound = True
-            for i in xrange(self.animControls.getNumAnims()):
+            for i in range(self.animControls.getNumAnims()):
                 self.animControls.getAnim(i).setPlayRate(random.uniform(0.80000000000000004, 1))
             
         

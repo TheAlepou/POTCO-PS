@@ -212,7 +212,7 @@ class DistributedDoor(DistributedInteractive.DistributedInteractive):
             localAvatar.guiMgr.showNonPayer(quest = 'Restricted_Location', focus = 0)
             return None
         
-        print 'requestinteraction', 0
+        print(('requestinteraction', 0))
         if avId == localAvatar.doId:
             self.fadeOut()
             return None
@@ -234,7 +234,7 @@ class DistributedDoor(DistributedInteractive.DistributedInteractive):
                 return None
             
         
-        print 'requestinteraction', 2
+        print(('requestinteraction', 2))
         DistributedInteractive.DistributedInteractive.requestInteraction(self, avId, interactType)
 
     

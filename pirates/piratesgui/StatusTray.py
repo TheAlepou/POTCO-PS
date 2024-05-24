@@ -91,7 +91,7 @@ class StatusTray(GuiTray.GuiTray):
         self.privateerLogos = {
             PVPGlobals.FrenchTeam: privateerLogos.find('**/logo_french_flag'),
             PVPGlobals.SpanishTeam: privateerLogos.find('**/logo_spanish_flag') }
-        for logo in self.privateerLogos.itervalues():
+        for logo in list(self.privateerLogos.values()):
             logo.setScale(0.073999999999999996)
             logo.flattenStrong()
         
@@ -147,7 +147,7 @@ class StatusTray(GuiTray.GuiTray):
         del self.hpMeterUpYellowIval
         self.statusEffectsPanel.destroy()
         del self.statusEffectsPanel
-        for key in self.icons.keys():
+        for key in list(self.icons.keys()):
             self.icons[key].removeNode()
         
         del self.icons
@@ -414,10 +414,10 @@ class StatusTray(GuiTray.GuiTray):
 
     
     def updateStatusEffects(self, effects):
-        effectIdList = effects.keys()
+        effectIdList = list(effects.keys())
         for effectKeyId in effectIdList:
             (effectId, attackerId, duration, timeLeft, ts, buffs) = effects[effectKeyId]
-            if effectKeyId not in self.skillEffects.keys() and effectId not in [
+            if effectKeyId not in list(self.skillEffects.keys()) and effectId not in [
                 WeaponGlobals.C_VOODOO_STUN,
                 WeaponGlobals.C_VOODOO_HEX_STUN,
                 WeaponGlobals.C_INTERRUPTED,
@@ -436,7 +436,7 @@ class StatusTray(GuiTray.GuiTray):
                 continue
             self.statusEffectsPanel.updateStatusEffect(effectId, duration, timeLeft, ts, attackerId)
         
-        for effectKeyId in self.skillEffects.keys():
+        for effectKeyId in list(self.skillEffects.keys()):
             if effectKeyId not in effectIdList:
                 buff = self.skillEffects.get(effectKeyId)
                 if buff:

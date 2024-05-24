@@ -1,6 +1,6 @@
 import copy
 import math
-import cPickle
+import pickle
 from pandac.PandaModules import *
 from direct.interval.IntervalGlobal import *
 from direct.showbase.PythonUtil import *
@@ -15,24 +15,24 @@ from pirates.inventory import ItemGlobals
 import random
 import os
 import copy
-import Pistol
-import Sword
-import Doll
-import Melee
-import Dagger
-import Grenade
-import Wand
-import Bayonet
-import MonsterMelee
-import Consumable
-import Weapon
-import DualCutlass
-import Foil
-import FishingRod
-import Gun
-import Torch
-import PowderKeg
-from WeaponConstants import *
+from . import Pistol
+from . import Sword
+from . import Doll
+from . import Melee
+from . import Dagger
+from . import Grenade
+from . import Wand
+from . import Bayonet
+from . import MonsterMelee
+from . import Consumable
+from . import Weapon
+from . import DualCutlass
+from . import Foil
+from . import FishingRod
+from . import Gun
+from . import Torch
+from . import PowderKeg
+from .WeaponConstants import *
 __defensiveBuffs = [
     C_TAKECOVER,
     C_OPENFIRE,
@@ -128,7 +128,7 @@ BD_2INT = 2
 BD_MULTIPLIER = 3
 BD_1FLOAT = 4
 
-from SkillInfo import *
+from .SkillInfo import *
 __skillInfo = skillInfo
 __attackEffectsSkillInfo = { }
 
@@ -271,7 +271,7 @@ __typeWeapons = {
     ItemGlobals.QUEST_PROP: COMBAT }
 
 def getWeaponTypes():
-    return __humanWeapons.keys() + __enemyWeapons.keys()
+    return list(__humanWeapons.keys()) + list(__enemyWeapons.keys())
 
 
 def getHumanWeaponTypes():
@@ -1944,7 +1944,7 @@ __typeId2RepId = {
     ItemGlobals.QUEST_PROP: InventoryType.MeleeRep }
 
 def getRepId(inventoryId):
-    if inventoryId <= ItemGlobals.CHARM_RANGE and inventoryId not in range(InventoryType.begin_FishingLures, InventoryType.end_FishingLures):
+    if inventoryId <= ItemGlobals.CHARM_RANGE and inventoryId not in list(range(InventoryType.begin_FishingLures, InventoryType.end_FishingLures)):
         typeId = ItemGlobals.getType(inventoryId)
         return __typeId2RepId.get(typeId, 0)
     else:
@@ -2022,13 +2022,13 @@ CHARGEABLE_WEAPONS = [
     InventoryType.GrenadeRep,
     InventoryType.WandRep]
 __skills = { }
-for (skillId, skillData) in __skillInfo.items():
+for (skillId, skillData) in list(__skillInfo.items()):
     repCat = skillData[REPUTATION_CATEGORY_INDEX]
     __skills.setdefault(repCat, []).append(skillId)
 
 
 def getAllSkillIds():
-    return __skillInfo.keys()
+    return list(__skillInfo.keys())
 
 
 def getSkills(weaponRepId):
@@ -2161,7 +2161,7 @@ def getSkillAmmoInventoryId(skillId):
 
 def getAllAmmoSkills():
     skillIds = []
-    for skillId in __skillInfo.keys():
+    for skillId in list(__skillInfo.keys()):
         if getSkillAmmoInventoryId(skillId):
             skillIds.append(skillId)
             continue
@@ -2213,7 +2213,7 @@ def getSkillTrack(skillId):
 
 
 def getSkillIcon(skillId):
-    if not __skillInfo.has_key(skillId):
+    if skillId not in __skillInfo:
         return 'base'
     
     icon = __skillInfo[skillId][SKILL_ICON_INDEX]
@@ -3326,7 +3326,7 @@ def getComboBonus(val):
 
 
 def skillTableSanityCheck():
-    for (skillId, skillInfo) in __skillInfo.items():
+    for (skillId, skillInfo) in list(__skillInfo.items()):
         maxQuant = getSkillMaxQuantity(skillId)
         ammoInvId = getSkillAmmoInventoryId(skillId)
         if maxQuant != INF_QUANT and maxQuant != STAFF_QUANT:

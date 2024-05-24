@@ -58,13 +58,13 @@ class BattleSkillDiary:
 
     
     def clearRecharging(self, skillId):
-        if self._BattleSkillDiary__timers.has_key(skillId):
+        if skillId in self._BattleSkillDiary__timers:
             del self._BattleSkillDiary__timers[skillId]
         
 
     
     def addHit(self, skillId, amount):
-        if self._BattleSkillDiary__hits.has_key(skillId):
+        if skillId in self._BattleSkillDiary__hits:
             self._BattleSkillDiary__hits[skillId] += amount
         else:
             self._BattleSkillDiary__hits[skillId] = amount
@@ -151,7 +151,7 @@ class BattleSkillDiary:
     def __str__(self):
         s = 'BattleSkillDiary\n'
         s += ' Skill: Timestamp\n'
-        for (skillId, details) in self._BattleSkillDiary__timers.items():
+        for (skillId, details) in list(self._BattleSkillDiary__timers.items()):
             skillName = WeaponGlobals.getSkillName(skillId)
             state = ('Idle', 'Charging')[details[0]]
             dt = details[1]
@@ -159,7 +159,7 @@ class BattleSkillDiary:
             remaining = self.getTimeRemaining(skillId)
             s += ' %s (%s): %s, dt=%f, t=%f, remaining=%f (s)\n' % (skillName, skillId, state, dt, timeStamp, remaining)
         
-        for (skillId, details) in self._BattleSkillDiary__hits.items():
+        for (skillId, details) in list(self._BattleSkillDiary__hits.items()):
             skillName = WeaponGlobals.getSkillName(skillId)
             hits = details[0]
             remaining = self.getTimeRemaining(skillId)

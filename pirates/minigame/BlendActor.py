@@ -18,7 +18,7 @@ class BlendActor(Actor):
         self.blendTimeDict = blendTimeDict
         self.blendInterval = None
         self.currentAnimation = None
-        self.skeletonAnimationNames = animDict.keys()
+        self.skeletonAnimationNames = list(animDict.keys())
 
     
     def changeAnimationTo(self, toAnim, loopAnim = True, blend = True):
@@ -28,7 +28,7 @@ class BlendActor(Actor):
         else:
             self.play(toAnim)
         mostImportantAnimation = self.getMostImportantAnimationPlayingNow()[0]
-        if self.blendTimeDict.has_key('%sTo%s' % (mostImportantAnimation, toAnim)):
+        if '%sTo%s' % (mostImportantAnimation, toAnim) in self.blendTimeDict:
             transitionDuration = self.blendTimeDict[toAnim]
         else:
             transitionDuration = self.defaultBlendTime
@@ -112,17 +112,17 @@ class BlendActor(Actor):
 
     
     def printEffectWeights(self, task = None):
-        print '-----'
-        print self.getName()
+        print('-----')
+        print((self.getName()))
         for animationName in self.skeletonAnimationNames:
             for subPart in self.getPartNames():
                 weight = self.getControlEffect(animationName, partName = subPart)
                 if weight > 0.0:
-                    print '%s\t-\t%s - %.2f ' % (animationName, subPart, weight)
+                    print(('%s\t-\t%s - %.2f ' % (animationName, subPart, weight)))
                     continue
             
         
-        print '-----'
+        print('-----')
 
     
     def destroy(self):

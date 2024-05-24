@@ -782,7 +782,7 @@ class Water(DirectObject):
 
     
     def print_camera(self):
-        print 'camera_position', base.cam.getPos(render)
+        print(('camera_position', base.cam.getPos(render)))
 
     
     def set_camera_position_2(self):
@@ -802,7 +802,7 @@ class Water(DirectObject):
 
     
     def print_ambient_color(self):
-        print 'ambient red', self.ar, 'ambient green', self.ag, 'ambient blue', self.ab
+        print(('ambient red', self.ar, 'ambient green', self.ag, 'ambient blue', self.ab))
 
     
     def set_ambient_color_np(self):
@@ -816,7 +816,7 @@ class Water(DirectObject):
 
     
     def print_diffuse_color(self):
-        print 'diffuse red', self.dr, 'diffuse green', self.dg, 'diffuse blue', self.db
+        print(('diffuse red', self.dr, 'diffuse green', self.dg, 'diffuse blue', self.db))
 
     
     def set_diffuse_color_np(self):
@@ -830,7 +830,7 @@ class Water(DirectObject):
 
     
     def print_specular_color(self):
-        print 'red', self.r, 'green', self.g, 'blue', self.b
+        print(('red', self.r, 'green', self.g, 'blue', self.b))
 
     
     def set_specular_color_np(self):
@@ -844,7 +844,7 @@ class Water(DirectObject):
 
     
     def print_light_parameters(self):
-        print 'diffuse_factor', self.d, 'specular_factor', self.s, 'specular_power', self.p
+        print(('diffuse_factor', self.d, 'specular_factor', self.s, 'specular_power', self.p))
 
     
     def set_light_parameters_np(self):
@@ -858,11 +858,11 @@ class Water(DirectObject):
 
     
     def print_reflection_parameters(self):
-        print 'purturb x', self.px, 'purturb y', self.py, 'reflection_factor', self.reflection_factor
+        print(('purturb x', self.px, 'purturb y', self.py, 'reflection_factor', self.reflection_factor))
 
     
     def print_water_color_map_parameters(self):
-        print 'map x', self.map_x_origin, 'map y', self.map_y_origin, 'map size', self.map_x_scale, 'map size', self.map_y_scale
+        print(('map x', self.map_x_origin, 'map y', self.map_y_origin, 'map size', self.map_x_scale, 'map size', self.map_y_scale))
 
     
     def set_reflection_parameters_np(self):
@@ -880,7 +880,7 @@ class Water(DirectObject):
 
     
     def print_water_color(self):
-        print 'water color: red', self.water_r, 'green', self.water_g, 'blue', self.water_b, 'alpha', self.water_a
+        print(('water color: red', self.water_r, 'green', self.water_g, 'blue', self.water_b, 'alpha', self.water_a))
 
     
     def set_water_color_np(self):
@@ -1053,7 +1053,7 @@ class Water(DirectObject):
 
     
     def print_light_position(self):
-        print 'x', self.x, 'y', self.y, 'z', self.z
+        print(('x', self.x, 'y', self.y, 'z', self.z))
 
     
     def set_light_position_np(self):
@@ -1562,13 +1562,13 @@ class IslandWaterParameters:
                 water.set_water_color_texture(self.water_color_file_path, self.unload_previous_texture, self.water_color_texture)
                 water.set_water_alpha_texture(self.water_alpha_file_path, self.unload_previous_texture, self.water_alpha_texture)
                 if self.debug:
-                    print 'WATER ALPHA ON'
+                    print('WATER ALPHA ON')
                 
             else:
                 water.set_water_color_texture(self.default_water_color_file_path, self.unload_previous_texture, None)
                 water.set_water_alpha_texture(self.default_water_alpha_file_path, self.unload_previous_texture, None)
                 if self.debug:
-                    print 'WATER ALPHA OFF'
+                    print('WATER ALPHA OFF')
                 
         
         if self.swamp_water:

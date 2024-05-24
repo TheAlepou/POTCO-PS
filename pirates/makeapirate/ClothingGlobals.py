@@ -4039,17 +4039,17 @@ navy_pant_geoms = [
 shopkeep_pant_geoms = [
     6]
 quickConfirmSet = set()
-for gender in textures.keys():
+for gender in list(textures.keys()):
     if gender == 'MALE':
         genderName = 'm'
     elif gender == 'FEMALE':
         genderName = 'f'
     
     clothing = textures[gender]
-    for clothingType in clothing.keys():
+    for clothingType in list(clothing.keys()):
         models = clothing[clothingType]
-        for i in xrange(len(models)):
-            for j in xrange(len(models[i])):
+        for i in range(len(models)):
+            for j in range(len(models[i])):
                 quickConfirmSet.add((genderName, clothingType, i, j))
             
         
@@ -4366,7 +4366,7 @@ def printList():
                         int(subtype[1].getX() * 256),
                         int(subtype[1].getY() * 256),
                         int(subtype[1].getZ() * 256)]
-                    print str(subtype[0]), str(outVal)
+                    print((str(subtype[0]), str(outVal)))
                 
             
         
@@ -4386,7 +4386,7 @@ def printList2():
                             map = True
                         
                     
-                    print str(subtype[0]) + ';', map
+                    print((str(subtype[0]) + ';', map))
                     subtypeNum = subtypeNum + 1
                 
                 itemNum = itemNum + 1

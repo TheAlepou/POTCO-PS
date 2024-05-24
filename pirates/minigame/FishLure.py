@@ -11,7 +11,7 @@ from pirates.piratesbase import PiratesGlobals
 from pirates.piratesgui.GuiPanel import *
 from pirates.uberdog.UberDogGlobals import InventoryType
 from pirates.effects.LureGlow import LureGlow
-import FishingGlobals
+from . import FishingGlobals
 _glowColors = {
     InventoryType.FishingRodStall: (1.0, 1.0, 0.59999999999999998, 0.69999999999999996),
     InventoryType.FishingRodPull: (0.69999999999999996, 0.69999999999999996, 1.0, 0.69999999999999996),

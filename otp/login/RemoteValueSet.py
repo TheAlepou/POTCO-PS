@@ -1,8 +1,8 @@
 # File: R (Python 2.4)
 
 from direct.directnotify import DirectNotifyGlobal
-import TTAccount
-import HTTPUtil
+from . import TTAccount
+from . import HTTPUtil
 
 class RemoteValueSet:
     notify = DirectNotifyGlobal.directNotify.newCategory('RemoteValueSet')
@@ -44,7 +44,7 @@ class RemoteValueSet:
             self.dict[name] = value
         
         for name in expectedFields:
-            if not self.dict.has_key(name):
+            if name not in self.dict:
                 errMsg = "missing expected field '%s'" % name
                 self.notify.warning(errMsg)
                 onUnexpectedResponse(errMsg)
@@ -58,7 +58,7 @@ class RemoteValueSet:
 
     
     def hasKey(self, key):
-        return self.dict.has_key(key)
+        return key in self.dict
 
     
     def getBool(self, name, default = None):

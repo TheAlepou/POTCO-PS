@@ -130,7 +130,7 @@ class AmbientManagerBase(DirectObject):
     
     def load(self, name, path, looping = True, isMusic = False):
         retval = False
-        if self.ambientDict.has_key(name):
+        if name in self.ambientDict:
             if self.ambientDict[name].path == path:
                 self.notify.warning('ambient name=%s path=%s already loaded' % (name, path))
             else:
@@ -141,7 +141,7 @@ class AmbientManagerBase(DirectObject):
 
     
     def unload(self, name):
-        if self.ambientDict.has_key(name):
+        if name in self.ambientDict:
             self.ambientDict[name].unload()
             del self.ambientDict[name]
         else:
@@ -157,20 +157,20 @@ class AmbientManagerBase(DirectObject):
 
     
     def requestChangeVolume(self, name, duration, finalVolume, priority = 0):
-        if self.ambientDict.has_key(name):
+        if name in self.ambientDict:
             self.ambientDict[name].requestChangeVolume(duration, finalVolume, priority)
         
 
     
     def delete(self):
-        for name in self.ambientDict.keys():
+        for name in list(self.ambientDict.keys()):
             self.ambientDict[name].unload()
         
         self.ambientDict = { }
 
     
     def silence(self):
-        for name in self.ambientDict.keys():
+        for name in list(self.ambientDict.keys()):
             self.ambientDict[name].requestChangeVolume(0.0, 0.0, priority = 1)
         
 
@@ -178,7 +178,7 @@ class AmbientManagerBase(DirectObject):
     def changeMasterAmbientVolume(self, newMasterAmbientVolume):
         if not newMasterAmbientVolume == self.masterAmbientVolume:
             self.masterAmbientVolume = newMasterAmbientVolume
-            for name in self.ambientDict.keys():
+            for name in list(self.ambientDict.keys()):
                 self.ambientDict[name].changeMasterAmbientVolume(self.masterAmbientVolume)
             
         

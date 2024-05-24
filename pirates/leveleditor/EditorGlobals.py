@@ -42,43 +42,43 @@ def LightDynamic(levelObj, parent = render, drawIcon = True, modular = False):
         levelObj = WorldGlobals.LevelObject('', { })
     
     color = None
-    if levelObj.data.has_key('Visual'):
-        if levelObj.data['Visual'].has_key('Color'):
+    if 'Visual' in levelObj.data:
+        if 'Color' in levelObj.data['Visual']:
             color = levelObj.data['Visual']['Color']
         
     
     attenuation = None
-    if levelObj.data.has_key('Attenuation'):
+    if 'Attenuation' in levelObj.data:
         quadAtten = float(levelObj.data['Attenuation'])
     else:
         quadAtten = 0
-    if levelObj.data.has_key('QuadraticAttenuation'):
+    if 'QuadraticAttenuation' in levelObj.data:
         quadAtten = float(levelObj.data['QuadraticAttenuation'])
         quadAtten = quadAtten * quadAtten / 100.0
     
-    if levelObj.data.has_key('ConstantAttenuation'):
+    if 'ConstantAttenuation' in levelObj.data:
         constantAtten = float(levelObj.data['ConstantAttenuation'])
     else:
         constantAtten = 1
-    if levelObj.data.has_key('LinearAttenuation'):
+    if 'LinearAttenuation' in levelObj.data:
         linearAtten = float(levelObj.data['LinearAttenuation'])
     else:
         linearAtten = 0
     attenuation = (constantAtten, linearAtten, quadAtten)
     intensity = None
-    if levelObj.data.has_key('Intensity'):
+    if 'Intensity' in levelObj.data:
         intensity = float(levelObj.data['Intensity'])
     
     coneAngle = None
     dropOff = None
-    if levelObj.data.has_key('ConeAngle'):
+    if 'ConeAngle' in levelObj.data:
         coneAngle = float(levelObj.data['ConeAngle'])
         if coneAngle == 0.0:
             levelObj.data['ConeAngle'] = '60.0'
             coneAngle = 60.0
         
     
-    if levelObj.data.has_key('DropOff'):
+    if 'DropOff' in levelObj.data:
         dropOff = float(levelObj.data['DropOff'])
     
     exponent = None
@@ -88,12 +88,12 @@ def LightDynamic(levelObj, parent = render, drawIcon = True, modular = False):
             flickering = True
         
         flickRate = 1.0
-        if levelObj.data.has_key('FlickRate'):
+        if 'FlickRate' in levelObj.data:
             flickRate = float(levelObj.data['FlickRate'])
         
     
     lightType = DynamicLight.DYN_LIGHT_POINT
-    if levelObj.data.has_key('LightType'):
+    if 'LightType' in levelObj.data:
         typeString = levelObj.data['LightType']
         if typeString == 'AMBIENT':
             lightType = DynamicLight.DYN_LIGHT_AMBIENT
@@ -148,7 +148,7 @@ def CreateAnimal(species = None):
     if not species:
         species = 'Pig'
     
-    exec 'animal = %s()' % species
+    exec('animal = %s()' % species)
     animal.setAvatarType(eval('AvatarTypes.%s' % species))
     return animal
 
@@ -183,7 +183,7 @@ def CreateCreature(species = None):
     if not species:
         species = 'Crab'
     
-    exec 'creature = %s()' % CREATURE_CLASS_DICT[species]
+    exec('creature = %s()' % CREATURE_CLASS_DICT[species])
     creature.show()
     avatarTypeFunc = AvatarTypes.NPC_SPAWNABLES[species][AvatarTypes.AVATAR_TYPE_IDX]
     avatarType = avatarTypeFunc()
@@ -262,7 +262,7 @@ class ShipNP(NodePath):
 
 def getShipEnumerations():
     enums = []
-    shipClasses = ShipGlobals.__shipConfigs.keys()
+    shipClasses = list(ShipGlobals.__shipConfigs.keys())
     shipClasses.sort()
     for shipClass in shipClasses:
         shipStr = str(shipClass) + ': ' + PLocalizer.ShipClassNames[shipClass]
@@ -273,14 +273,14 @@ def getShipEnumerations():
 
 def getStyleEnumerations():
     styleInfo = PLocalizerEnglish.ShipStyleNames
-    styles = styleInfo.keys()
+    styles = list(styleInfo.keys())
     styles.sort()
     return [1] + [ str(x) + ': ' + styleInfo[x] for x in styles ]
 
 
 def getLogoEnumerations():
     logoInfo = PLocalizerEnglish.ShipLogoNames
-    logos = logoInfo.keys()
+    logos = list(logoInfo.keys())
     logos.sort()
     return [1] + [ str(x) + ': ' + logoInfo[x] for x in logos ]
 

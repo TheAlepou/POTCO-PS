@@ -76,8 +76,8 @@ class DistributedInteractiveProp(DistributedInteractive.DistributedInteractive, 
         
         def set_hp(self, hp):
             if type(hp) in [
-                types.IntType,
-                types.FloatType]:
+                int,
+                float]:
                 self._DistributedInteractiveProp__hp = hp
             else:
                 self._DistributedInteractiveProp__hp = 1
@@ -90,8 +90,8 @@ class DistributedInteractiveProp(DistributedInteractive.DistributedInteractive, 
         
         def set_maxHp(self, maxHp):
             if type(maxHp) in [
-                types.IntType,
-                types.FloatType]:
+                int,
+                float]:
                 self._DistributedInteractiveProp__maxHp = maxHp
             else:
                 self._DistributedInteractiveProp__maxHp = 1
@@ -365,7 +365,7 @@ class DistributedInteractiveProp(DistributedInteractive.DistributedInteractive, 
 
     
     def cleanupMovies(self):
-        for currIval in self.myIvals.values():
+        for currIval in list(self.myIvals.values()):
             currIval.pause()
         
         self.myIvals = { }

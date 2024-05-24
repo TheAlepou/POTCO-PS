@@ -70,7 +70,7 @@ class InventoryUIMaterialContainer(InventoryUIStackContainer.InventoryUIStackCon
         self.figureOutStackTypes()
         self.computeCellSize()
         for Z in range(len(self.listOfItemLists)):
-            print 'setting up material type %s' % Z
+            print(('setting up material type %s' % Z))
             if self.seperatorOn:
                 self.seperatorCount += 1
             else:
@@ -84,7 +84,7 @@ class InventoryUIMaterialContainer(InventoryUIStackContainer.InventoryUIStackCon
             bagCell['image'] = None
             for X in range(1, len(self.listOfItemLists[Z])):
                 materialId = self.listOfItemLists[Z][X]
-                print 'setting up material id %s' % materialId
+                print(('setting up material id %s' % materialId))
                 cellPos = self.findGridPos(X, Z, self.gapOn)
                 materialCell = self.getCell()
                 materialCell.setPos(cellPos)

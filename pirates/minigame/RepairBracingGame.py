@@ -7,10 +7,10 @@ from direct.gui.DirectGui import DirectFrame, DirectButton, DGG
 from pirates.piratesbase import PLocalizer
 from pirates.audio import SoundGlobals
 from pirates.audio.SoundGlobals import loadSfx
-from RepairMincroGame import RepairMincroGame
-from RepairGridPiece import RepairGridPiece, GOAL_HORIZ_1, GOAL_HORIZ_2, GOAL_VERT_1, GOAL_CROSS_1_1
-from RepairGridPiece import TOP, BOTTOM, LEFT, RIGHT
-import RepairGlobals
+from .RepairMincroGame import RepairMincroGame
+from .RepairGridPiece import RepairGridPiece, GOAL_HORIZ_1, GOAL_HORIZ_2, GOAL_VERT_1, GOAL_CROSS_1_1
+from .RepairGridPiece import TOP, BOTTOM, LEFT, RIGHT
+from . import RepairGlobals
 SPACING = 0.14999999999999999
 GRID_SIZE = 4
 

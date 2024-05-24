@@ -270,10 +270,10 @@ class ChatInputWhiteList(FSM.FSM, DirectEntry):
 
     
     def _ChatInputWhiteList__execMessage(self, message):
-        print '_execMessage %s' % message
+        print(('_execMessage %s' % message))
         if not ChatInputTyped.ExecNamespace:
             ChatInputTyped.ExecNamespace = { }
-            exec 'from panda3d.core import *' in globals(), self.ExecNamespace
+            exec('from panda3d.core import *', globals(), self.ExecNamespace)
             self.importExecNamespace()
 
         try:

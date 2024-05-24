@@ -256,12 +256,12 @@ class AITradeBase(AsyncRequest):
             inventoryId = self.neededObjects.get('setInventoryId')
             if inventoryId is not None:
                 self.inventoryId = inventoryId[0]
-            elif not self.neededObjects.has_key('setInventoryId'):
+            elif 'setInventoryId' not in self.neededObjects:
                 self.askForObjectField('DistributedPlayerPirateAI', 'setInventoryId', self.avatarId)
             
             return None
         
-        for (key, category) in self.newDoId.items():
+        for (key, category) in list(self.newDoId.items()):
             doId = self.neededObjects.get('newDoId_%s' % (key,))
             if doId is not None:
                 self.giveDoId(category, doId)
@@ -279,7 +279,7 @@ class AITradeBase(AsyncRequest):
 
     
     def isTradeSent(self):
-        return self.neededObjects.has_key(self.responseKey)
+        return self.responseKey in self.neededObjects
 
     
     def sendTrade(self):
@@ -294,7 +294,7 @@ class AITradeBase(AsyncRequest):
             self.ignore(self.approvedTradeMsg(context))
         
         for failureInfo in self.failureCallback:
-            apply(failureInfo[0], failureInfo[1] + [
+            failureInfo[0](*failureInfo[1] + [
                 self] + [
                 reasonId])
         
@@ -304,7 +304,7 @@ class AITradeBase(AsyncRequest):
     def approvedTradeResponse(self, context):
         self.ignore(self.rejectTradeMsg(context))
         for successInfo in self.successCallback:
-            apply(successInfo[0], successInfo[1] + [
+            successInfo[0](*successInfo[1] + [
                 self])
         
         self._checkCompletion(self.responseKey, None, True)
@@ -312,7 +312,7 @@ class AITradeBase(AsyncRequest):
     
     def timeout(self, task):
         for timeoutInfo in self.timeoutCallback:
-            apply(timeoutInfo[0], timeoutInfo[1] + [
+            timeoutInfo[0](*timeoutInfo[1] + [
                 self])
         
         AsyncRequest.timeout(self, task)
@@ -336,15 +336,15 @@ class AITradeBase(AsyncRequest):
         
         def check1(tradeItems, limitChanges, stacks, locatable, accumulators, doIds, giving):
             listType = type([])
-            possibleTypes = (type(1), type(0x1L), listType)
+            possibleTypes = (type(1), type(0x1), listType)
             for i in tradeItems:
                 for v in i:
                     itemType = type(v)
                     if itemType not in possibleTypes:
-                        raise AITradeException, 'element is the wrong type'
+                        raise AITradeException('element is the wrong type')
                     
-                    if v > 0xFFFFFFFFL and itemType != listType:
-                        raise AITradeException, 'element is larger than unsigned long'
+                    if v > 0xFFFFFFFF and itemType != listType:
+                        raise AITradeException('element is larger than unsigned long')
                         continue
                 else:
                     t = i[TypeIndex]
@@ -353,18 +353,18 @@ class AITradeBase(AsyncRequest):
                             t,
                             0])
                         a[1] += i[QuantityIndex]
-                        if a[1] > 0xFFFFL:
-                            raise AITradeException, 'element is larger than unsigned short'
+                        if a[1] > 0xFFFF:
+                            raise AITradeException('element is larger than unsigned short')
                         
                     if InventoryId.isStackable(t):
                         a = stacks.setdefault(t, [
                             t,
                             0])
                         a[1] += i[QuantityIndex]
-                        if a[1] > 0xFFFFL:
-                            raise AITradeException, 'element is larger than unsigned short'
+                        if a[1] > 0xFFFF:
+                            raise AITradeException('element is larger than unsigned short')
                         
-                    a[1] > 0xFFFFL
+                    a[1] > 0xFFFF
                     if isLocatable(t):
                         inv = simbase.air.doId2do.get(self.inventoryId)
                         if inv:
@@ -372,7 +372,7 @@ class AITradeBase(AsyncRequest):
                             theInvItemType = theInvItem.getType()
                             if giving:
                                 equippableInfo = inv.getItemRequirements(theInvItemType, self.giving)
-                                if (equippableInfo == None or filter(lambda x: equippableInfo[x][1] == False, equippableInfo)) and theInvItemType and theInvItemType not in self.unequippables:
+                                if (equippableInfo == None or [x for x in equippableInfo if equippableInfo[x][1] == False]) and theInvItemType and theInvItemType not in self.unequippables:
                                     self.unequippables.append(theInvItemType)
                                 
                             
@@ -388,7 +388,7 @@ class AITradeBase(AsyncRequest):
                                 
                             
                         else:
-                            raise AITradeException, 'inventory not present'
+                            raise AITradeException('inventory not present')
                         locatable.append(i)
                         continue
                     if InventoryId.isAccumulator(t):
@@ -396,10 +396,10 @@ class AITradeBase(AsyncRequest):
                             t,
                             0])
                         a[1] += i[QuantityIndex]
-                        if a[1] > 0xFFFFFFFFL:
-                            raise AITradeException, 'element is larger than unsigned long'
+                        if a[1] > 0xFFFFFFFF:
+                            raise AITradeException('element is larger than unsigned long')
                         
-                    a[1] > 0xFFFFFFFFL
+                    a[1] > 0xFFFFFFFF
                     if InventoryId.isDoId(t):
                         doIds[i[DoIdIndex]] = i
                         continue
@@ -409,8 +409,8 @@ class AITradeBase(AsyncRequest):
         check1(self.taking, takingLimitChanges, takingStacks, takingLocatable, takingAccumulators, takingDoIds, giving = False)
         
         def check2(s1, s2):
-            for i in s1.keys():
-                if s2.has_key(i):
+            for i in list(s1.keys()):
+                if i in s2:
                     q1 = s1[i][QuantityIndex]
                     q2 = s2[i][QuantityIndex]
                     if q1 == q2:
@@ -435,8 +435,8 @@ class AITradeBase(AsyncRequest):
         
         
         def check3(s1, s2):
-            for i in s1.keys():
-                if s2.has_key(i):
+            for i in list(s1.keys()):
+                if i in s2:
                     del s1[i]
                     del s2[i]
                     continue
@@ -447,8 +447,8 @@ class AITradeBase(AsyncRequest):
             check3(takingDoIds, givingDoIds)
         
         self._checkRules(givingLimitChanges, givingStacks, givingAccumulators, givingDoIds, givingLocatable, takingLimitChanges, takingStacks, takingAccumulators, takingDoIds, takingLocatable)
-        self.giving = givingLimitChanges.values() + givingStacks.values() + givingLocatable + givingAccumulators.values() + givingDoIds.values()
-        self.taking = takingLimitChanges.values() + takingStacks.values() + takingLocatable + takingAccumulators.values() + takingDoIds.values()
+        self.giving = list(givingLimitChanges.values()) + list(givingStacks.values()) + givingLocatable + list(givingAccumulators.values()) + list(givingDoIds.values())
+        self.taking = list(takingLimitChanges.values()) + list(takingStacks.values()) + takingLocatable + list(takingAccumulators.values()) + list(takingDoIds.values())
         self._sortOffer(self.giving)
         self._sortOffer(self.taking)
 
@@ -456,7 +456,7 @@ class AITradeBase(AsyncRequest):
     def _checkRules(self, givingLimitChanges, givingStacks, givingAccumulators, givingDoIds, givingLocatable, takingLimitChanges, takingStacks, takingAccumulators, takingDoIds, takingLocatable):
         
         def isNotFreelyRemovable(stacks):
-            for (stackType, quantity) in stacks.items():
+            for (stackType, quantity) in list(stacks.items()):
                 if not InventoryId.isFreeTakeStackType(stackType):
                     return True
                     continue
@@ -465,7 +465,7 @@ class AITradeBase(AsyncRequest):
 
         
         def isNotFreelyGivable(stacks):
-            for (stackType, quantity) in stacks.items():
+            for (stackType, quantity) in list(stacks.items()):
                 if not InventoryId.isFreeGiveStackType(stackType):
                     return True
                     continue
@@ -473,16 +473,16 @@ class AITradeBase(AsyncRequest):
             return False
 
         if takingAccumulators:
-            raise AITradeException, 'error: cannot take accumulators'
+            raise AITradeException('error: cannot take accumulators')
         elif not givingStacks and givingDoIds and givingLimitChanges or givingLocatable:
             if not takingStacks and takingDoIds or takingLocatable:
-                raise AITradeException, 'error: nothing for nothing trade'
+                raise AITradeException('error: nothing for nothing trade')
             elif takingDoIds or isNotFreelyRemovable(takingStacks):
-                raise AITradeException, 'error: nothing for something trade'
+                raise AITradeException('error: nothing for something trade')
             
         elif not takingStacks and takingDoIds and givingLimitChanges or takingLocatable:
             if givingDoIds or isNotFreelyGivable(takingStacks):
-                raise AITradeException, 'error: something for nothing trade'
+                raise AITradeException('error: something for nothing trade')
             
         
 
@@ -506,8 +506,8 @@ class AITradeBase(AsyncRequest):
                 elif InventoryId.isAccumulator(changing):
                     setAccumulators.append(i)
                 else:
-                    print '=============EXCEPTION1 RAISED: %s' % a
-                    raise Exception, 'undefined trade category'
+                    print(('=============EXCEPTION1 RAISED: %s' % a))
+                    raise Exception('undefined trade category')
             InventoryId.isCategory(changing)
             if InventoryId.isStackable(a):
                 stackables.append(i)
@@ -521,8 +521,8 @@ class AITradeBase(AsyncRequest):
             if InventoryId.isCategory(a):
                 doIds.append(i)
                 continue
-            print '=============EXCEPTION2 RAISED: %s' % a
-            raise Exception, 'undefined trade type'
+            print(('=============EXCEPTION2 RAISED: %s' % a))
+            raise Exception('undefined trade type')
         
         offer = categoryLimitChanges + stackLimitChanges + setAccumulators + stackables + locatable + accumulators + doIds
 
